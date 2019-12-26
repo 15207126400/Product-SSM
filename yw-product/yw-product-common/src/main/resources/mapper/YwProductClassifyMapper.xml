@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductClassifyDao">
+
+    <sql id="insertSql">
+       classify_name,classify_url,classify_createtime,classify_updatetime,parent_id,classify_status,classify_order,classify_level
+    </sql>
+    
+    <sql id="sql">
+       classify_id,classify_name,classify_url,classify_createtime,classify_updatetime,parent_id,classify_status,classify_order,classify_level
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="classify_id != null and classify_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_id = #{classify_id}
+	        </if>
+	        <if test="classify_name != null and classify_name != '' ">
+	          and classify_name like CONCAT('%',#{classify_name},'%')
+	        </if>
+	        <if test="parent_id != null and parent_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and parent_id = #{parent_id}
+	        </if>
+	        <if test="classify_status != null and classify_status != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_status = #{classify_status}
+	        </if>
+	        <if test="classify_order != null and classify_order != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_order = #{classify_order}
+	        </if>
+	        <if test="classify_level != null and classify_level != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_level = #{classify_level}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereSql2">
+	     <where>
+	        <if test="classify_name != null and classify_name != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_name = #{classify_name}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="classify_id != null and classify_id != '' ">
+				and classify_id in
+				<foreach collection="classify_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwProductClassify">
+		insert into yw_product_classify(<include refid="insertSql"/>) values(#{classify_name},#{classify_url},#{classify_createtime},#{classify_updatetime},#{parent_id},#{classify_status},#{classify_order},#{classify_level})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductClassify">
+		select 
+			c.classify_id,
+			c.classify_name,
+			c.classify_createtime,
+			c.classify_updatetime,
+			c.parent_id,
+			c.classify_status,
+			c.classify_order,
+			c.classify_level,
+			b.thumbnail_url classify_url
+			 
+			from yw_product_classify c
+			left join yw_images_xcxthumbnail b on c.classify_url = b.image_id and b.thumbnail_type = '3'
+		<include refid="whereSql"/>
+		order by classify_order asc	, id desc
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductClassify">
+		select 
+			c.classify_id,
+			c.classify_name,
+			c.classify_createtime,
+			c.classify_updatetime,
+			c.parent_id,
+			c.classify_status,
+			c.classify_order,
+			c.classify_level,
+			b.thumbnail_url classify_url
+			 
+			from yw_product_classify c
+			left join yw_images_xcxthumbnail b on c.classify_url = b.image_id and b.thumbnail_type = '3'
+		<include refid="whereSql"/>
+		order by classify_order asc	, id desc
+		limit #{begin},#{end}
+	</select>
+	
+
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_product_classify
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_product_classify
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="classify_name != null and classify_name != ''">
+	           classify_name = #{classify_name},
+	      </if>
+	      <if test="classify_url != null and classify_url != ''">
+	           classify_url = #{classify_url},
+	      </if>
+	      <if test="classify_createtime != null and classify_createtime != '' ">
+	           classify_createtime = #{classify_createtime},
+	      </if>
+	      <if test="classify_updatetime != null and classify_updatetime != '' ">
+	           classify_updatetime = #{classify_updatetime},
+	      </if>
+	      <if test="parent_id != null and parent_id != '' ">
+	           parent_id = #{parent_id},
+	      </if>
+	      <if test="classify_status != null and classify_status != '' ">
+	           classify_status = #{classify_status},
+	      </if>
+	      <if test="classify_order != null and classify_order != '' ">
+	           classify_order = #{classify_order},
+	      </if>
+	      <if test="classify_level != null and classify_level != '' ">
+	           classify_level = #{classify_level},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="classify_id != null and classify_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_id = #{classify_id}
+	        </if>
+	    </where> 
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_product_classify 
+	    <where>
+	        <if test="classify_id != null and classify_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{classify_id}),'%') -->
+	          and classify_id = #{classify_id}
+	        </if>
+	    </where> 
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_product_classify
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+	<!-- 查询第一条数据 -->
+	<select id="queryByfirst" resultType="YwProductClassify">
+		select * from shop_classify limit 1
+	</select>
+</mapper>

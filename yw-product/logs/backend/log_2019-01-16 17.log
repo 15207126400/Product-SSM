@@ -1,0 +1,1 @@
+2019年01月16日 17:14:52.113 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@edf4efb]

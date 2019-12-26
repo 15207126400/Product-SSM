@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwXcxNavigationDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.YwXcxNavigation" id="resultMap">
+         <id column="id" property="id" />
+         <result column="user_id" property="user_id" />  
+         <result column="scene_type" property="scene_type" />  
+         <result column="wx_appid" property="wx_appid" />  
+         <result column="nav_name" property="nav_name" />  
+         <result column="nav_path" property="nav_path" />  
+         <result column="status" property="status" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         user_id,
+         scene_type,
+         wx_appid,
+         nav_name,
+         nav_path,
+         status
+    </sql>
+    
+    <sql id="insertSql">
+    	 user_id,
+    	 scene_type,
+         wx_appid,
+         nav_name,
+         nav_path,
+         status
+    </sql>
+    
+    <sql id="unionSql">
+         xn.id,
+         xn.user_id,
+         xn.scene_type,
+         xn.wx_appid,
+         xn.nav_name,
+         xn.nav_path,
+         xn.status
+    </sql>
+    
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+	        <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	          and scene_type = #{scene_type}
+	        </if>
+	        <if test="wx_appid != null and wx_appid != '' ">
+	          and wx_appid = #{wx_appid}
+	        </if>
+            <if test="nav_name != null and nav_name != '' ">
+	          and nav_name = #{nav_name}
+	        </if>
+            <if test="nav_path != null and nav_path != '' ">
+	          and nav_path = #{nav_path}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and xn.id = #{id}
+	        </if>
+	        <if test="user_id != null and user_id != '' ">
+	          and xn.user_id = #{user_id}
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	          and xn.scene_type = #{scene_type}
+	        </if>
+	        <if test="wx_appid != null and wx_appid != '' ">
+	          and xn.wx_appid = #{wx_appid}
+	        </if>
+            <if test="nav_name != null and nav_name != '' ">
+	          and xn.nav_name = #{nav_name}
+	        </if>
+            <if test="nav_path != null and nav_path != '' ">
+	          and xn.nav_path = #{nav_path}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and xn.status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and xn.id = #{id}
+	        </if>
+	        <if test="user_id != null and user_id != '' ">
+	          and xn.user_id = #{user_id}
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	          and xn.scene_type = #{scene_type}
+	        </if>
+	        <if test="wx_appid != null and wx_appid != '' ">
+	          and xn.wx_appid = #{wx_appid}
+	        </if>
+            <if test="nav_name != null and nav_name != '' ">
+	          and xn.nav_name = #{nav_name}
+	        </if>
+            <if test="nav_path != null and nav_path != '' ">
+	          and xn.nav_path = #{nav_path}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and xn.status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwXcxNavigation">
+		insert into yw_system_usercenter.yw_system_usercenter.yw_xcx_navigation(<include refid="insertSql"/>) 
+		values(
+				 #{user_id},
+				 #{scene_type},
+				 #{wx_appid},
+	             #{nav_name},
+	             #{nav_path},
+	             #{status}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_system_usercenter.yw_xcx_navigation(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                 #{item.user_id},
+                 #{item.scene_type},
+				 #{item.wx_appid},
+	             #{item.nav_name},
+	             #{item.nav_path},
+	             #{item.status}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwXcxNavigation">
+		select <include refid="sql"/> from yw_system_usercenter.yw_xcx_navigation
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表联合查询(或分页联合查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_system_usercenter.yw_xcx_navigation as xn
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwXcxNavigation">
+		select <include refid="sql"/> from yw_system_usercenter.yw_xcx_navigation
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_xcx_navigation
+		<include refid="whereSql"/>
+	</select>
+
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_xcx_navigation
+	     <trim prefix="set" suffixOverrides=",">
+	        <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	           scene_type = #{scene_type},
+	        </if>
+	        <if test="wx_appid != null and wx_appid != '' ">
+	           wx_appid = #{wx_appid},
+	        </if>
+            <if test="nav_name != null and nav_name != '' ">
+	           nav_name = #{nav_name},
+	        </if>
+            <if test="nav_path != null and nav_path != '' ">
+	           nav_path = #{nav_path},
+	        </if>
+	        <if test="status != null and status != '' ">
+	           status = #{status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_xcx_navigation
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_xcx_navigation
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

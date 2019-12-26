@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwShopcartDao">
+
+	<!-- 新增购物车 -->
+	<insert id="addPaycat" parameterType="YwShopcart">
+		insert into yw_shopcart(title,url,price,createBy,shopid,isSelect,count,sku_id,sku_attr,product_carriage,starting_amount,branch_id) values(#{title},#{url},#{price},#{createBy},#{shopid},#{isSelect},#{count},#{sku_id},#{sku_attr},#{product_carriage},#{starting_amount},#{branch_id})
+	</insert>
+	
+	<!-- 查询购物车 -->
+	<select id="queryAllPaycat"  resultType="YwShopcart" parameterType="Map">
+		select 
+			s.id,
+			s.title,
+			s.url,
+			s.price,
+			s.createBy,
+			s.shopid,
+			s.isSelect,
+			s.count,
+			s.sku_id,
+			s.sku_attr,
+			s.product_carriage,
+			s.starting_amount,
+			s.branch_id,
+			sk.sku_stock,
+			b.branch_name,
+			b.branch_logo
+			from yw_shopcart s
+			<choose>
+	   		    <when test="db_name == 'yw_branch_product_sku' ">
+	   		        left join yw_branch_product_sku sk on s.sku_id = sk.sku_id
+	   		    </when>
+	   		    <otherwise>
+	   		        left join yw_product_sku sk on s.sku_id = sk.sku_id
+	   		    </otherwise>
+	   		</choose>
+			
+			left join yw_system_usercenter.yw_branches b on s.branch_id = b.id
+		<where>
+			<if test="createBy!=null and createBy != ''">
+				and createBy = #{createBy}
+			</if>
+		</where>
+		order by s.id
+	</select>
+	
+	<!-- 通过id查找购物车信息 -->
+	<select id="queryByPaycat" resultType="YwShopcart" parameterType="int">
+		select * from yw_shopcart where id = #{id}
+	</select>
+	
+	<!-- 通过openid查找购物车信息 -->
+	<select id="queryByOpenid" resultType="YwShopcart" parameterType="int">
+		select * from yw_shopcart where createBy = #{createBy}
+	</select>
+	
+	<!-- 删除购物车商品 -->
+	<delete id="deletePaycat" parameterType="map">	
+		delete from yw_shopcart
+		<where>
+			<if test="id != null and id != '' ">
+				and id = #{id}
+			</if>
+			<if test="createBy != null and createBy != '' ">
+				and createBy = #{createBy}
+			</if>
+		</where>
+	</delete>
+</mapper>

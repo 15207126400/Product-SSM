@@ -1,0 +1,8 @@
+2018年12月07日 17:24:04.180 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@18e8568]
+2018年12月07日 17:29:07.454 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@18e8568]
+2018年12月07日 17:39:11.048 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@18e8568]
+2018年12月07日 17:39:31.847 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@18e8568]
+2018年12月07日 17:40:09.555 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@18e8568]
+2018年12月07日 17:52:30.463 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@edf4efb]
+2018年12月07日 17:54:52.493 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@edf4efb]
+2018年12月07日 17:56:39.695 [main:0] INFO com.yunwei.common.util.RedisClientUtil.getJedisPool(RedisClientUtil.java:126) - 连接redis服务器[redis.clients.jedis.JedisPool@edf4efb]

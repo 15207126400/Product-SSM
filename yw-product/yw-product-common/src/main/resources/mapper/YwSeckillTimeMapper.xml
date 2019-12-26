@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSeckillTimeDao">
+
+    <sql id="sql">
+       time_id,time_title_url,seckill_date,seckill_starttime,seckill_endtime,time_status
+    </sql>
+    
+    <sql id="insertSql">
+       time_title_url,seckill_date,seckill_starttime,seckill_endtime,time_status
+    </sql>
+    <sql id = "whereSql">
+	     <where>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	        <if test="time_title_url != null and time_title_url != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_title_url = #{time_title_url}
+	        </if>
+	        <if test="seckill_date != null and seckill_date != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and seckill_date = #{seckill_date}
+	        </if>
+	        <if test="seckill_starttime != null and seckill_starttime != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and seckill_starttime = #{seckill_starttime}
+	        </if>
+	        <if test="time_status != null and time_status != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_status = #{time_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereUnionSql">
+	     <where>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	        <if test="time_title_url != null and time_title_url != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_title_url = #{time_title_url}
+	        </if>
+	        <if test="seckill_date != null and seckill_date != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and seckill_date = #{seckill_date}
+	        </if>
+	        <if test="seckill_starttime != null and seckill_starttime != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and seckill_starttime = #{seckill_starttime}
+	        </if>
+	        <if test="time_status != null and time_status != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_status = #{time_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereMapSql">
+	     <where>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	        <if test="time_status != null and time_status != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_status = #{time_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="time_id != null and time_id != '' ">
+				and time_id in
+				<foreach collection="time_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="seckill_starttime != null and seckill_starttime != '' ">
+				and seckill_starttime in
+				<foreach collection="seckill_starttime" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSeckillTime">
+		insert into yw_seckill_time(<include refid="insertSql"/>) values(#{time_title_url},#{seckill_date},#{seckill_starttime},#{seckill_endtime},#{time_status})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSeckillTime">
+		select 
+		t.time_id,
+		t.seckill_date,
+		t.seckill_starttime,
+		t.seckill_endtime,
+		t.time_status,
+		b.thumbnail_url time_title_url
+		from yw_seckill_time t
+		<choose>
+   		    <when test="db_name == 'yw_images_xcxthumbnail' ">
+   		        left join yw_images_xcxthumbnail b on t.time_title_url = b.image_id and b.thumbnail_type = ${thumbnail_type}
+   		    </when>
+   		    <otherwise>
+   		        left join yw_images_backthumbnail b on t.time_title_url = b.image_id and b.thumbnail_type = '1'
+   		    </otherwise>
+   		</choose>
+		<include refid="whereUnionSql"/>
+		order by seckill_date , seckill_starttime , time_id
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSeckillTime">
+		select 
+		t.time_id,
+		t.seckill_date,
+		t.seckill_starttime,
+		t.seckill_endtime,
+		t.time_status,
+		b.thumbnail_url time_title_url
+		from yw_seckill_time t
+		left join yw_images_backthumbnail b on t.time_title_url = b.image_id and b.thumbnail_type = '1'
+		<include refid="whereUnionSql"/>
+		order by seckill_date , time_id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_seckill_time
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_seckill_time
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="time_title_url != null and time_title_url != ''">
+	           time_title_url = #{time_title_url},
+	      </if>
+	      <if test="seckill_date != null and seckill_date != ''">
+	           seckill_date = #{seckill_date},
+	      </if>
+	      <if test="seckill_starttime != null and seckill_starttime != '' ">
+	           seckill_starttime = #{seckill_starttime},
+	      </if>
+	      <if test="seckill_endtime != null and seckill_endtime != '' ">
+	           seckill_endtime = #{seckill_endtime},
+	      </if>
+	      <if test="time_status != null and time_status != '' ">
+	           time_status = #{time_status},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	    </where> 
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_seckill_time 
+	    <where>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{time_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	    </where> 
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_seckill_time
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

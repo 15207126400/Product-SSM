@@ -1,0 +1,32 @@
+/**文本框**/
+.oneJD-input{
+	width: 200px;
+	height: 30px;
+	border:1px solid #BBBBBB;
+	border-radius: 8px;
+	outline:none;
+}
+.oneJD-input:focus {
+border-style: solid;
+border-color: #A1C0D8;
+}
+
+/**弹出层**/
+.oneJD-model-border{
+	border:1px #999999;
+	border-style: solid;
+}
+
+
+/**文本域**/
+.oneJD-textarea{
+	width: 250px;
+	height: 100px;
+	border:1px solid #BBBBBB;
+	border-radius: 8px;
+	outline:none;
+}
+.oneJD-textarea:focus {
+border-style: solid;
+border-color: #A1C0D8;
+}

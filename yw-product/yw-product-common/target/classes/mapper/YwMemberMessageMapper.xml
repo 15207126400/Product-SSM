@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwMemberMessageDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.YwMemberMessage" id="resultMap">
+         <id column="id" property="id" />
+         <result column="openid" property="openid" />  
+         <result column="formid" property="formid" />  
+         <result column="prepay_id" property="prepay_id" />  
+         <result column="message_count" property="message_count" />  
+         <result column="message_type" property="message_type" />  
+         <result column="message_content" property="message_content" />  
+         <result column="order_sn" property="order_sn" />  
+         <result column="branch_id" property="branch_id" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         openid,
+         formid,
+         prepay_id,
+         message_count,
+         message_type,
+         message_content,
+         order_sn,
+         branch_id
+    </sql>
+    
+    <sql id="insertSql">
+         openid,
+         formid,
+         prepay_id,
+         message_count,
+         message_type,
+         message_content,
+         order_sn,
+         branch_id
+    </sql>
+    
+    <sql id="unionSql">
+         mm.id,
+         mm.openid,
+         mm.formid,
+         mm.prepay_id,
+         mm.message_count,
+         mm.message_type,
+         mm.message_content,
+         mm.order_sn,
+         mm.branch_id
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+            <if test="formid != null and formid != '' ">
+	          and formid = #{formid}
+	        </if>
+            <if test="prepay_id != null and prepay_id != '' ">
+	          and prepay_id = #{prepay_id}
+	        </if>
+            <if test="message_count != null and message_count != '' ">
+	          and message_count = #{message_count}
+	        </if>
+            <if test="message_type != null and message_type != '' ">
+	          and message_type = #{message_type}
+	        </if>
+            <if test="message_content != null and message_content != '' ">
+	          and message_content = #{message_content}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	          and branch_id = #{branch_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and mm.id = #{id}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and mm.openid = #{openid}
+	        </if>
+            <if test="formid != null and formid != '' ">
+	          and mm.formid = #{formid}
+	        </if>
+            <if test="prepay_id != null and prepay_id != '' ">
+	          and mm.prepay_id = #{prepay_id}
+	        </if>
+            <if test="message_count != null and message_count != '' ">
+	          and mm.message_count = #{message_count}
+	        </if>
+            <if test="message_type != null and message_type != '' ">
+	          and mm.message_type = #{message_type}
+	        </if>
+            <if test="message_content != null and message_content != '' ">
+	          and mm.message_content = #{message_content}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and mm.order_sn = #{order_sn}
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	          and mm.branch_id = #{branch_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwMemberMessage">
+		insert into yw_member_message(<include refid="insertSql"/>) 
+		values(
+	             #{openid},
+	             #{formid},
+	             #{prepay_id},
+	             #{message_count},
+	             #{message_type},
+	             #{message_content},
+	             #{order_sn},
+	             #{branch_id}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_member_message(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.openid},
+	             #{item.formid},
+	             #{item.prepay_id},
+	             #{item.message_count},
+	             #{item.message_type},
+	             #{item.message_content},
+	             #{item.order_sn},
+	             #{item.branch_id}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMemberMessage">
+		select <include refid="sql"/> from yw_member_message
+		<include refid="whereSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMemberMessage">
+		select <include refid="sql"/> from yw_member_message
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_member_message as mm
+		<include refid="whereUnionSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_member_message as mm
+		<include refid="whereUnionSql"/>
+		order by id desc
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_member_message
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_member_message
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="openid != null and openid != '' ">
+	           openid = #{openid},
+	        </if>
+            <if test="formid != null and formid != '' ">
+	           formid = #{formid},
+	        </if>
+            <if test="prepay_id != null and prepay_id != '' ">
+	           prepay_id = #{prepay_id},
+	        </if>
+            <if test="message_count != null and message_count != '' ">
+	           message_count = #{message_count},
+	        </if>
+            <if test="message_type != null and message_type != '' ">
+	           message_type = #{message_type},
+	        </if>
+            <if test="message_content != null and message_content != '' ">
+	           message_content = #{message_content},
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	           order_sn = #{order_sn},
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	           branch_id = #{branch_id},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update yw_member_message
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_member_message
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_member_message
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

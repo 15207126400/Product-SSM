@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwMemberDao">
+
+    <sql id="sql">
+       id,openid,sessionKey,createTime,ac_price,nickname,avatarUrl,level,discount,realname,phone,address,is_auditing,shopname
+    </sql>
+    
+    <sql id="insertSql">
+       openid,sessionKey,createTime,ac_price,nickname,avatarUrl,level,discount,realname,phone,address,is_auditing,shopname
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="id != null and id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{id}),'%') -->
+	          and id = #{id}
+	        </if>
+	        <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMember">
+		select <include refid="sql"/> from yw_member
+		<include refid="whereSql"/>
+	</select>
+    
+	<!-- 小程序查询所有用户 -->
+	<select id="queryAll"  resultType="YwMember" parameterType="map">
+		select * from yw_member
+			<where>
+				<if test="openid!=null and openid != '' ">
+					and openid=#{openid}
+				</if>
+				<if test="level != null and level != '' ">
+					and level=#{level}
+				</if>
+			</where>
+	</select>
+     
+    <!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwMember">
+		insert into yw_member(<include refid="insertSql"/>) values(#{openid},#{sessionKey},#{createTime},#{ac_price},#{nickname},#{avatarUrl},#{level},#{discount},#{realname},#{phone},#{address},#{is_auditing},#{shopname})
+	</insert>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_member
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="openid != null and openid != '' ">
+	           openid = #{openid},
+	      </if>
+	      <if test="sessionKey != null and sessionKey != ''">
+	           sessionKey = #{sessionKey},
+	      </if>
+	      <if test="createTime != null and createTime != '' ">
+	           createTime = #{createTime},
+	      </if>
+	      <if test="ac_price != null and ac_price != '' ">
+	           ac_price = #{ac_price},
+	      </if>
+	      <if test="nickname != null and nickname != '' ">
+	           nickname = #{nickname},
+	      </if>
+	      <if test="avatarUrl != null and avatarUrl != '' ">
+	           avatarUrl = #{avatarUrl},
+	      </if>
+	      <if test="level != null and level != '' ">
+	           level = #{level},
+	      </if>
+	      <if test="discount != null and discount != '' ">
+	           discount = #{discount},
+	      </if>
+	      <if test="realname != null and realname != '' ">
+	           realname = #{realname},
+	      </if>
+	      <if test="phone != null and phone != '' ">
+	           phone = #{phone},
+	      </if>
+	      <if test="address != null and address != '' ">
+	           address = #{address},
+	      </if>
+	      <if test="is_auditing != null and is_auditing != '' ">
+	           is_auditing = #{is_auditing},
+	      </if>
+	      <if test="shopname != null and shopname != '' ">
+	           shopname = #{shopname},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+
+	<!-- 新增用户openid -->
+	<insert id="addOpenId" parameterType="YwMember">
+		insert into yw_member(openid,sessionKey,createTime,ac_price,level,is_auditing) values(#{openid},#{sessionKey},#{createTime},#{ac_price},#{level},#{is_auditing})
+	</insert>
+	
+	<!-- 新增用户信息 -->
+	<insert id="addUserInfo" parameterType="YwMember">
+		update yw_member set nickname=#{nickname},avatarUrl=#{avatarUrl} where openid=#{openid}
+	</insert>
+	
+	<!-- 用户openid查询 -->
+	<select id="queryAllOpenId"  resultType="YwMember" parameterType="map">
+		select * from yw_member where level != '游客'
+			<if test="openid!=null">
+				and openid=#{openid}
+			</if>
+			<if test="level!=null">
+				and level like CONCAT('%',#{level},'%')
+			</if>
+			<if test="begin!=null and end!=null">
+				limit #{begin},#{end}		
+			</if>
+	</select>
+	
+	<!-- 查询openid存在数量 -->
+	<select id="queryByOpenidCount" resultType="int" parameterType="String">
+		SELECT count(1) FROM yw_member where openid = #{openid} 
+	</select>
+	
+	<!-- 查询指定openid信息 -->
+	<select id="queryByOpenid" resultType="YwMember" parameterType="String" >
+		select * from yw_member where openid = #{openid} 
+	</select>
+	
+	<!-- 修改openid信息 -->
+	<update id="updateByOpenid" parameterType="YwMember">
+		update yw_member set sessionKey=#{sessionKey},createTime=#{createTime} where openid=#{openid}
+	</update>
+	
+	<!-- 支付成功后计算积分 -->
+	<update id="updateByac_price" parameterType="YwMember">
+		update yw_member set ac_price=#{ac_price} where openid=#{openid}
+	</update>
+	
+	<!-- 查询会员总数 -->
+	<select id="findsum" resultType="int" parameterType="Map">
+		SELECT count(1) FROM yw_member where level != '游客'
+			<if test="level!=null">
+					and level like CONCAT('%',#{level},'%')
+			</if>
+	</select>
+	
+	<!-- 修改用户会员等级 -->
+	<update id="updateByLevel" parameterType="YwMember">
+		update yw_member set level=#{level},discount=#{discount} where openid=#{openid}
+	</update>
+	
+	<!-- 修改注册会员真实信息 -->
+	<update id="updateByRegUser" parameterType="YwMember">
+		update yw_member set realname = #{realname},phone = #{phone},address = #{address},is_auditing = #{is_auditing},shopname = #{shopname} where openid=#{openid}
+	</update>
+	
+	<!-- 修改会员名称 -->
+	<update id="updateByLevelname" parameterType="YwMember">
+		update yw_member set level=#{level} where openid=#{openid}
+	</update>
+	
+	    
+    <!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMember">
+		select 
+			y.id,
+			y.openid,
+			y.sessionKey,
+			y.createTime,
+			y.ac_price,
+			y.nickname,
+			y.avatarUrl,
+			y.level,
+			y.discount,
+			y.realname,
+			y.phone,
+			y.address,
+			y.is_auditing,
+			y.shopname,
+			r.id,
+			r.levelname
+		 from yw_member y
+		 left join yw_member_role r on y.level = r.id
+		<where>
+			<if test="id != null and id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{id}),'%') -->
+	          and y.id = #{id}
+	        </if>
+	        <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+	        <if test="is_auditing != null and is_auditing != '' ">
+	          and is_auditing = #{is_auditing}
+	        </if>
+	        <if test="level != null and level != '' ">
+	          and level = #{level}
+	        </if>
+		</where>
+		order by createTime desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_member
+		<where>
+			<if test="id != null and id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{id}),'%') -->
+	          and id = #{id}
+	        </if>
+	        <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+	        <if test="is_auditing != null and is_auditing != '' ">
+	          and is_auditing = #{is_auditing}
+	        </if>
+	        <if test="level != null and level != '' ">
+	          and level = #{level}
+	        </if>
+		</where>
+	</select>
+	
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+		delete from yw_member where id = #{id}
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_member
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

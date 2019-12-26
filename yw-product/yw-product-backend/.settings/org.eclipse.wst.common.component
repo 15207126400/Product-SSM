@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="yw-product-backend">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="yw-product-common-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-product-common/yw-product-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yw-context-config-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-context-config/yw-context-config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yw-context-sys-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-context-sys/yw-context-sys">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yw-context-jdbc-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-context-jdbc/yw-context-jdbc">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yw-context-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-context/yw-context">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yw-common-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yw-common/yw-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="yw-product-backend"/>
+        <property name="java-output-path" value="/yw-product-backend/target/classes"/>
+    </wb-module>
+</project-modules>

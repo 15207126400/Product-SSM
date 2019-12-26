@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductAttributeRelationDao">
+
+    <sql id="sql">
+       prod_attr_id,product_id,attrname_id,attrvalue_id
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="prod_attr_id != null and prod_attr_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{prod_attr_id}),'%') -->
+	          and prod_attr_id = #{prod_attr_id}
+	        </if>
+	        <if test="attrname_id != null and attrname_id != '' ">
+	          and attrname_id = #{attrname_id}
+	        </if>
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwProductAttributeRelation">
+		insert into yw_product_attribute_relation(<include refid="sql"/>) values(#{prod_attr_id},#{product_id},#{attrname_id},#{attrvalue_id})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductAttributeRelation">
+		select <include refid="sql"/> from yw_product_attribute_relation
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductAttributeRelation">
+		select <include refid="sql"/> from yw_product_attribute_relation
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_product_attribute_relation
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_product_attribute_relation
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="prod_attr_id != null and prod_attr_id != '' ">
+	           prod_attr_id = #{prod_attr_id},
+	      </if>
+	      <if test="product_id != null and product_id != ''">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="attrname_id != null and attrname_id != '' ">
+	           attrname_id = #{attrname_id},
+	      </if>
+	      <if test="attrvalue_id != null and attrvalue_id != '' ">
+	           attrvalue_id = #{attrvalue_id},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_product_attribute_relation 
+	    <include refid="whereSql"/>
+	</delete>
+	
+</mapper>

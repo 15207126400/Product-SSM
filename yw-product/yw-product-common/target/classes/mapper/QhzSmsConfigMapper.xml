@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.QhzSmsConfigDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.QhzSmsConfig" id="resultMap">
+         <id column="id" property="id" />
+         <result column="type" property="type" />  
+         <result column="url" property="url" />  
+         <result column="userid" property="userid" />  
+         <result column="account" property="account" />  
+         <result column="password" property="password" />  
+         <result column="action" property="action" />  
+         <result column="sign" property="sign" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         type,
+         url,
+         userid,
+         account,
+         password,
+         action,
+         sign
+    </sql>
+    
+    <sql id="insertSql">
+         type,
+         url,
+         userid,
+         account,
+         password,
+         action,
+         sign
+    </sql>
+    
+    <sql id="unionSql">
+         sc.id,
+         sc.type,
+         sc.url,
+         sc.userid,
+         sc.account,
+         sc.password,
+         sc.action,
+         sc.sign
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="type != null and type != '' ">
+	          and type = #{type}
+	        </if>
+            <if test="url != null and url != '' ">
+	          and url = #{url}
+	        </if>
+            <if test="userid != null and userid != '' ">
+	          and userid = #{userid}
+	        </if>
+            <if test="account != null and account != '' ">
+	          and account = #{account}
+	        </if>
+            <if test="password != null and password != '' ">
+	          and password = #{password}
+	        </if>
+            <if test="action != null and action != '' ">
+	          and action = #{action}
+	        </if>
+	        <if test="sign != null and sign != '' ">
+	          and sign = #{sign}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and sc.id = #{id}
+	        </if>
+            <if test="type != null and type != '' ">
+	          and sc.type = #{type}
+	        </if>
+            <if test="url != null and url != '' ">
+	          and sc.url = #{url}
+	        </if>
+            <if test="userid != null and userid != '' ">
+	          and sc.userid = #{userid}
+	        </if>
+            <if test="account != null and account != '' ">
+	          and sc.account = #{account}
+	        </if>
+            <if test="password != null and password != '' ">
+	          and sc.password = #{password}
+	        </if>
+            <if test="action != null and action != '' ">
+	          and sc.action = #{action}
+	        </if>
+	        <if test="sign != null and sign != '' ">
+	          and sc.sign = #{sign}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.QhzSmsConfig">
+		insert into qhz_sms_config(<include refid="insertSql"/>) 
+		values(
+	             #{type},
+	             #{url},
+	             #{userid},
+	             #{account},
+	             #{password},
+	             #{action},
+	             #{sign}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into qhz_sms_config(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.type},
+	             #{item.url},
+	             #{item.userid},
+	             #{item.account},
+	             #{item.password},
+	             #{item.action},
+	             #{item.sign}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSmsConfig">
+		select <include refid="sql"/> from qhz_sms_config
+		<include refid="whereSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSmsConfig">
+		select <include refid="sql"/> from qhz_sms_config
+		<include refid="whereSql"/>
+		order by id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_sms_config as sc
+		<include refid="whereUnionSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_sms_config as sc
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from qhz_sms_config
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update qhz_sms_config
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="type != null and type != '' ">
+	           type = #{type},
+	        </if>
+            <if test="url != null and url != '' ">
+	           url = #{url},
+	        </if>
+            <if test="userid != null and userid != '' ">
+	           userid = #{userid},
+	        </if>
+            <if test="account != null and account != '' ">
+	           account = #{account},
+	        </if>
+            <if test="password != null and password != '' ">
+	           password = #{password},
+	        </if>
+            <if test="action != null and action != '' ">
+	           action = #{action},
+	        </if>
+	        <if test="sign != null and sign != '' ">
+	           sign = #{sign},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update qhz_sms_config
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from qhz_sms_config
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from qhz_sms_config
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

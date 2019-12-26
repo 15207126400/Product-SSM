@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwDistributorWithdrawalrecordDao">
+
+    <sql id="insertSql">
+       dis_wid_type,user_id,dis_wid_money,dis_wid_createtime,dis_wid_updatetime,dis_wid_status,dis_wid_remark
+    </sql>
+    
+    <sql id="sql">
+       dis_wid_id,dis_wid_type,user_id,dis_wid_money,dis_wid_createtime,dis_wid_updatetime,dis_wid_status,dis_wid_remark
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="dis_wid_id != null and dis_wid_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{user_id}),'%') -->
+	          and dis_wid_id = #{dis_wid_id}
+	        </if>
+	        <if test="user_id != null and user_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{user_id}),'%') -->
+	          and user_id = #{user_id}
+	        </if>
+	        <if test="dis_wid_type != null and dis_wid_type != '' ">
+	          and dis_wid_type = #{dis_wid_type}
+	        </if>
+	        <if test="dis_wid_status != null and dis_wid_status != '' ">
+	          and dis_wid_status = #{dis_wid_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="dis_wid_id != null and dis_wid_id != '' ">
+				and dis_wid_id in
+				<foreach collection="dis_wid_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwDistributorWithdrawalrecord">
+		insert into yw_distributor_withdrawalrecord(<include refid="insertSql"/>) values(#{dis_wid_type},#{user_id},#{dis_wid_money},#{dis_wid_createtime},#{dis_wid_updatetime},#{dis_wid_status},#{dis_wid_remark})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorWithdrawalrecord">
+		select <include refid="sql"/> from yw_distributor_withdrawalrecord
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionMemberList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwDistributorWithdrawalrecordDto">
+		select
+			w.dis_wid_id,
+			w.dis_wid_type,
+			w.user_id,
+			w.dis_wid_money,
+			w.dis_wid_createtime,
+			w.dis_wid_updatetime,
+			w.dis_wid_status,
+			w.dis_wid_remark,
+			m.openid,
+			m.nickname
+		from yw_distributor_withdrawalrecord w
+			left join yw_member m on w.user_id = m.openid
+			<include refid="whereSql" />
+			order by dis_wid_createtime desc
+			<if test="begin != null and begin != '' ">
+				limit #{begin},#{end}
+			</if>
+	</select>
+	
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorWithdrawalrecord">
+		select <include refid="sql"/> from yw_distributor_withdrawalrecord
+		<include refid="whereSql"/>
+		order by dis_wid_createtime desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_distributor_withdrawalrecord
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_distributor_withdrawalrecord
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="dis_wid_type != null and dis_wid_type != '' ">
+	           dis_wid_type = #{dis_wid_type},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="dis_wid_money != null and dis_wid_money != '' ">
+	           dis_wid_money = #{dis_wid_money},
+	      </if>
+	      <if test="dis_wid_createtime != null and dis_wid_createtime != '' ">
+	           dis_wid_createtime = #{dis_wid_createtime},
+	      </if>
+	      <if test="dis_wid_updatetime != null and dis_wid_updatetime != '' ">
+	           dis_wid_updatetime = #{dis_wid_updatetime},
+	      </if>
+	      <if test="dis_wid_status != null and dis_wid_status != '' ">
+	           dis_wid_status = #{dis_wid_status},
+	      </if>
+	      <if test="dis_wid_remark != null and dis_wid_remark != '' ">
+	           dis_wid_remark = #{dis_wid_remark},
+	      </if>
+	    </trim>
+	    <where>
+		   <if test="dis_wid_id != null and dis_wid_id != '' ">
+	         and dis_wid_id = #{dis_wid_id}
+	       </if>
+        </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_distributor_withdrawalrecord 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_distributor_withdrawalrecord
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

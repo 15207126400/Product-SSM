@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwMemberRoleDao">
+
+    <sql id="sql">
+       id,level,levelname,levelpoints,discount,proportion,iflevel
+    </sql>
+    
+    <sql id="insertSql">
+       level,levelname,levelpoints,discount,proportion,iflevel
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="id != null and id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{id}),'%') -->
+	          and id = #{id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwMemberRole">
+		insert into yw_member_role(<include refid="insertSql"/>) values(#{level},#{levelname},#{levelpoints},#{discount},#{proportion},#{iflevel})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMemberRole">
+		select <include refid="sql"/> from yw_member_role
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwMemberRole">
+		select <include refid="sql"/> from yw_member_role
+		<include refid="whereSql"/>
+		order by level
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_member_role
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_member_role
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="level != null and level != ''">
+	           level = #{level},
+	      </if>
+	      <if test="levelname != null and levelname != ''">
+	           levelname = #{levelname},
+	      </if>
+	      <if test="levelpoints != null and levelpoints != '' ">
+	           levelpoints = #{levelpoints},
+	      </if>
+	      <if test="discount != null and discount != '' ">
+	           discount = #{discount},
+	      </if>
+	      <if test="proportion != null and proportion != '' ">
+	           proportion = #{proportion},
+	      </if>
+	      <if test="iflevel != null and iflevel != '' ">
+	           iflevel = #{iflevel},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_member_role 
+	    <include refid="whereSql"/>
+	</delete>
+
+	<select id="queryAll" resultType="YwMemberRole" parameterType="map">
+		select * from yw_member_role
+		<where>
+			<if test="level != null and level != ''">
+	           level = #{level},
+	      	</if>
+			<if test="iflevel != null and != ''">
+			   iflevel = #{iflevel},
+			</if>
+		</where>
+		<if test="begin!=null and end!=null">
+			limit #{begin},#{end}
+		</if>
+	</select>
+	
+	<select id="queryById" resultType="YwMemberRole" parameterType="int">
+		select * from yw_member_role where id = #{id}
+	</select>
+	
+	<insert id="addYwMemberRole" parameterType="YwMemberRole">
+		insert into yw_member_role(level,levelname,levelpoints,discount,proportion) values(#{level},#{levelname},#{levelpoints},#{discount},#{proportion})
+	</insert>
+	
+	<!-- 修改会员权限 -->
+	<update id="updateYwMemberRole" parameterType="YwMemberRole">
+		update yw_member_role set level=#{level},levelname=#{levelname},levelpoints=#{levelpoints},discount=#{discount},proportion=#{proportion} where id=#{id}
+	</update>	
+	
+	<!-- 删除会员权限 -->
+	<delete id="deleteYwMemberRole" parameterType="int">
+		delete from yw_member_role where id = #{id}
+	</delete>
+	
+	<select id="findsum" resultType="int" parameterType="Map">
+		SELECT count(1) FROM yw_member_role
+	</select>
+	
+	<!-- 根据会员级别查找 -->
+	<select id="queryByLevelname" resultType="YwMemberRole" parameterType="String">
+		select * from yw_member_role where level = #{level}
+	</select>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_member_role
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

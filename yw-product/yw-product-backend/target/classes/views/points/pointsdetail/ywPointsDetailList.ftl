@@ -1,0 +1,107 @@
+<@screen id="ywPointsDetail" title="积分明细页面" places=[{"name":"积分明细","href":"#"}]>
+<@ajaxQueryTable id="ywPointsDetail_list" auto=true isMultiple=true multipleCondition=["detail_id"]
+	action="${base}/points/ywPointsDetail/getList.json" 
+	paginatorUrl="${base}/points/ywPointsDetail/getPaginator.json"
+	buttons={"查询#btn_qry":"btn btn-info btn-search"}
+	headItems=[
+	       {"id":"detail_id", "name":"编号"},
+	       {"id":"nickname", "name":"用户昵称"},
+	       {"id":"detail_type", "name":"积分明细类型","dic_key":"1056"},
+	       {"id":"detail_status", "name":"积分明细状态","dic_key":"1057"},
+	       {"id":"points_id", "name":"积分编号"},
+	       {"id":"order_sn", "name":"订单编号"},
+	       {"id":"detail_points_change", "name":"变动积分"},
+	       {"id":"detail_createtime", "name":"积分明细创建时间"},
+	       {"id":"detail_updatetime", "name":"积分明细更新时间"},
+	       {"id":"caozuo", "name":"操作", "provider":"dealStatus"}
+		
+	]>
+
+	
+	<@innerOfQueryCondition>
+	    <dl class="search-dl">
+  			<dd>
+  				<span class="dl-title">编号：</span>
+    			<label class="w-170">
+      			 <input id="detail_id" name="detail_id" type="text" class="yw-input" value="" placeholder="请输入积分明细编号"/ >
+    			</label>
+  			</dd>
+		</dl>
+	</@innerOfQueryCondition>
+	
+	<@innerOfQueryTable>
+	<div class="right-btn-box">
+		<#--
+	    <span class="input-group-btn" style="float: left;">
+			<a href="${base}/points/ywPointsDetail/edit.htm?op_type=1">
+				<button class="btn btn-success btn_text" type="button">添加</button>
+			</a>
+		</span>
+		-->
+		<span class="input-group-btn">
+			<a href="javascript:void(0)" >
+				<button class="btn btn-success btn_text" type="button" onclick="deleteBatch()">批量删除</button>
+			</a>
+		</span>
+	</div>
+   </@innerOfQueryTable>
+</@ajaxQueryTable>
+<@script>
+    function dealStatus(row, head){
+        var html = [];
+        html.push("<a href='${base}/points/ywPointsDetail/edit.htm?detail_id="+ row["detail_id"]+"&op_type=2' class='tablelink'>查看</a>");
+        html.push("<a href='javascript:void(0)' onclick=\"deleteOne('"+row["detail_id"]+"')\" class='tablelink'>删除</a>");
+   		return html.join(" ");
+    }
+	
+    // 删除
+ 	function deleteOne(detail_id){
+ 	    devActAfterConfirmAndClose("您确定要删除吗",function(){
+ 	    
+ 	       $.ajax({
+ 		     type:"post",
+ 		     url:"${base}/points/ywPointsDetail/delete.json",
+ 		     data:{"detail_id":detail_id},
+ 		     dataType:"json",
+ 		     success:function(data){
+ 		        if(data.error_no == "0"){
+ 		           devActAfterShowDialog(data.error_info,function(){
+	                  location.href = "${base}/points/ywPointsDetail.htm";
+	                },"suc");
+ 		        } else {
+ 		           isTimeOutdevShowDialog(data.error_info,data.infos);
+ 		        }
+ 		     }
+ 		  })
+ 	   });
+ 	}
+ 	
+ 	// 批量删除
+	function deleteBatch(){
+	  var ywPointsDetailForm = []
+	   var detail_id = []
+	   ywPointsDetailForm = getAllCheckboxs().split(",");
+	   for(var i=0;i<ywPointsDetailForm.length;i++){
+	   		detail_id.push(ywPointsDetailForm[i].split("-")[0])
+	   }
+	  devActAfterConfirmAndClose("您确定要批量删除吗",function(){
+		   $.ajax({
+				 type:"post",
+				 url:"${base}/points/ywPointsDetail/deleteBatch.json",
+				 data:{"detail_id":detail_id.toString()},
+				 dataType:"json",
+				 success:function(data){
+					if(data.error_no == "0"){
+					   devActAfterShowDialog(data.error_info,function(){
+						  location.href = "${base}/points/ywPointsDetail.htm";
+						},"suc");
+					} else {
+					   isTimeOutdevShowDialog(data.error_info,data.infos);
+					}
+				 }
+			  })
+		});  
+	 }
+ 	
+</@script>
+</@screen>

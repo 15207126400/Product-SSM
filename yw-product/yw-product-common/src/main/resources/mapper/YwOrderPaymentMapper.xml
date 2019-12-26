@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwOrderPaymentDao">
+
+	<sql id="insertSql">
+		order_pay_price ,
+		order_pay_status ,
+		order_sn ,
+		order_pay_type,
+		order_pay_method ,
+		order_pay_createtime ,
+		order_pay_updatetime ,
+		order_pay_remark ,
+		order_pay_url ,
+		order_pay_returnUrl ,
+		order_pay_code ,
+		open_id ,
+		order_pay_errorNo ,
+		order_pay_errorInfo,
+		branch_id
+	</sql>
+	
+	<sql id="sql">
+		order_pay_id ,
+		order_pay_price ,
+		order_pay_status ,
+		order_sn ,
+		order_pay_type,
+		order_pay_method ,
+		order_pay_createtime ,
+		order_pay_updatetime ,
+		order_pay_remark ,
+		order_pay_url ,
+		order_pay_returnUrl ,
+		order_pay_code ,
+		open_id ,
+		order_pay_errorNo ,
+		order_pay_errorInfo,
+		branch_id
+	</sql>
+
+	<sql id="whereSql">
+		<where>
+			<if test="order_pay_id != null and order_pay_id != '' ">
+				<!-- like CONCAT(CONCAT('%',#{order_pay_id}),'%') -->
+				and order_pay_id = #{order_pay_id}
+			</if>
+			<if test="order_sn != null and order_sn != '' ">
+				and order_sn = #{order_sn}
+			</if>
+			<if test="open_id != null and open_id != '' ">
+				and open_id = #{open_id}
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				and branch_id = #{branch_id}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereBatchSql">
+		<where>
+			<if test="order_pay_id != null and order_pay_id != '' ">
+				and order_pay_id in
+				<foreach collection="order_pay_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="order_sn != null and order_sn != '' ">
+				and order_sn in
+				<foreach collection="order_sn" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwOrderPayment">
+		insert into yw_order_payment(
+		<include refid="insertSql" />
+		)
+		values(
+		#{ order_pay_price },
+		#{ order_pay_status },
+		#{ order_sn },
+		#{ order_pay_type },
+		#{ order_pay_method },
+		#{ order_pay_createtime},
+		#{ order_pay_updatetime},
+		#{ order_pay_remark },
+		#{ order_pay_url },
+		#{ order_pay_returnUrl },
+		#{ order_pay_code },
+		#{ open_id },
+		#{ order_pay_errorNo },
+		#{ order_pay_errorInfo },
+		#{ branch_id })
+	</insert>
+
+	<!-- 查询所有字典信息 -->
+	<select id="queryList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.model.YwOrderPayment">
+		select
+		<include refid="sql" />
+		from yw_order_payment
+		<include refid="whereSql" />
+	</select>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionMemberList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwOrderPaymentDto">
+		select
+			p.order_pay_id,
+			p.order_pay_price,
+			p.order_pay_status,
+			p.order_sn,
+			p.order_pay_type,
+			p.order_pay_method,
+			p.order_pay_createtime,
+			p.order_pay_updatetime,
+			p.order_pay_remark,
+			p.order_pay_url,
+			p.order_pay_returnUrl,
+			p.order_pay_code,
+			p.open_id,
+			p.order_pay_errorNo,
+			p.order_pay_errorInfo,
+			p.branch_id,
+			m.openid,
+			m.nickname
+			
+		from yw_order_payment p
+			left join yw_member m on p.open_id = m.openid
+			inner join (select order_pay_id from yw_order_payment <include refid="whereSql" /> order by order_pay_id desc limit #{begin},#{end}) b on p.order_pay_id = b.order_pay_id
+	</select>
+
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.model.YwOrderPayment">
+		select
+		    p.order_pay_id,
+			p.order_pay_price,
+			p.order_pay_status,
+			p.order_sn,
+			p.order_pay_type,
+			p.order_pay_method,
+			p.order_pay_createtime,
+			p.order_pay_updatetime,
+			p.order_pay_remark,
+			p.order_pay_url,
+			p.order_pay_returnUrl,
+			p.order_pay_code,
+			p.open_id,
+			p.order_pay_errorNo,
+			p.order_pay_errorInfo,
+			p.branch_id,
+		from yw_order_payment p
+		inner join (select order_pay_id from yw_order_payment <include refid="whereSql" /> order by order_pay_id desc limit #{begin},#{end}) b on p.order_pay_id = b.order_pay_id
+	</select>
+
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map"
+		resultType="int">
+		select count(1) from yw_order_payment
+		<include refid="whereSql" />
+	</select>
+
+	<update id="update" parameterType="java.util.Map">
+		update yw_order_payment
+		<trim prefix="set" suffixOverrides=",">
+			<if test="order_pay_price != null and order_pay_price != ''">
+				order_pay_price = #{order_pay_price},
+			</if>
+			<if test="order_pay_status != null and order_pay_status != '' ">
+				order_pay_status = #{order_pay_status},
+			</if>
+			<if test="order_pay_type != null and order_pay_type != '' ">
+				order_pay_type = #{order_pay_type},
+			</if>
+			<if test="order_pay_method != null and order_pay_method != '' ">
+				order_pay_method = #{order_pay_method},
+			</if>
+			<if test="order_pay_createtime != null and order_pay_createtime != '' ">
+				order_pay_createtime = #{order_pay_createtime},
+			</if>
+			<if test="order_pay_updatetime != null and order_pay_updatetime != '' ">
+				order_pay_updatetime = #{order_pay_updatetime},
+			</if>
+			<if test="order_pay_remark != null and order_pay_remark != '' ">
+				order_pay_remark = #{order_pay_remark},
+			</if>
+			<if test="order_pay_url != null and order_pay_url != '' ">
+				order_pay_url = #{order_pay_url},
+			</if>
+			<if test="order_pay_returnUrl != null and order_pay_returnUrl != '' ">
+				order_pay_returnUrl = #{order_pay_returnUrl},
+			</if>
+			<if test="order_pay_code != null and order_pay_code != '' ">
+				order_pay_code = #{order_pay_code},
+			</if>
+			<if test="order_pay_errorNo != null and order_pay_errorNo != '' ">
+				order_pay_errorNo = #{order_pay_errorNo},
+			</if>
+			<if test="order_pay_errorInfo != null and order_pay_errorInfo != '' ">
+				order_pay_errorInfo = #{order_pay_errorInfo},
+			</if>
+			<if test="order_pay_errorInfo != null and order_pay_errorInfo != '' ">
+				order_pay_errorInfo = #{order_pay_errorInfo},
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				branch_id = #{branch_id},
+			</if>
+		</trim>
+		<include refid="whereSql" />
+	</update>
+
+	<delete id="delete" parameterType="java.util.Map">
+		delete from yw_order_payment
+		<include refid="whereSql" />
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_order_payment
+	   <include refid="whereBatchSql"/>
+	</delete>
+
+</mapper>

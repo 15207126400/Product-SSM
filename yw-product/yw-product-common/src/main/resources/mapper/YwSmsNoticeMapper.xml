@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSmsNoticeDao">
+
+    <sql id="sql">
+       sms_id,sms_createtime,sms_updatetime,sms_type,sms_status,user_id,sms_mobile,sms_content,sms_template_id,sms_remark,sms_error_no,sms_error_info,sms_isfee
+    </sql>
+    
+    <sql id="insertSql">
+       sms_createtime,sms_updatetime,sms_type,sms_status,user_id,sms_mobile,sms_content,sms_template_id,sms_remark,sms_error_no,sms_error_info,sms_isfee
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="sms_id != null and sms_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{sms_id}),'%') -->
+	          and sms_id = #{sms_id}
+	        </if>
+	    </where> 
+    </sql>
+
+    <sql id = "whereUpdateSql">
+	     <where>
+	        <if test="sms_id != null and sms_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{sms_id}),'%') -->
+	          and sms_id = #{sms_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+	<sql id="whereBatchSql">
+		<where>
+			<if test="sms_id != null and sms_id != '' ">
+				and sms_id in
+				<foreach collection="sms_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSmsNotice">
+		insert into yw_sms_notice(<include refid="insertSql"/>) values(#{sms_createtime},#{sms_updatetime},#{sms_type},#{sms_status},#{user_id},#{sms_mobile},#{sms_content},#{sms_template_id},#{sms_remark},#{sms_error_no},#{sms_error_info},#{sms_isfee})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsNotice">
+		select <include refid="sql"/> from yw_sms_notice
+		<include refid="whereSql"/>
+		order by sms_createtime desc
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsNotice">
+		select <include refid="sql"/> from yw_sms_notice
+		<include refid="whereSql"/>
+		order by sms_createtime desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_sms_notice
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_sms_notice
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="sms_type != null and sms_type != '' ">
+	           sms_type = #{sms_type},
+	      </if>
+	      <if test="sms_status != null and sms_status != '' ">
+	           sms_status = #{sms_status},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="sms_mobile != null and sms_mobile != '' ">
+	           sms_mobile = #{sms_mobile},
+	      </if>
+	      <if test="sms_content != null and sms_content != '' ">
+	           sms_content = #{sms_content},
+	      </if>
+	      <if test="sms_template_id != null and sms_template_id != '' ">
+	           sms_template_id = #{sms_template_id},
+	      </if>
+	      <if test="sms_remark != null and sms_remark != '' ">
+	           sms_remark = #{sms_remark},
+	      </if>
+	      <if test="sms_error_no != null and sms_error_no != '' ">
+	           sms_error_no = #{sms_error_no},
+	      </if>
+	      <if test="sms_error_info != null and sms_error_info != '' ">
+	           sms_error_info = #{sms_error_info},
+	      </if>
+	      <if test="sms_isfee != null and sms_isfee != '' ">
+	           sms_isfee = #{sms_isfee},
+	      </if>
+	    </trim>
+	    <include refid="whereUpdateSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_sms_notice 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_sms_notice
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

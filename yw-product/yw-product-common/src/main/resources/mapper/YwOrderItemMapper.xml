@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwOrderItemDao">
+
+    <sql id="sql">
+       order_sn,product_id,order_ite_count,order_ite_price,order_ite_img,order_ite_name,order_ite_sku
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="order_sn != null and order_sn != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{order_sn}),'%') -->
+	          and order_sn = #{order_sn}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereMapSql">
+	     <where>
+	        <if test="order_sn != null and order_sn != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{order_sn}),'%') -->
+	          and order_sn = #{order_sn}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwOrderItem">
+		insert into yw_order_item(<include refid="sql"/>) values(#{order_sn},#{product_id},#{order_ite_count},#{order_ite_price},#{order_ite_img},#{order_ite_name},#{order_ite_sku})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwOrderItem">
+		select <include refid="sql"/> from yw_order_item
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwOrderItem">
+		select <include refid="sql"/> from yw_order_item
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_order_item
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_order_item
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="order_sn != null and order_sn != '' ">
+	           order_sn = #{order_sn},
+	      </if>
+	      <if test="product_id != null and product_id != ''">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="order_ite_count != null and order_ite_count != '' ">
+	           order_ite_count = #{order_ite_count},
+	      </if>
+	      <if test="order_ite_price != null and order_ite_price != '' ">
+	           order_ite_price = #{order_ite_price},
+	      </if>
+	      <if test="order_ite_img != null and order_ite_img != '' ">
+	           order_ite_img = #{order_ite_img},
+	      </if>
+	      <if test="order_ite_name != null and order_ite_name != '' ">
+	           order_ite_name = #{order_ite_name},
+	      </if>
+	      <if test="order_ite_sku != null and order_ite_sku != '' ">
+	      	   order_ite_sku = #{order_ite_sku}
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_order_item 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_order_item (<include refid="sql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.order_sn},#{item.product_id},#{item.order_ite_count},#{item.order_ite_price},#{item.order_ite_img},#{item.order_ite_name},#{item.order_ite_sku})
+        </foreach>
+    </insert>
+	
+</mapper>

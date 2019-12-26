@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSmsComboDao">
+
+    <sql id="sql">
+       combo_id,combo_type,combo_number,combo_unitprice,combo_remark,combo_status
+    </sql>
+    
+    <sql id="insertSql">
+       combo_type,combo_number,combo_unitprice,combo_remark,combo_status
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="combo_id != null and combo_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{combo_id}),'%') -->
+	          and combo_id = #{combo_id}
+	        </if>
+	    </where> 
+    </sql>
+
+    <sql id = "whereUpdateSql">
+	     <where>
+	        <if test="combo_id != null and combo_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{combo_id}),'%') -->
+	          and combo_id = #{combo_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="combo_id != null and combo_id != '' ">
+				and combo_id in
+				<foreach collection="combo_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSmsCombo">
+		insert into yw_sms_combo(<include refid="insertSql"/>) values(#{combo_type},#{combo_number},#{combo_unitprice},#{combo_remark},#{combo_status})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsCombo">
+		select <include refid="sql"/> from yw_sms_combo
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsCombo">
+		select <include refid="sql"/> from yw_sms_combo
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_sms_combo
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_sms_combo
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="combo_type != null and combo_type != '' ">
+	           combo_type = #{combo_type},
+	      </if>
+	      <if test="combo_number != null and combo_number != '' ">
+	           combo_number = #{combo_number},
+	      </if>
+	      <if test="combo_unitprice != null and combo_unitprice != '' ">
+	           combo_unitprice = #{combo_unitprice},
+	      </if>
+	      <if test="combo_remark != null and combo_remark != '' ">
+	           combo_remark = #{combo_remark},
+	      </if>
+	      <if test="combo_status != null and combo_status != '' ">
+	           combo_status = #{combo_status},
+	      </if>
+	    </trim>
+	    <include refid="whereUpdateSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_sms_combo 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_sms_combo
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

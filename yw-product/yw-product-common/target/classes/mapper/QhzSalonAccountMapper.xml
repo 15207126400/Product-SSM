@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.QhzSalonAccountDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.QhzSalonAccount" id="resultMap">
+         <id column="id" property="id" />
+         <result column="openid" property="openid" />  
+         <result column="name" property="name" />  
+         <result column="tel" property="tel" />  
+         <result column="card" property="card" />  
+         <result column="company" property="company" />  
+         <result column="adviser" property="adviser" />  
+         <result column="child_name" property="child_name" />  
+         <result column="child_card" property="child_card" />  
+         <result column="create_datetime" property="create_datetime" />  
+         <result column="update_datetime" property="update_datetime" />  
+         <result column="existing_ids" property="existing_ids" />  
+         <result column="sc_price" property="sc_price" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         openid,
+         name,
+         tel,
+         card,
+         company,
+         adviser,
+         child_name,
+         child_card,
+         create_datetime,
+         update_datetime,
+         existing_ids,
+         sc_price
+    </sql>
+    
+    <sql id="insertSql">
+         openid,
+         name,
+         tel,
+         card,
+         company,
+         adviser,
+         child_name,
+         child_card,
+         create_datetime,
+         update_datetime,
+         existing_ids,
+         sc_price
+    </sql>
+    
+    <sql id="unionSql">
+         sa.id,
+         sa.openid,
+         sa.name,
+         sa.tel,
+         sa.card,
+         sa.company,
+         sa.adviser,
+         sa.child_name,
+         sa.child_card,
+         sa.create_datetime,
+         sa.update_datetime,
+         sa.existing_ids,
+         sa.sc_price
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and name like CONCAT('%',#{name},'%')
+	        </if>
+            <if test="tel != null and tel != '' ">
+	          and tel = #{tel}
+	        </if>
+            <if test="card != null and card != '' ">
+	          and card = #{card}
+	        </if>
+            <if test="company != null and company != '' ">
+	          and company = #{company}
+	        </if>
+            <if test="adviser != null and adviser != '' ">
+	          and adviser = #{adviser}
+	        </if>
+            <if test="child_name != null and child_name != '' ">
+	          and child_name like CONCAT('%',#{child_name},'%')
+	        </if>
+            <if test="child_card != null and child_card != '' ">
+	          and child_card = #{child_card}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+	        <if test="existing_ids != null and existing_ids != '' ">
+	          and existing_ids = #{existing_ids}
+	        </if>
+	        <if test="sc_price != null and sc_price != '' ">
+	          and sc_price = #{sc_price}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and sa.id = #{id}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and sa.openid = #{openid}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and sa.name like CONCAT('%',#{name},'%')
+	        </if>
+            <if test="tel != null and tel != '' ">
+	          and sa.tel = #{tel}
+	        </if>
+            <if test="card != null and card != '' ">
+	          and sa.card = #{card}
+	        </if>
+            <if test="company != null and company != '' ">
+	          and sa.company = #{company}
+	        </if>
+            <if test="adviser != null and adviser != '' ">
+	          and sa.adviser = #{adviser}
+	        </if>
+            <if test="child_name != null and child_name != '' ">
+	          and sa.child_name like CONCAT('%',#{child_name},'%')
+	        </if>
+            <if test="child_card != null and child_card != '' ">
+	          and sa.child_card = #{child_card}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and sa.create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and sa.update_datetime = #{update_datetime}
+	        </if>
+	        <if test="existing_ids != null and existing_ids != '' ">
+	          and sa.existing_ids = #{existing_ids}
+	        </if>
+	        <if test="sc_price != null and sc_price != '' ">
+	          and sa.sc_price = #{sc_price}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.QhzSalonAccount">
+		insert into qhz_salon_account(<include refid="insertSql"/>) 
+		values(
+	             #{openid},
+	             #{name},
+	             #{tel},
+	             #{card},
+	             #{company},
+	             #{adviser},
+	             #{child_name},
+	             #{child_card},
+	             #{create_datetime},
+	             #{update_datetime},
+	             #{existing_ids},
+	             #{sc_price}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into qhz_salon_account(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.openid},
+	             #{item.name},
+	             #{item.tel},
+	             #{item.card},
+	             #{item.company},
+	             #{item.adviser},
+	             #{item.child_name},
+	             #{item.child_card},
+	             #{item.create_datetime},
+	             #{item.update_datetime},
+	             #{item.existing_ids},
+	             #{item.sc_price}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSalonAccount">
+		select <include refid="sql"/> from qhz_salon_account
+		<include refid="whereSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSalonAccount">
+		select <include refid="sql"/> from qhz_salon_account
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_salon_account as sa
+		<include refid="whereUnionSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_salon_account as sa
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from qhz_salon_account
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update qhz_salon_account
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="openid != null and openid != '' ">
+	           openid = #{openid},
+	        </if>
+            <if test="name != null and name != '' ">
+	           name = #{name},
+	        </if>
+            <if test="tel != null and tel != '' ">
+	           tel = #{tel},
+	        </if>
+            <if test="card != null and card != '' ">
+	           card = #{card},
+	        </if>
+            <if test="company != null and company != '' ">
+	           company = #{company},
+	        </if>
+            <if test="adviser != null and adviser != '' ">
+	           adviser = #{adviser},
+	        </if>
+            <if test="child_name != null and child_name != '' ">
+	           child_name = #{child_name},
+	        </if>
+            <if test="child_card != null and child_card != '' ">
+	           child_card = #{child_card},
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	           create_datetime = #{create_datetime},
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	        </if>
+	        <if test="existing_ids != null and existing_ids != '' ">
+	           existing_ids = #{existing_ids},
+	        </if>
+	        <if test="sc_price != null and sc_price != '' ">
+	           sc_price = #{sc_price},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update qhz_salon_account
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from qhz_salon_account
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from qhz_salon_account
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

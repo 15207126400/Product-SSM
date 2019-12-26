@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSeckillActivityDao">
+
+    <sql id="sql">
+       seckill_id,seckill_type,seckill_name,seckill_url,seckill_price,seckill_stock,sales_sum,sales_percent,time_id,
+       product_id,sku_id,seckill_limit,seckill_description,seckill_istop,seckill_status
+    </sql>
+    
+    <sql id="insertSql">
+       seckill_type,seckill_name,seckill_url,seckill_price,seckill_stock,sales_sum,sales_percent,time_id,
+       product_id,sku_id,seckill_limit,seckill_description,seckill_istop,seckill_status
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="seckill_id != null and seckill_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_id = #{seckill_id}
+	        </if>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	        <if test="seckill_istop != null and seckill_istop != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_istop = #{seckill_istop}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereUnionSql">
+	     <where>
+	        <if test="seckill_id != null and seckill_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_id = #{seckill_id}
+	        </if>
+	        <if test="time_id != null and time_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and time_id = #{time_id}
+	        </if>
+	        <if test="seckill_istop != null and seckill_istop != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_istop = #{seckill_istop}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="seckill_id != null and seckill_id != '' ">
+				and seckill_id in
+				<foreach collection="seckill_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="seckill_name != null and seckill_name != '' ">
+				and seckill_name in
+				<foreach collection="seckill_name" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSeckillActivity">
+		insert into yw_seckill_activity(<include refid="insertSql"/>) values(#{seckill_type},#{seckill_name},#{seckill_url},#{seckill_price},#{seckill_stock},
+		#{sales_sum},#{sales_percent},#{time_id},#{product_id},#{sku_id},#{seckill_limit},#{seckill_description},#{seckill_istop},#{seckill_status})
+	</insert>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionSeckillTimeList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwSeckillActivityInfobaseDto">
+		select
+			s.seckill_id,
+			s.seckill_type,
+			s.seckill_name,
+			s.seckill_price,
+			s.sales_sum,
+			s.sales_percent,
+			s.time_id,
+       		s.product_id,
+       		s.sku_id,
+       		s.seckill_limit,
+       		s.seckill_description,
+       		s.seckill_istop,
+       		s.seckill_status,
+			p.price,
+			t.seckill_date,
+			t.seckill_starttime,
+			t.seckill_endtime,
+			b.thumbnail_url seckill_url,
+			ps.sku_attr,
+			ps.sku_stock seckill_stock
+		from yw_seckill_activity s
+			left join yw_product p on s.product_id = p.id
+			left join yw_product_sku ps on s.sku_id = ps.sku_id
+			left join yw_seckill_time t on s.time_id = t.time_id
+			left join yw_images_xcxthumbnail b on s.seckill_url = b.image_id and b.thumbnail_type = '1'
+			<where>
+				<if test="time_id != null and time_id != '' ">
+					s.time_id = #{time_id}
+				</if>
+				<if test="seckill_id != null and seckill_id != '' ">
+					s.seckill_id = #{seckill_id}
+				</if>
+			</where>
+			
+	</select>
+	
+	<!-- 联合查询秒杀活动表关联的秒杀时间表和商品表信息 -->
+	<select id="queryUnionSeckillTimeAndProductPage" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwSeckillActivityDto">
+		select
+			s.seckill_id,
+			s.seckill_type,
+			s.seckill_name,
+			s.seckill_price,
+			s.seckill_stock,
+			s.sales_sum,
+			s.sales_percent,
+			s.time_id,
+       		s.product_id,
+       		s.sku_id,
+       		s.seckill_limit,
+       		s.seckill_description,
+       		s.seckill_istop,
+       		s.seckill_status,
+			p.price,
+			p.title,
+			t.seckill_date,
+			t.seckill_starttime,
+			t.seckill_endtime,
+			b.thumbnail_url seckill_url
+			
+		    from yw_seckill_activity s
+			left join yw_product p on s.product_id = p.id
+			left join yw_seckill_time t on s.time_id = t.time_id
+			left join yw_images_backthumbnail b on s.seckill_url = b.image_id and b.thumbnail_type = '1'
+			<include refid="whereUnionSql"/>
+			order by seckill_id desc
+			limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSeckillActivity">
+		select 
+		    s.seckill_id,
+			s.seckill_type,
+			s.seckill_name,
+			s.seckill_price,
+			s.seckill_stock,
+			s.sales_sum,
+			s.sales_percent,
+			s.time_id,
+       		s.product_id,
+       		s.sku_id,
+       		s.seckill_limit,
+       		s.seckill_description,
+       		s.seckill_istop,
+       		s.seckill_status,
+       		b.thumbnail_url seckill_url
+       		from yw_seckill_activity s 
+       		<choose>
+       		    <when test="db_name == 'yw_images_xcxthumbnail' ">
+       		        left join yw_images_xcxthumbnail b on s.seckill_url = b.image_id and b.thumbnail_type = ${thumbnail_type}
+       		    </when>
+       		    <otherwise>
+       		        left join yw_images_backthumbnail b on s.seckill_url = b.image_id and b.thumbnail_type = '1'
+       		    </otherwise>
+       		</choose>
+		<include refid="whereUnionSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSeckillActivity">
+		select <include refid="sql"/> from yw_seckill_activity
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_seckill_activity
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_seckill_activity
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="seckill_type != null and seckill_type != ''">
+	           seckill_type = #{seckill_type},
+	      </if>
+	      <if test="seckill_name != null and seckill_name != '' ">
+	           seckill_name = #{seckill_name},
+	      </if>
+	      <if test="seckill_url != null and seckill_url != '' ">
+	           seckill_url = #{seckill_url},
+	      </if>
+	      <if test="seckill_price != null and seckill_price != '' ">
+	           seckill_price = #{seckill_price},
+	      </if>
+	      <if test="seckill_stock != null and seckill_stock != '' ">
+	           seckill_stock = #{seckill_stock},
+	      </if>
+	      <if test="sales_sum != null and sales_sum != '' ">
+	           sales_sum = #{sales_sum},
+	      </if>
+	      <if test="sales_percent != null and sales_percent != '' ">
+	           sales_percent = #{sales_percent},
+	      </if>
+	      <if test="time_id != null and time_id != '' ">
+	           time_id = #{time_id},
+	      </if>
+	      <if test="product_id != null and product_id != '' ">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="sku_id != null and sku_id != '' ">
+	           sku_id = #{sku_id},
+	      </if>
+	      <if test="seckill_limit != null and seckill_limit != '' ">
+	           seckill_limit = #{seckill_limit},
+	      </if>
+	      <if test="seckill_description != null and seckill_description != '' ">
+	           seckill_description = #{seckill_description},
+	      </if>
+	      <if test="seckill_istop != null and seckill_istop != '' ">
+	           seckill_istop = #{seckill_istop},
+	      </if>
+	      <if test="seckill_status != null and seckill_status != '' ">
+	           seckill_status = #{seckill_status},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="seckill_id != null and seckill_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_id = #{seckill_id}
+	        </if>
+	    </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_seckill_activity 
+	   <where>
+	        <if test="seckill_id != null and seckill_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{seckill_id}),'%') -->
+	          and seckill_id = #{seckill_id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_seckill_activity
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

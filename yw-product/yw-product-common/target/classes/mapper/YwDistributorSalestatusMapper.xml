@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwDistributorSalestatusDao">
+
+    <sql id="insertSql">
+       product_id,dis_id,dis_level,dis_st_amont,dis_st_moeny,dis_st_datetime,dis_st_buyer,dis_st_palce
+    </sql>
+    
+    <sql id="sql">
+       dis_st_id,product_id,dis_id,dis_level,dis_st_amont,dis_st_moeny,dis_st_datetime,dis_st_buyer,dis_st_palce
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="dis_st_id != null and dis_st_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{product_id}),'%') -->
+	          and dis_st_id = #{dis_st_id}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{product_id}),'%') -->
+	          and product_id = #{product_id}
+	        </if>
+	        <if test="dis_id != null and dis_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{product_id}),'%') -->
+	          and dis_id = #{dis_id}
+	        </if>
+	        <if test="dis_level != null and dis_level != '' ">
+	          and dis_level = #{dis_level}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="dis_st_id != null and dis_st_id != '' ">
+				and dis_st_id in
+				<foreach collection="dis_st_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwDistributorSalestatus">
+		insert into yw_distributor_salestatus(<include refid="insertSql"/>) values(#{product_id},#{dis_id},#{dis_level},#{dis_st_amont},#{dis_st_moeny},#{dis_st_datetime},#{dis_st_buyer},#{dis_st_palce})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorSalestatus">
+		select <include refid="sql"/> from yw_distributor_salestatus
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionMemberList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwDistributorSalestatusDto">
+		select
+			s.dis_st_id,
+			s.product_id,
+			s.dis_id,
+			s.dis_level,
+			s.dis_st_amont,
+			s.dis_st_moeny,
+			s.dis_st_datetime,
+			s.dis_st_buyer,
+			s.dis_st_palce,
+			y.openid,
+			y.nickname as share_nickname,
+			m.openid,
+			m.nickname as buy_nickname
+			
+		from yw_distributor_salestatus s
+			left join yw_member y on s.dis_id = y.openid
+			left join yw_member m on s.dis_st_buyer = m.openid
+			<where>
+				<if test="dis_st_id != null and dis_st_id != '' ">
+		          and dis_st_id = #{dis_st_id}
+		        </if>
+		        <if test="product_id != null and product_id != '' ">
+		          and product_id = #{product_id}
+		        </if>
+		        <if test="dis_id != null and dis_id != '' ">
+		          and dis_id = #{dis_id}
+		        </if>
+		    </where> 
+			order by dis_st_datetime desc
+			<if test="begin != null and begin != '' ">
+				limit #{begin},#{end}
+			</if>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorSalestatus">
+		select <include refid="sql"/> from yw_distributor_salestatus
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_distributor_salestatus
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_distributor_salestatus
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="product_id != null and product_id != '' ">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="dis_id != null and dis_id != ''">
+	           dis_id = #{dis_id},
+	      </if>
+	      <if test="dis_level != null and dis_level != '' ">
+	           dis_level = #{dis_level},
+	      </if>
+	      <if test="dis_st_amont != null and dis_st_amont != '' ">
+	           dis_st_amont = #{dis_st_amont},
+	      </if>
+	      <if test="dis_st_moeny != null and dis_st_moeny != '' ">
+	           dis_st_moeny = #{dis_st_moeny},
+	      </if>
+	      <if test="dis_st_datetime != null and dis_st_datetime != '' ">
+	           dis_st_datetime = #{dis_st_datetime},
+	      </if>
+	      <if test="dis_st_buyer != null and dis_st_buyer != '' ">
+	           dis_st_buyer = #{dis_st_buyer},
+	      </if>
+	      <if test="dis_st_palce != null and dis_st_palce != '' ">
+	           dis_st_palce = #{dis_st_palce},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_distributor_salestatus 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_distributor_salestatus
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

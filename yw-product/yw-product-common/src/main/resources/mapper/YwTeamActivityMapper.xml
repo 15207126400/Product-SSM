@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwTeamActivityDao">
+
+	<sql id="insertSql">
+		 act_name,team_type,time_limit,team_price,needer,product_name,product_id,item_id,bonus,stock_limit,buy_limit,sales_sum,virtual_num,share_title,
+		share_desc,share_img,sort,is_recommend,status,is_lottery
+	</sql>
+	
+	<sql id="sql">
+		team_id,act_name,team_type,time_limit,team_price,needer,product_name,product_id,item_id,bonus,stock_limit,buy_limit,sales_sum,virtual_num,share_title,
+		share_desc,share_img,sort,is_recommend,status,is_lottery
+	</sql>
+
+	<sql id="whereSql">
+		<where>
+			<if test="team_id != null and team_id != '' ">
+				<!-- like CONCAT(CONCAT('%',#{team_id}),'%') -->
+				and team_id = #{team_id}
+			</if>
+			<if test="team_type != null and team_type != '' ">
+				and team_type = #{team_type}
+			</if>
+			<if test="product_id != null and product_id != '' ">
+				and product_id = #{product_id}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereUnionSql">
+		<where>
+			<if test="team_id != null and team_id != '' ">
+				<!-- like CONCAT(CONCAT('%',#{team_id}),'%') -->
+				and team_id = #{team_id}
+			</if>
+			<if test="team_type != null and team_type != '' ">
+				and team_type = #{team_type}
+			</if>
+			<if test="product_id != null and product_id != '' ">
+				and product_id = #{product_id}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereBatchSql">
+		<where>
+			<if test="team_id != null and team_id != '' ">
+				and team_id in
+				<foreach collection="team_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwTeamActivity">
+		insert into yw_team_activity(
+		<include refid="insertSql" />
+		) values(
+		#{act_name},
+		#{team_type},
+		#{time_limit},
+		#{team_price},
+		#{needer},
+		#{product_name},
+		#{product_id},
+		#{item_id},
+		#{bonus},
+		#{stock_limit},
+		#{buy_limit},
+		#{sales_sum},
+		#{virtual_num},
+		#{share_title},
+		#{share_desc},
+		#{share_img},
+		#{sort},
+		#{is_recommend},
+		#{status},
+		#{is_lottery}
+	</insert>
+
+	<!-- 查询所有字典信息 -->
+	<select id="queryList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.model.YwTeamActivity">
+		select
+		<include refid="sql" />
+		from yw_team_activity
+		<include refid="whereSql" />
+	</select>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionProductList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.model.YwTeamActivity">
+		select
+		t.team_id,t.act_name,t.team_type,t.time_limit,t.team_price,t.needer,t.product_name,t.product_id,t.item_id,t.bonus,t.stock_limit,t.buy_limit,t.sales_sum,t.virtual_num,t.share_title,
+		t.share_desc,t.share_img,t.sort,t.is_recommend,t.status,t.is_lottery,p.price,p.url
+		from yw_team_activity t
+		left join yw_product p on t.product_id = p.id
+		<where>
+			<if test="status != null and status != '' ">
+				and t.status = #{status}
+			</if>
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.model.YwTeamActivity">
+		select
+		<include refid="sql" />
+		from yw_team_activity
+		<include refid="whereSql" />
+		order by team_id desc
+		limit #{begin},#{end}
+	</select>
+
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map"
+		resultType="int">
+		select count(1) from yw_team_activity
+		<include refid="whereSql" />
+	</select>
+
+	<update id="update" parameterType="java.util.Map">
+		update yw_team_activity
+		<trim prefix="set" suffixOverrides=",">
+			<if test="act_name != null and act_name != ''">
+				act_name = #{act_name},
+			</if>
+			<if test="team_type != null and team_type != '' ">
+				team_type = #{team_type},
+			</if>
+			<if test="time_limit != null and time_limit != '' ">
+				time_limit = #{time_limit},
+			</if>
+			<if test="team_price != null and team_price != '' ">
+				team_price = #{team_price},
+			</if>
+			<if test="needer != null and needer != '' ">
+				needer = #{needer},
+			</if>
+			<if test="product_name != null and product_name != '' ">
+				product_name = #{product_name},
+			</if>
+			<if test="product_id != null and product_id != '' ">
+				product_id = #{product_id},
+			</if>
+			<if test="item_id != null and item_id != '' ">
+				item_id = #{item_id},
+			</if>
+			<if test="bonus != null and bonus != '' ">
+				bonus = #{bonus},
+			</if>
+			<if test="stock_limit != null and stock_limit != '' ">
+				stock_limit = #{stock_limit},
+			</if>
+			<if test="buy_limit != null and buy_limit != '' ">
+				buy_limit = #{buy_limit},
+			</if>
+			<if test="sales_sum != null and sales_sum != '' ">
+				sales_sum = #{sales_sum},
+			</if>
+			<if test="virtual_num != null and virtual_num != '' ">
+				virtual_num = #{virtual_num},
+			</if>
+			<if test="share_title != null and share_title != '' ">
+				share_title = #{share_title},
+			</if>
+			<if test="share_desc != null and share_desc != '' ">
+				share_desc = #{share_desc},
+			</if>
+			<if test="share_img != null and share_img != '' ">
+				share_img = #{share_img},
+			</if>
+			<if test="sort != null and sort != '' ">
+				sort = #{sort},
+			</if>
+			<if test="is_recommend != null and is_recommend != '' ">
+				is_recommend = #{is_recommend},
+			</if>
+			<if test="status != null and status != '' ">
+				status = #{status},
+			</if>
+			<if test="is_lottery != null and is_lottery != '' ">
+				is_lottery = #{is_lottery},
+			</if>
+		</trim>
+		<where>
+			<if test="team_id != null and team_id != '' ">
+				<!-- like CONCAT(CONCAT('%',#{team_id}),'%') -->
+				and team_id = #{team_id}
+			</if>
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="java.util.Map">
+		delete from yw_team_activity
+		<include refid="whereSql" />
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_team_activity
+	   <include refid="whereBatchSql"/>
+	</delete>
+
+</mapper>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.QhzSalonMeetingDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.QhzSalonMeeting" id="resultMap">
+         <id column="id" property="id" />
+         <result column="name" property="name" />  
+         <result column="start_day" property="start_day" />  
+         <result column="end_day" property="end_day" />  
+         <result column="address" property="address" />  
+         <result column="people_num" property="people_num" />  
+         <result column="people_surplus_num" property="people_surplus_num" />  
+         <result column="price" property="price" />  
+         <result column="is_ticket" property="is_ticket" />  
+         <result column="status" property="status" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         name,
+         start_day,
+         end_day,
+         address,
+         people_num,
+         people_surplus_num,
+         price,
+         is_ticket,
+         status
+    </sql>
+    
+    <sql id="insertSql">
+         name,
+         start_day,
+         end_day,
+         address,
+         people_num,
+         people_surplus_num,
+         price,
+         is_ticket,
+         status
+    </sql>
+    
+    <sql id="unionSql">
+         sm.id,
+         sm.name,
+         sm.start_day,
+         sm.end_day,
+         sm.address,
+         sm.people_num,
+         sm.people_surplus_num,
+         sm.price,
+         sm.status
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and name like CONCAT(CONCAT('%',#{name}),'%')
+	        </if>
+            <if test="start_day != null and start_day != '' ">
+	          and DATE_FORMAT(start_day,'%Y-%m-%d') = #{start_day}
+	        </if>
+	        <if test="end_day != null and end_day != '' ">
+	          and DATE_FORMAT(end_day,'%Y-%m-%d') = #{end_day}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and address like CONCAT(CONCAT('%',#{address}),'%')
+	        </if>
+            <if test="people_num != null and people_num != '' ">
+	          and people_num = #{people_num}
+	        </if>
+	        <if test="people_surplus_num != null and people_surplus_num != '' ">
+	          and people_surplus_num = #{people_surplus_num}
+	        </if>
+            <if test="price != null and price != '' ">
+	          and price = #{price}
+	        </if>
+	        <if test="is_ticket != null and is_ticket != '' ">
+	          and is_ticket = #{is_ticket}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and sm.id = #{id}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and sm.name like CONCAT(CONCAT('%',#{name}),'%')
+	        </if>
+            <if test="start_day != null and start_day != '' ">
+              and DATE_FORMAT(sm.start_day,'%Y-%m-%d') = #{start_day}
+	        </if>
+	        <if test="end_day != null and end_day != '' ">
+              and DATE_FORMAT(sm.end_day,'%Y-%m-%d') = #{end_day}
+	        </if>
+            <if test="address != null and address != '' ">
+              and sm.address like CONCAT(CONCAT('%',#{address}),'%')
+	        </if>
+            <if test="people_num != null and people_num != '' ">
+	          and sm.people_num = #{people_num}
+	        </if>
+	        <if test="people_surplus_num != null and people_surplus_num != '' ">
+	          and sm.people_surplus_num = #{people_surplus_num}
+	        </if>
+            <if test="price != null and price != '' ">
+	          and sm.price = #{price}
+	        </if>
+	        <if test="is_ticket != null and is_ticket != '' ">
+	          and sm.is_ticket = #{is_ticket}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and sm.status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.QhzSalonMeeting">
+		insert into qhz_salon_meeting(<include refid="insertSql"/>) 
+		values(
+	             #{name},
+	             #{start_day},
+	             #{end_day},
+	             #{address},
+	             #{people_num},
+	             #{people_surplus_num},
+	             #{price},
+	             #{is_ticket},
+	             #{status}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into qhz_salon_meeting(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.name},
+	             #{item.start_day},
+	             #{item.end_day},
+	             #{item.address},
+	             #{item.people_num},
+	             #{item.people_surplus_num},
+	             #{item.price},
+	             #{item.is_ticket},
+	             #{item.status}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSalonMeeting">
+		select <include refid="sql"/> from qhz_salon_meeting
+		<include refid="whereSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzSalonMeeting">
+		select <include refid="sql"/> from qhz_salon_meeting
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_salon_meeting as sm
+		<include refid="whereUnionSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_salon_meeting as sm
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from qhz_salon_meeting
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update qhz_salon_meeting
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != '' ">
+	           name = #{name},
+	        </if>
+            <if test="start_day != null and start_day != '' ">
+	           start_day = #{start_day},
+	        </if>
+	        <if test="end_day != null and end_day != '' ">
+	           end_day = #{end_day},
+	        </if>
+            <if test="address != null and address != '' ">
+	           address = #{address},
+	        </if>
+            <if test="people_num != null and people_num != '' ">
+	           people_num = #{people_num},
+	        </if>
+	        <if test="people_surplus_num != null and people_surplus_num != '' ">
+	           people_surplus_num = #{people_surplus_num},
+	        </if>
+            <if test="price != null and price != '' ">
+	           price = #{price},
+	        </if>
+	        <if test="is_ticket != null and is_ticket != '' ">
+	           is_ticket = #{is_ticket},
+	        </if>
+	        <if test="status != null and status != '' ">
+	           status = #{status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update qhz_salon_meeting
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from qhz_salon_meeting
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from qhz_salon_meeting
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

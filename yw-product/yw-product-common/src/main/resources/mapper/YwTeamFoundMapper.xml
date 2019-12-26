@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwTeamFoundDao">
+
+    <sql id="insertSql">
+       found_time,found_end_time,user_id,team_id,nickname,head_pic,order_id,found_join,need,price,product_price,status,bonus_status
+    </sql>
+    
+    <sql id="sql">
+       found_id,found_time,found_end_time,user_id,team_id,nickname,head_pic,order_id,found_join,need,price,product_price,status,bonus_status
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="found_id != null and found_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{found_id}),'%') -->
+	          and found_id = #{found_id}
+	        </if>
+	        <if test="order_id != null and order_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{found_id}),'%') -->
+	          and order_id = #{order_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "where_select_sql">
+	     <where>
+	        <if test="found_end_time != null and found_end_time != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{found_id}),'%') -->
+	          and found_end_time &lt;= #{found_end_time}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{found_id}),'%') -->
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="found_id != null and found_id != '' ">
+				and found_id in
+				<foreach collection="found_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwTeamFound" useGeneratedKeys="true" keyProperty="found_id" keyColumn="found_id">
+		insert into yw_team_found(<include refid="insertSql"/>) values(#{found_time},#{found_end_time},#{user_id},#{team_id},#{nickname},#{head_pic},#{order_id},#{found_join},#{need},#{price},#{product_price},#{status},#{bonus_status})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwTeamFound">
+		select <include refid="sql"/> from yw_team_found
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询所有超时的开团信息-->
+	<select id="queryTimeoutList" parameterType="com.yunwei.product.common.model.YwTeamFound" resultType="com.yunwei.product.common.model.YwTeamFound">
+		select <include refid="sql"/> from yw_team_found
+		<include refid="where_select_sql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwTeamFound">
+		select <include refid="sql"/> from yw_team_found
+		<include refid="whereSql"/>
+		order by found_id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_team_found
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_team_found
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="found_id != null and found_id != '' ">
+	           found_id = #{found_id},
+	      </if>
+	      <if test="found_time != null and found_time != ''">
+	           found_time = #{found_time},
+	      </if>
+	      <if test="found_end_time != null and found_end_time != '' ">
+	           found_end_time = #{found_end_time},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="team_id != null and team_id != '' ">
+	           team_id = #{team_id},
+	      </if>
+	      <if test="nickname != null and nickname != '' ">
+	           nickname = #{nickname},
+	      </if>
+	      <if test="head_pic != null and head_pic != '' ">
+	           head_pic = #{head_pic},
+	      </if>
+	      <if test="order_id != null and order_id != '' ">
+	           order_id = #{order_id},
+	      </if>
+	      <if test="found_join != null and found_join != '' ">
+	           found_join = #{found_join},
+	      </if>
+	      <if test="need != null and need != '' ">
+	           need = #{need},
+	      </if>
+	      <if test="price != null and price != '' ">
+	           price = #{price},
+	      </if>
+	      <if test="product_price != null and product_price != '' ">
+	           product_price = #{product_price},
+	      </if>
+	      <if test="status != null and status != '' ">
+	           status = #{status},
+	      </if>
+	      <if test="bonus_status != null and bonus_status != '' ">
+	           bonus_status = #{bonus_status},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_team_found 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_team_found
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

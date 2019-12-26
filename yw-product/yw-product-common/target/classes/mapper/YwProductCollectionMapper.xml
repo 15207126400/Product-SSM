@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductCollectionDao">
+
+	<!-- 收藏商品 -->
+	<insert id="addIslike" parameterType="String">
+		insert into yw_product_collection(url,title,price,createBy,shopid) values(#{url},#{title},#{price},#{createBy},#{shopid})
+	</insert>
+	
+	<!-- 查询所有收藏 -->
+	<select id="queryIslike"  resultType="YwProductCollection" parameterType="Map">
+		select * from yw_product_collection
+		<where>
+			<if test="createBy!=null">
+				and createBy=#{createBy}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 通过id查看收藏 -->
+	<select  id="queryByIslike" resultType="YwProductCollection" parameterType="Map">
+		select * from yw_product_collection 
+		<where>
+			<if test="shopid != null and shopid != '' ">
+				and shopid = #{shopid}
+			</if>
+			<if test="createBy != null and createBy != '' ">
+				and createBy = #{createBy}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 删除收藏 -->
+	<delete id="deleteIslike" parameterType="int">	
+		delete from yw_product_collection where shopid = #{shopid}
+	</delete>
+	
+	<!-- 删除收藏 -->
+	<delete id="deleteIslikeById" parameterType="int">	
+		delete from yw_product_collection where id = #{id}
+	</delete>
+	
+	<!-- 查看某商品是否收藏(数量是否大于0) -->
+	<select id="findsum"  resultType="int" parameterType="Map">
+		select count(*) from yw_product_collection
+		<where>
+			<if test="createBy!=null">
+				and createBy=#{createBy}
+			</if>
+			<if test="shopid!=null">
+				and shopid=#{shopid}
+			</if>
+		</where>
+	</select>
+</mapper>

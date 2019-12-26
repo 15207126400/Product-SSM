@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwImagesXcxthumbnailDao">
+
+    <sql id="sql">
+         id,
+         thumbnail_name,
+         thumbnail_type,
+         thumbnail_url,
+         image_id,
+         create_datetime,
+         update_datetime,
+         status
+    </sql>
+    
+    <sql id="insertSql">
+         thumbnail_name,
+         thumbnail_type,
+         thumbnail_url,
+         image_id,
+         create_datetime,
+         update_datetime,
+         status
+    </sql>
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="thumbnail_name != null and thumbnail_name != '' ">
+	          and thumbnail_name = #{thumbnail_name}
+	        </if>
+            <if test="thumbnail_type != null and thumbnail_type != '' ">
+	          and thumbnail_type = #{thumbnail_type}
+	        </if>
+            <if test="thumbnail_url != null and thumbnail_url != '' ">
+	          and thumbnail_url = #{thumbnail_url}
+	        </if>
+            <if test="image_id != null and image_id != '' ">
+	          and image_id = #{image_id}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="thumbnail_name != null and thumbnail_name != '' ">
+	          and thumbnail_name = #{thumbnail_name}
+	        </if>
+            <if test="thumbnail_type != null and thumbnail_type != '' ">
+	          and thumbnail_type = #{thumbnail_type}
+	        </if>
+            <if test="thumbnail_url != null and thumbnail_url != '' ">
+	          and thumbnail_url = #{thumbnail_url}
+	        </if>
+            <if test="image_id != null and image_id != '' ">
+	          and image_id = #{image_id}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwImagesXcxthumbnail">
+		insert into yw_images_xcxthumbnail(<include refid="insertSql"/>) 
+		values(
+	             #{thumbnail_name},
+	             #{thumbnail_type},
+	             #{thumbnail_url},
+	             #{image_id},
+	             #{create_datetime},
+	             #{update_datetime},
+	             #{status}
+		     )
+	</insert>
+	
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwImagesXcxthumbnail">
+		select <include refid="sql"/> from yw_images_xcxthumbnail
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwImagesXcxthumbnail">
+		select <include refid="sql"/> from yw_images_xcxthumbnail
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_images_xcxthumbnail
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_images_xcxthumbnail
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="thumbnail_name != null and thumbnail_name != '' ">
+	           thumbnail_name = #{thumbnail_name},
+	        </if>
+            <if test="thumbnail_type != null and thumbnail_type != '' ">
+	           thumbnail_type = #{thumbnail_type},
+	        </if>
+            <if test="thumbnail_url != null and thumbnail_url != '' ">
+	           thumbnail_url = #{thumbnail_url},
+	        </if>
+            <if test="image_id != null and image_id != '' ">
+	           image_id = #{image_id},
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	           create_datetime = #{create_datetime},
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	        </if>
+            <if test="status != null and status != '' ">
+	           status = #{status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_images_xcxthumbnail 
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	        <if test="image_id != null and image_id != '' ">
+	           and image_id = #{image_id}
+	        </if>
+	        <if test="thumbnail_type != null and thumbnail_type != '' ">
+	           and thumbnail_type = #{thumbnail_type}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_images_xcxthumbnail
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

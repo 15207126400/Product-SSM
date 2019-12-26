@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwDistributorRuleDao">
+
+	<sql id="insertSql">
+		rule_level_type ,
+		rule_scale_one ,
+		rule_scale_two ,
+		rule_scale_three ,
+		rule_door_type ,
+		rule_door_price ,
+		rule_pay_type ,
+		rule_discounts ,
+		rule_cash_count ,
+		rule_cash_money ,
+		rule_levellock_day ,
+		rule_QRcode_url 
+	</sql>
+	
+	<sql id="sql">
+		rule_id ,
+		rule_level_type ,
+		rule_scale_one ,
+		rule_scale_two ,
+		rule_scale_three ,
+		rule_door_type ,
+		rule_door_price ,
+		rule_pay_type ,
+		rule_discounts ,
+		rule_cash_count ,
+		rule_cash_money ,
+		rule_levellock_day ,
+		rule_QRcode_url 
+	</sql>
+
+    <sql id = "whereSql">
+	     <where>
+	        <if test="rule_id != null and rule_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{rule_id}),'%') -->
+	          and rule_id = #{rule_id}
+	        </if>
+	        <if test="rule_level_type != null and rule_level_type != ''">
+	          and rule_level_type = #{rule_level_type}
+	      	</if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="rule_id != null and rule_id != '' ">
+				and rule_id in
+				<foreach collection="rule_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwDistributorRule">
+		insert into yw_distributor_rule(<include refid="insertSql"/>) 
+		values(#{rule_level_type },#{rule_scale_one },#{rule_scale_two },#{rule_scale_three },
+		#{rule_door_type },#{rule_door_price },#{rule_pay_type },#{rule_discounts },#{rule_cash_count },
+		#{rule_cash_money },#{rule_levellock_day },#{rule_QRcode_url })
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorRule">
+		select <include refid="sql"/> from yw_distributor_rule
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributorRule">
+		select <include refid="sql"/> from yw_distributor_rule
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_distributor_rule
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_distributor_rule
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="rule_id != null and rule_id != '' ">
+	           rule_id = #{rule_id},
+	      </if>
+	      <if test="rule_level_type != null and rule_level_type != ''">
+	           rule_level_type = #{rule_level_type},
+	      </if>
+	      <if test="rule_scale_one != null and rule_scale_one != ''">
+	           rule_scale_one = #{rule_scale_one},
+	      </if>
+	      <if test="rule_scale_two != null and rule_scale_two != ''">
+	           rule_scale_two = #{rule_scale_two},
+	      </if>
+	      <if test="rule_scale_three != null and rule_scale_three != ''">
+	           rule_scale_three = #{rule_scale_three},
+	      </if>
+	      <if test="rule_door_type != null and rule_door_type != ''">
+	           rule_door_type = #{rule_door_type},
+	      </if>
+	      <if test="rule_door_price != null and rule_door_price != ''">
+	           rule_door_price = #{rule_door_price},
+	      </if>
+	      <if test="rule_pay_type != null and rule_pay_type != ''">
+	           rule_pay_type = #{rule_pay_type},
+	      </if>
+	      <if test="rule_discounts != null and rule_discounts != ''">
+	           rule_discounts = #{rule_discounts},
+	      </if>
+	      <if test="rule_cash_count != null and rule_cash_count != ''">
+	           rule_cash_count = #{rule_cash_count},
+	      </if>
+	      <if test="rule_cash_money != null and rule_cash_money != ''">
+	           rule_cash_money = #{rule_cash_money},
+	      </if>
+	      <if test="rule_levellock_day != null and rule_levellock_day != ''">
+	           rule_levellock_day = #{rule_levellock_day},
+	      </if>
+	      <if test="rule_QRcode_url != null and rule_QRcode_url != ''">
+	           rule_QRcode_url = #{rule_QRcode_url}
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_distributor_rule 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_distributor_rule
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

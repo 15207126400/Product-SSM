@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwNoticeDao">
+
+    <sql id="sql">
+       noc_id, 
+       scene_type, 
+       noc_content,
+       create_name,
+       create_time,
+       update_name,
+       update_time,
+       status
+    </sql>
+    
+    <sql id="insertSql">
+    	scene_type,
+    	noc_content,
+    	create_name,
+    	create_time,
+    	update_name,
+    	update_time,
+    	status
+    </sql>
+    
+    <sql id="whereSql">
+	 <where>
+       <if test="noc_id != null and noc_id != '' ">
+         and noc_id = #{noc_id}
+       </if>
+       <if test="scene_type != null and scene_type != '' ">
+         and scene_type = #{scene_type}
+       </if>
+       <if test="noc_content != null and noc_content != '' ">
+         and noc_content like CONCAT(CONCAT('%',#{noc_content}),'%')
+       </if>
+       <if test="create_name != null and create_name != '' ">
+         and create_name like CONCAT(CONCAT('%',#{create_name}),'%')
+       </if>
+       <if test="create_time != null and create_time != '' ">
+         and create_time = #{create_time}
+       </if>
+       <if test="update_name != null and update_name != '' ">
+         and update_name like CONCAT(CONCAT('%',#{update_name}),'%')
+       </if>
+       <if test="update_time != null and update_time != '' ">
+         and update_time = #{update_time}
+       </if>
+       <if test="status != null and status != '' ">
+         and status = #{status}
+       </if>
+	 </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="noc_id != null and noc_id != '' ">
+				and noc_id in
+				<foreach collection="noc_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwNotice">
+		insert into yw_notice(<include refid="insertSql"/>) 
+		values(
+				#{scene_type},
+				#{noc_content},
+				#{create_name},
+				#{create_time},
+				#{update_name},
+				#{update_time},
+				#{status}
+		)
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwNotice">
+		select <include refid="sql"/> from yw_notice
+		<include refid="whereSql"/>
+		order by noc_id desc
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwNotice">
+		select <include refid="sql"/> from yw_notice
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_notice
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_notice
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="scene_type != null and scene_type != ''">
+	           scene_type = #{scene_type},
+	      </if>
+	      <if test="noc_content != null and noc_content != ''">
+	           noc_content = #{noc_content},
+	      </if>
+	      <if test="create_name != null and create_name != ''">
+	           create_name = #{create_name},
+	      </if>
+	      <if test="create_time != null and create_time != ''">
+	           create_time = #{create_time},
+	      </if>
+	      <if test="update_name != null and update_name != ''">
+	           update_name = #{update_name},
+	      </if>
+	      <if test="update_time != null and update_time != ''">
+	           update_time = #{update_time},
+	      </if>
+	      <if test="status != null and status != ''">
+	           status = #{status},
+	      </if>
+	    </trim>
+	    <where>
+	    	<if test="noc_id != null and noc_id != '' ">
+	         	and noc_id = #{noc_id}
+	        </if>
+	    </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_notice 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_notice
+	<include refid="whereBatchSql"/>
+</delete>
+	
+</mapper>

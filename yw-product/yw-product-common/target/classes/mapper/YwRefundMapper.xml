@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwRefundDao">
+
+    <sql id="sql">
+       refund_id,refund_sn,order_sn,refund_price,user_id,refund_createtime,refund_updatetime,operator_no,refund_type,refund_status,refund_remark,refund_error_no,refund_error_info
+    </sql>
+    
+    <sql id="insertSql">
+      refund_sn,order_sn,refund_price,user_id,refund_createtime,refund_updatetime,operator_no,refund_type,refund_status,refund_remark,refund_error_no,refund_error_info
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="refund_id != null and refund_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{refund_id}),'%') -->
+	          and refund_id = #{refund_id}
+	        </if>
+	        <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+	        <if test="refund_sn != null and refund_sn != '' ">
+	          and refund_sn = #{refund_sn}
+	        </if>
+	        <!-- <if test="refund_sn != null and refund_sn != '' ">
+	          and refund_sn like CONCAT(CONCAT('%',#{refund_sn}),'%')
+	        </if> -->
+	    </where> 
+    </sql>
+    
+     <sql id = "where_select_sql">
+	     <where>
+	        <if test="refund_id != null and refund_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{refund_id}),'%') -->
+	          and refund_id = #{refund_id}
+	        </if>
+	        <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+	        <if test="refund_sn != null and refund_sn != '' ">
+	          and refund_sn = #{refund_sn}
+	        </if>
+	        <if test="refund_type != null and refund_type != '' ">
+	          and refund_type = #{refund_type}
+	        </if>
+	        <!-- 除退款成功外 -->
+	          and refund_status != 1
+	        <!-- <if test="refund_sn != null and refund_sn != '' ">
+	          and refund_sn like CONCAT(CONCAT('%',#{refund_sn}),'%')
+	        </if> -->
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwRefund">
+		insert into yw_refund(<include refid="insertSql"/>) values(#{refund_sn},#{order_sn},#{refund_price},#{user_id},#{refund_createtime},#{refund_updatetime},#{operator_no},#{refund_type},#{refund_status},#{refund_remark},#{refund_error_no},#{refund_error_info})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwRefund">
+		select <include refid="sql"/> from yw_refund
+		<include refid="where_select_sql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwRefund">
+		select <include refid="sql"/> from yw_refund
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_refund
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_refund
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="refund_price != null and refund_price != '' ">
+	           refund_price = #{refund_price},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="refund_createtime != null">
+	           refund_createtime = #{refund_createtime},
+	      </if>
+	      <if test="refund_updatetime != null">
+	           refund_updatetime = #{refund_updatetime},
+	      </if>
+	      <if test="operator_no != null and operator_no != '' ">
+	           operator_no = #{operator_no},
+	      </if>
+	      <if test="refund_type != null and refund_type != '' ">
+	           refund_type = #{refund_type},
+	      </if>
+	      <if test="refund_status != null and refund_status != '' ">
+	           refund_status = #{refund_status},
+	      </if>
+	      <if test="refund_remark != null and refund_remark != '' ">
+	           refund_remark = #{refund_remark},
+	      </if>
+	      <if test="refund_error_no != null and refund_error_no != '' ">
+	           refund_error_no = #{refund_error_no},
+	      </if>
+	      <if test="refund_error_info != null and refund_error_info != '' ">
+	           refund_error_info = #{refund_error_info},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_refund 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_refund(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.refund_sn},
+	             #{item.order_sn},
+	             #{item.refund_price},
+	             #{item.user_id},
+	             #{item.refund_createtime},
+	             #{item.refund_updatetime},
+	             #{item.operator_no},
+	             #{item.refund_type},
+	             #{item.refund_status},
+	             #{item.refund_remark},
+	             #{item.refund_error_no},
+	             #{item.refund_error_info}
+	       )
+        </foreach>
+    </insert>
+	
+</mapper>

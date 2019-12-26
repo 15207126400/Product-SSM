@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwImagesDao">
+
+    <sql id="sql">
+       image_id,image_url,image_type,product_id,image_order,image_createtime,image_updatetime,image_remark,image_status,gw_product_id,gw_newcenters_id
+    </sql>
+    
+    <sql id="insertSql">
+       image_url,image_type,product_id,image_order,image_createtime,image_updatetime,image_remark,image_status,gw_product_id,gw_newcenters_id
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="image_id != null and image_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{image_id}),'%') -->
+	          and image_id = #{image_id}
+	        </if>
+	        <if test="image_type != null and image_type != '' ">
+	          and image_type = #{image_type}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          and product_id = #{product_id}
+	        </if>
+	        <if test="gw_product_id != null and gw_product_id != '' ">
+	          and gw_product_id = #{gw_product_id}
+	        </if>
+	        <if test="gw_newcenters_id != null and gw_newcenters_id != '' ">
+	          and gw_newcenters_id = #{gw_newcenters_id}
+	        </if>
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwImages" useGeneratedKeys="true" keyColumn="image_id" keyProperty="image_id">
+		insert into yw_images(<include refid="insertSql"/>) values(#{image_url},#{image_type},#{product_id},#{image_order},#{image_createtime},#{image_updatetime},#{image_remark},#{image_status},#{gw_product_id},#{gw_newcenters_id})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwImages">
+		select <include refid="sql"/> from yw_images
+		<include refid="whereSql"/>
+		order by image_id
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwImages">
+		select <include refid="sql"/> from yw_images
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+		order by image_id
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_images
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_images
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="image_id != null and image_id != '' ">
+	           image_id = #{image_id},
+	      </if>
+	      <if test="image_url != null and image_url != ''">
+	           image_url = #{image_url},
+	      </if>
+	      <if test="image_type != null and image_type != '' ">
+	           image_type = #{image_type},
+	      </if>
+	      <if test="product_id != null and product_id != '' ">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="image_order != null and image_order != '' ">
+	           image_order = #{image_order},
+	      </if>
+	      <if test="image_createtime != null and image_createtime != '' ">
+	           image_createtime = #{image_createtime},
+	      </if>
+	      <if test="image_updatetime != null and image_updatetime != '' ">
+	           image_updatetime = #{image_updatetime},
+	      </if>
+	      <if test="image_remark != null and image_remark != '' ">
+	           image_remark = #{image_remark},
+	      </if>
+	      <if test="image_status != null and image_status != '' ">
+	           image_status = #{image_status},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_images 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_images (<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.image_url},#{item.image_type},#{item.product_id},#{item.image_order},#{item.image_createtime},#{item.image_updatetime},#{item.image_remark},#{item.image_status},#{item.gw_product_id},#{item.gw_newcenters_id})
+        </foreach>
+    </insert>
+    
+	<!-- 批量插入 -->
+	<insert id="insertBatchByMenDian" parameterType="java.util.List">
+        insert into yw_images (image_url,product_id,gw_product_id,gw_newcenters_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.image_url},#{item.product_id},#{item.gw_product_id},#{item.gw_newcenters_id})
+        </foreach>
+    </insert>
+	
+</mapper>

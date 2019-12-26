@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<typeAliases>
+		<typeAlias alias="YwProduct" type="com.yunwei.product.common.model.YwProduct" />
+		<typeAlias alias="YwMemberAddress" type="com.yunwei.product.common.model.YwMemberAddress"/>
+		<typeAlias alias="YwShopcart" type="com.yunwei.product.common.model.YwShopcart" />
+		<typeAlias alias="YwProductClassify" type="com.yunwei.product.common.model.YwProductClassify" />
+		<typeAlias alias="YwProductCollection" type="com.yunwei.product.common.model.YwProductCollection" />
+		<typeAlias alias="YwMemberToken" type="com.yunwei.product.common.model.YwMemberToken" />
+		<typeAlias alias="YwMember" type="com.yunwei.product.common.model.YwMember" />
+		<typeAlias alias="YwOrderPayment" type="com.yunwei.product.common.model.YwOrderPayment" />
+		<typeAlias alias="YwOrder" type="com.yunwei.product.common.model.YwOrder" />
+		<typeAlias alias="YwCoupon" type="com.yunwei.product.common.model.YwCoupon" />
+		<typeAlias alias="YwCouponCollectiondetails" type="com.yunwei.product.common.model.YwCouponCollectiondetails" />
+		<typeAlias alias="YwMemberRole" type="com.yunwei.product.common.model.YwMemberRole" />
+		
+	</typeAliases>
+	
+	<!-- 多个数据库切换 -->
+	<databaseIdProvider type="DB_VENDOR">
+	    <property name="MySQL" value="mysql" />
+        <property name="Oracle" value="oracle" />
+        <property name="SQL Server" value="sqlserver"/>
+	</databaseIdProvider>
+	
+</configuration>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwMemberAddressDao">
+
+	<!-- 地址保存 -->
+	<insert id="addAddress" parameterType="String">
+		insert into yw_member_address(tel,name,sex,address,door,createBy,defaultAddress) values(#{tel},#{name},#{sex},#{address},#{door},#{createBy},#{defaultAddress})
+	</insert>
+	
+	<!-- 地址展示页 -->
+	<select id="queryAddress"  resultType="YwMemberAddress" parameterType="map">
+		select * from yw_member_address
+		<where>
+			<if test="createBy != null">
+				and createBy=#{createBy}
+			</if>
+			<if test="defaultAddress != null">
+				and defaultAddress=#{defaultAddress}
+			</if>
+		</where>
+		order by defaultAddress desc , id
+	</select>
+	
+	<!-- 通过id查找指定地址信息 -->
+	<select  id="queryByAddress" resultType="YwMemberAddress" parameterType="int">
+		select * from yw_member_address where id = #{id}
+	</select>
+	
+	<!-- 修改地址信息 -->
+	<update id="updateAddress" parameterType="YwMemberAddress">
+		update yw_member_address set name=#{name},tel=#{tel},sex=#{sex},address=#{address},door=#{door} where id=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteAddress" parameterType="int">	
+		delete from yw_member_address where id = #{id}
+	</delete>
+	
+	<!-- 修改地址信息 -->
+	<update id="updateDefault" parameterType="YwMemberAddress">
+		update yw_member_address set defaultAddress=#{defaultAddress} where id=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,293 @@
+/**顶部特色导航**/
+.nav-ul{
+	height:200px;
+}
+.top{
+	position: relative;
+    bottom: -3px;
+	height: 100px;
+	width: 100%;
+	background: url('../../image/front/top_bg.png');
+	background-size: 100% 100px;
+}
+.top-left-nav{
+	width: 15%;
+}
+.top-center-nav{
+	width: 65%;
+}
+.top-right-nav{
+	width: 20%;
+}
+.top-center-nav-item{
+	height: 100px;
+	width:80px;
+}
+/**鼠标滑过样式**/
+.top-center-nav-item:hover{
+	height: 90px;
+	width:80px;
+	background: rgba(241,241,241,0.5);
+}
+/**鼠标选中样式**/
+.active{
+	height: 90px;
+	width:80px;
+	color: #0164C9;
+	font-weight: bold;
+	border-bottom: 3px solid #0164C9;
+}
+/**中部导航栏**/
+.nav-li{
+    filter: none; 
+    opacity: 1; 
+    font-size: 12px;
+}
+.nav-li:hover{
+    filter: grayscale(100%); 
+    opacity: 0.66; 
+}
+/**近期课程公告**/
+.recent-courses-box{
+	width:60%;
+	height:85px;
+	background:url('../../image/new/index/recent_courses_img.png');
+	background-size:100% 100%;
+}
+.recent-courses{
+	position:relative;
+	top:20px;
+	left:20%;
+	width:60%;
+	color:#fff;
+	height:25px;
+	line-height:40px;
+	text-align:center;
+}
+/**客户见证**/
+.testimonials-box{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+}
+.testimonials-data-box{
+	width:100%;
+	height:400px;
+	background:#F9FAFC;
+}
+.testimonials-data{
+	width:60%;
+	height:100%;
+}
+.testimonials-left-data{
+	width:65%;
+	height:100%;
+}
+.testimonials-left-data-top-box{
+	width:100%;
+	height:49%;
+	margin-bottom:10px;
+}
+.testimonials-left-data-top-box-item{
+	width:49%;
+	height:100%;
+}
+.testimonials-left-data-top-box-item-img{
+	width:100%;
+	height:100%;
+}
+.testimonials-right-data{
+	width:30%;
+	height:100%;
+	margin-left:10px;
+}
+.testimonials-right-data-top-box-item{
+	width:100%;
+	height:49%;
+}
+.testimonials-bottom-line-box{
+	width:100%;
+	height:8px;
+}
+
+/**客户案例**/
+.case-box{
+	width:100%;
+	margin-top:20px;
+}
+.case-data-box{
+	width:60%;
+	height:280px;
+	background:#F9FAFC;
+}
+.case-content-box{
+	width:50%;
+	height:80%;
+}
+.case-title{
+	font-family: STXihei;
+	font-size:16px;
+	font-weight:bold;
+	text-align:center;
+}
+.case-content{
+	font-size:12px;
+	padding:10px;
+	line-height:25px;
+	-webkit-transform:scale(0.9);
+}
+.case-img-box{
+	width:50%;
+	height:100%;
+}
+.case-img{
+	width:100%;
+	height:100%;
+}
+/**了解更多**/
+.more-box{
+	width:100%;
+	margin-top:50px;
+}
+.more{
+	width:100px;
+	height:30px;
+	background:#0164C9;
+	color:#fff;
+	border-radius:3px;
+	border:none;
+}
+
+/**关于我们**/
+.about-box{
+	width:100%;
+	margin-top:100px;
+}
+.about-content-box{
+	width:100%;
+	margin-top:10px;
+	margin-bottom:10px;
+	line-height:25px;
+}
+.about-content{
+	font-size:12px;
+	color:#A4A4A4;
+	-webkit-transform:scale(0.9);
+}
+
+
+/**名师介绍**/
+.teacher-big-box{
+	width:100%;
+	margin-top:50px;
+}
+.teacher-box{
+	display:flex;
+	flex-direction:row;
+	width:900px;
+	height:420px;
+	margin-top:20px;
+}
+.teacher-item-box{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.teacher-item-inside-box{
+	margin:10px;
+	background: url('../../image/new/index/teacher_bg.png');
+	background-size: 100% 100%;
+}
+.teacher-brief-box{
+	width:280px;
+	height:75%;
+}
+.teacher-brief-box:hover div{
+	display:initial;
+}
+.teacher-brief-bg {
+	display:none;
+	position:relative;
+	top: -110%;
+	left:15%;
+	width:393px;
+	line-height:25px;
+	font-size:14px;
+	color:#DBD6DB;
+}
+.teacher-photo{
+	width:260px;
+	height:100%;
+}
+.teacher-name-box{
+	width:100%;
+	height:10%;
+}
+.teacher-post{
+	font-size:12px;
+	color:#0164C9;
+}
+.teacher-brief-bg div{
+	/**字体缩放**/
+	-webkit-transform:scale(0.833);
+}
+
+/**诚聘英才**/
+.join-box{
+	width:100%;
+	margin-top:100px;
+}
+.join-img{
+	width:100%;
+	margin-top:50px;
+}
+
+/**底部**/
+.bottom-box{
+	width:100%;
+	height:180px;
+	background:#0164C9;
+	color:#fff;
+}
+.bottom-right-qrcode-box{
+	width:250px;
+}
+.bottom-right-qrcode-text{
+	font-size:12px;
+	margin-top:10px;
+	
+}
+/**清楚滑动栏点击出现的蓝色边框**/
+.slick-slide:focus { outline:none;}
+/**客服**/
+.customer-box{
+	position: fixed;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+	z-index: 11;
+    right: 0.5%;
+    top: 5%;
+}
+/**回到顶部**/
+.goTop {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    bottom: 15%;
+    right: 3.5%;
+}
+.goTop a {
+    color: #0099DD;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

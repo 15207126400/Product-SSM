@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductDao">
+    
+    <resultMap type="YwProduct" id="productMap">
+       <id column="id" property="id" />
+       <result column="product_code" property="product_code" />
+       <result column="title" property="title" />
+       <result column="price" property="price" />
+       <result column="product_virtualprice" property="product_virtualprice" />
+       <result column="url" property="url" />
+       <result column="content" property="content" />
+       <result column="shopType" property="shopType" />
+       <result column="market_code" property="market_code" />
+       <result column="product_sort" property="product_sort" /> 
+       <result column="product_markets" property="product_markets" /> 
+       <result column="keyword" property="keyword" />
+       <result column="sold" property="sold" /> 
+       <result column="stock" property="stock" /> 
+       <result column="isLike" property="isLike" /> 
+       <result column="product_carriage" property="product_carriage" />
+       <result column="product_barcode" property="product_barcode" />
+       <result column="product_virtualsales" property="product_virtualsales" />
+       <result column="product_url" property="product_url" />
+       <result column="status" property="status" />
+       <result column="branch_id" property="branch_id" />
+       <result column="starting_amount" property="starting_amount" />
+       <collection property="ywProductAttributenames" ofType="com.yunwei.product.common.model.YwProductAttributename" notNullColumn="attrname_id" column="attrname_id" >
+           <id column="attrname_id" property="attrname_id" />
+	       <result column="attrname_name" property="attrname_name" />
+	       <result column="classify_id" property="classify_id" />
+	       <result column="product_id" property="product_id" />
+	       <result column="parent_id" property="parent_id" />
+	       <collection property="ywProductAttributevalues" ofType="com.yunwei.product.common.model.YwProductAttributevalue" notNullColumn="attrvalue_id" column="attrvalue_id" >
+	           <id column="attrvalue_id" property="attrvalue_id" />
+		       <result column="attrvalue_name" property="attrvalue_name" />
+		       <result column="attrname_id" property="attrname_id" />
+	       </collection>
+       </collection>
+       <collection property="ywProductSkus" ofType="com.yunwei.product.common.model.YwProductSku" notNullColumn="sku_id" column="sku_id">
+           <id column="sku_id" property="sku_id" />
+	       <result column="product_id" property="product_id" />
+	       <result column="sku_attr" property="sku_attr" />
+	       <result column="sku_image" property="sku_image" />
+	       <result column="sku_price" property="sku_price" />
+	       <result column="sku_virtualprice" property="sku_virtualprice" />
+	       <result column="sku_stock" property="sku_stock" />
+	       <result column="sku_sales" property="sku_sales" />
+	       <result column="product_sku_image" property="product_sku_image" />
+	       <association property="image_id" javaType="string" notNullColumn="image_id_p" column="image_id_p">
+	          <result property="image_id" column="image_id_p"/>
+	       </association>
+       </collection>
+       <!--  
+       <collection property="ywImages" ofType="com.yunwei.product.common.model.YwImages" notNullColumn="image_id" column="image_id">
+           <id column="image_id" property="image_id" />
+	       <result column="image_url" property="image_url" />
+	       <result column="image_resize_url" property="image_resize_url" />
+	       <result column="image_type" property="image_type" />
+	       <result column="product_id" property="product_id" />
+	       <result column="image_order" property="image_order" />
+	       <result column="image_createtime" property="image_createtime" />
+	       <result column="image_updatetime" property="image_updatetime" />
+	       <result column="image_remark" property="image_remark" />
+	       <result column="image_status" property="image_status" />
+	       <result column="gw_product_id" property="gw_product_id" />
+	       <result column="gw_newcenters_id" property="gw_newcenters_id" />
+       </collection> -->
+       
+    </resultMap>
+    
+    <resultMap type="YwProduct" id="importMap">
+       <id column="id" property="id" />
+       <result column="product_code" property="product_code" />
+       <result column="title" property="title" />
+       <result column="price" property="price" />
+       <result column="product_virtualprice" property="product_virtualprice" />
+       <result column="url" property="url" />
+       <result column="content" property="content" />
+       <result column="shopType" property="shopType" />
+       <result column="market_code" property="market_code" />
+       <result column="product_sort" property="product_sort" /> 
+       <result column="product_markets" property="product_markets" /> 
+       <result column="keyword" property="keyword" />
+       <result column="sold" property="sold" /> 
+       <result column="stock" property="stock" /> 
+       <result column="isLike" property="isLike" /> 
+       <result column="product_carriage" property="product_carriage" />
+       <result column="product_barcode" property="product_barcode" />
+       <result column="product_virtualsales" property="product_virtualsales" />
+       <result column="product_url" property="product_url" />
+       <result column="status" property="status" />
+       <result column="branch_id" property="branch_id" />
+       <result column="starting_amount" property="starting_amount" />
+       <collection property="ywProductSkus" ofType="com.yunwei.product.common.model.YwProductSku" column="sku_id">
+           <id column="sku_id" property="sku_id" />
+	       <result column="product_id" property="product_id" />
+	       <result column="sku_attr" property="sku_attr" />
+	       <result column="sku_image" property="sku_image" />
+	       <result column="sku_price" property="sku_price" />
+	       <result column="sku_virtualprice" property="sku_virtualprice" />
+	       <result column="sku_stock" property="sku_stock" />
+	       <result column="sku_sales" property="sku_sales" />
+	       <result column="product_sku_image" property="product_sku_image" />
+       </collection>
+       
+    </resultMap>
+    
+    
+    <sql id="insertSql">
+       product_code,title,price,product_virtualprice,url,content,shopType,market_code,product_sort,product_markets,keyword,sold,stock,isLike,product_carriage,product_barcode,product_virtualsales,status,branch_id,starting_amount
+    </sql>
+    
+    <sql id="sql">
+       id,product_code,title,price,product_virtualprice,url,content,shopType,market_code,product_sort,product_markets,keyword,sold,stock,isLike,product_carriage,product_barcode,product_virtualsales,status,branch_id,starting_amount
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+			<if test="id != null and id != '' ">
+				<!-- like CONCAT(CONCAT('%',#{id}),'%') -->
+				and id = #{id}
+			</if>
+		</where>
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- 首页查询展示所有商品 -->
+	<select id="queryList" resultMap="productMap" parameterType="java.util.Map">
+		select 
+		   p.id,
+		   p.product_code,
+		   p.url,
+		   p.title,
+		   p.price,
+		   p.product_virtualprice,
+		   p.content,
+		   p.market_code,
+		   p.product_sort,
+		   p.product_markets,
+		   p.keyword,
+		   p.sold,
+		   p.stock,
+		   p.isLike,
+		   p.product_carriage,
+		   p.product_barcode,
+		   p.product_virtualsales,
+		   p.status,
+		   p.branch_id,
+		   p.starting_amount,
+		   pif.classify_id,
+		   pif.classify_name as shopType,
+		   pa.attrname_id,
+		   pa.attrname_name,
+		   pa.classify_id,
+		   pa.product_id,
+		   pa.parent_id,
+		   pav.attrvalue_id,
+		   pav.attrvalue_name,
+		   pav.attrname_id,
+		   ps.sku_id,
+		   ps.product_id,
+		   ps.sku_attr,
+		   ps.sku_image,
+		   ps.sku_price,
+		   ps.sku_virtualprice,
+		   ps.sku_stock,
+		   ps.sku_sales,
+		   b.thumbnail_url as product_url,
+		   bb.thumbnail_url as product_sku_image,
+		   bb.image_id as image_id_p
+		from yw_product p
+		left join yw_product_classify pif on p.shopType = pif.classify_id
+		left join yw_product_sku ps on p.id = ps.product_id
+		left join yw_product_attributename pa on p.id = pa.product_id
+		left join yw_product_attributevalue pav on pa.attrname_id = pav.attrname_id
+		left join yw_images_backthumbnail b on p.url = b.image_id and b.thumbnail_type = '1'
+		left join yw_images_backthumbnail bb on ps.sku_image = bb.image_id and bb.thumbnail_type = '4'
+		<where>
+			<if test="id != null and id != '' ">
+				and id = #{id}
+			</if>
+			<if test="product_code != null and product_code != '' ">
+				and product_code = #{product_code}
+			</if>
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+			<if test="isLike != null and isLike != '' ">
+				and isLike = #{isLike}
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType = #{shopType}
+			</if>
+			<if test="market_code != null and market_code != '' ">
+				and market_code = #{market_code}
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				and FIND_IN_SET(${branch_id},p.branch_id)
+			</if>
+			<if test="status != null and status != '' ">
+				and p.status = #{status}
+			</if>
+		</where>
+		order by product_sort asc , id desc	
+		<if test="begin!=null and end!=null">
+			limit #{begin},#{end}		
+		</if>
+	</select>
+	
+	<!-- 根据id查找某商品 -->
+	<select id="queryById" resultMap="productMap" parameterType="String">
+		select 
+		   p.id,
+		   p.product_code,
+		   p.url,
+		   p.title,
+		   p.price,
+		   p.product_virtualprice,
+		   p.content,
+		   p.shopType,
+		   p.market_code,
+		   p.product_sort,
+		   p.product_markets,
+		   p.keyword,
+		   p.sold,
+		   p.stock,
+		   p.isLike,
+		   p.product_carriage,
+		   p.product_barcode,
+		   p.product_virtualsales,
+		   p.status,
+		   p.branch_id,
+		   p.starting_amount,
+		   pa.attrname_id,
+		   pa.attrname_name,
+		   pa.classify_id,
+		   pa.product_id,
+		   pa.parent_id,
+		   pav.attrvalue_id,
+		   pav.attrvalue_name,
+		   pav.attrname_id,
+		   ps.sku_id,
+		   ps.product_id,
+		   ps.sku_attr,
+		   ps.sku_image,
+		   ps.sku_price,
+		   ps.sku_virtualprice,
+		   ps.sku_stock,
+		   ps.sku_sales,
+		   b.image_url as product_url,
+		   bb.thumbnail_url as product_sku_image,
+		   bb.image_id as image_id_p
+		from yw_product p
+		left join yw_product_sku ps on p.id = ps.product_id
+		left join yw_product_attributename pa on p.id = pa.product_id
+		left join yw_product_attributevalue pav on pa.attrname_id = pav.attrname_id
+		left join yw_images b on p.url = b.image_id
+		left join yw_images_backthumbnail bb on ps.sku_image = bb.image_id and bb.thumbnail_type = '4'
+		where p.id = #{id}
+		order by pa.attrname_id,ps.sku_id,pav.attrvalue_id
+	</select>
+	
+	<!--按照标题中带有某字符的条件搜索 -->
+	<select id="queryByTitle" resultType="YwProduct" parameterType="YwProduct">
+		select * from yw_product 
+		<where>
+			<if test="title != null and title != '' ">
+				and title like CONCAT(CONCAT('%',#{title}),'%')
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType = #{shopType}
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 根据商品编码查找商品 -->
+	<select id="queryByProductCode" resultType="YwProduct" parameterType="String">
+		select * from yw_product where product_code = #{product_code}
+	</select> 
+	
+	<!-- 商品信息保存 -->
+	<insert id="addYwProduct" parameterType="YwProduct" useGeneratedKeys="true" keyProperty="id">
+		insert into yw_product(<include refid="insertSql"/>) values(#{product_code},#{title},#{price},#{product_virtualprice},#{url},#{content},#{shopType},#{market_code},#{product_sort},#{product_markets},#{keyword},#{sold},#{stock},#{isLike},#{product_carriage},#{product_barcode},#{product_virtualsales},#{status},#{branch_id},#{starting_amount})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="deleteYwProduct" parameterType="int">	
+		delete from yw_product where id = #{id}
+	</delete>
+	
+	
+	<update id="updateYwProduct" parameterType="YwProduct">
+		update yw_product set title=#{title},price=#{price},url=#{url},content=#{content},shopType=#{shopType},market_code=#{market_code},keyword=#{keyword},sold=#{sold},stock=#{stock},isLike=#{isLike},starting_amount=#{starting_amount} where id=#{id}
+	</update>
+	
+	<!-- 修改商品信息 -->
+	<update id="update" parameterType="java.util.Map">
+		update yw_product
+		<trim prefix="set" suffixOverrides=",">
+			<if test="product_code != null and product_code != ''">
+				product_code = #{product_code},
+			</if>
+			<if test="title != null and title != ''">
+				title = #{title},
+			</if>
+			<if test="price != null and price != ''">
+				price = #{price},
+			</if>
+			<if test="product_virtualprice != null and product_virtualprice != ''">
+				product_virtualprice = #{product_virtualprice},
+			</if>
+			<if test="url != null and url != ''">
+				url = #{url},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content},
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				shopType = #{shopType},
+			</if>
+			<if test="market_code != null and market_code != '' ">
+				market_code = #{market_code},
+			</if>
+			<if test="product_sort != null and product_sort != '' ">
+				product_sort = #{product_sort},
+			</if>
+			<if test="product_markets != null and product_markets != '' ">
+				product_markets = #{product_markets},
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				keyword = #{keyword},
+			</if>
+			<if test="sold != null and sold != '' ">
+				sold = #{sold},
+			</if>
+			<if test="stock != null and stock != '' ">
+				stock = #{stock},
+			</if>
+			<if test="isLike != null and isLike != '' ">
+				isLike = #{isLike},
+			</if>
+			<if test="product_carriage != null and product_carriage != '' ">
+				product_carriage = #{product_carriage},
+			</if>
+			<if test="product_barcode != null and product_barcode != '' ">
+				product_barcode = #{product_barcode},
+			</if>
+			<if test="product_virtualsales != null and product_virtualsales != '' ">
+				product_virtualsales = #{product_virtualsales},
+			</if>
+			<if test="status != null and status != '' ">
+				status = #{status},
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				branch_id = #{branch_id},
+			</if>
+			<if test="starting_amount != null and starting_amount != '' ">
+				starting_amount = #{starting_amount},
+			</if>
+		</trim>
+		<include refid="whereSql" />
+	</update>
+	
+	<!-- 查询商品总数 -->
+	<select id="findsum" resultType="int" parameterType="Map">
+		SELECT count(1) FROM yw_product
+		<where>
+			<if test="title!=null">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据登录用户id查找所属商品 -->
+	<select id="queryAll" resultType="YwProduct" parameterType="java.util.Map">
+		select * from yw_product
+		<where>
+			<if test="id != null and id != '' ">
+				and id = #{id}
+			</if>
+			<if test="product_code != null and product_code != '' ">
+				and product_code = #{product_code}
+			</if>
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType = #{shopType}
+			</if>
+			<if test="market_code != null and market_code != '' ">
+				and market_code = #{market_code}
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				and FIND_IN_SET(${branch_id},branch_id)
+			</if>
+			<if test="status != null and status != '' ">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProduct">
+		select 
+		   p.id,
+		   p.product_code,
+		   p.url,
+		   p.shopType,
+		   p.title,
+		   p.price,
+		   p.product_virtualprice,
+		   p.content,
+		   p.market_code,
+		   p.product_sort,
+		   p.product_markets,
+		   p.product_virtualprice,
+		   p.keyword,
+		   p.sold,
+		   p.stock,
+		   p.isLike,
+		   p.product_carriage,
+		   p.product_barcode,
+		   p.product_virtualsales,
+		   p.status,
+		   p.branch_id,
+		   p.starting_amount,
+		   pif.classify_id,
+		   pif.classify_name,
+		   b.image_url as product_url
+		   from yw_product p
+		   left join yw_product_classify pif on p.shopType = pif.classify_id
+		   left join yw_images b on p.url = b.image_id
+		<where>
+			<if test="id != null and id != '' ">
+				and id =#{id}
+			</if>
+			<if test="product_code != null and product_code != '' ">
+				and product_code =#{product_code}
+			</if>
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+			<if test="price != null and price != '' ">
+				and price=#{price}
+			</if>
+			<if test="url != null and url != '' ">
+				and url=#{url}
+			</if>
+			<if test="content != null and content != '' ">
+				and content=#{content}
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType=#{shopType}
+			</if>
+			<if test="market_code != null and market_code != '' ">
+				and market_code=#{market_code}
+			</if>
+			<if test="status != null and status != '' ">
+				and p.status=#{status}
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				and FIND_IN_SET(${branch_id},p.branch_id)
+			</if>
+			<if test="starting_amount != null and starting_amount != '' ">
+				starting_amount = #{starting_amount}
+			</if>
+		</where>
+		order by id desc
+		<if test="end > 0">
+			limit #{begin},#{end}		
+		</if>
+		
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_product
+		<where>
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+			<if test="price != null and price != '' ">
+				and price=#{price}
+			</if>
+			<if test="url != null and url != '' ">
+				and url=#{url}
+			</if>
+			<if test="content != null and content != '' ">
+				and content=#{content}
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType=#{shopType}
+			</if>
+			<if test="market_code != null and market_code != '' ">
+				and market_code=#{market_code}
+			</if>
+			<if test="branch_id != null and branch_id != '' ">
+				and FIND_IN_SET(${branch_id},branch_id)
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_product
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+	<!-- 导出excel表单数据关联查询 -->
+	<select id="importExcelByProduct" resultMap="importMap" parameterType="java.util.Map">
+		select 
+		   p.id,
+		   p.title,
+		   p.price,
+		   p.product_virtualprice,
+		   p.keyword,
+		   p.sold,
+		   p.product_virtualsales,
+		   p.stock,
+		   p.market_code,
+		   p.product_sort,
+		   p.product_carriage,
+		   ps.sku_attr,
+		   pif.classify_name as shopType
+		from yw_product p
+		left join yw_product_classify pif on p.shopType = pif.classify_id
+		left join yw_product_sku ps on p.id = ps.product_id
+		<where>
+			<if test="title != null and title != '' ">
+				and title like CONCAT('%',#{title},'%')
+			</if>
+			<if test="shopType != null and shopType != '' ">
+				and shopType = #{shopType}
+			</if>
+		</where>
+		order by product_sort asc , id desc	
+	</select>
+	
+	
+</mapper>

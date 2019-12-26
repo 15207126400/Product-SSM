@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwOrderOfflineDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.YwOrderOffline" id="resultMap">
+         <id column="id" property="id" />
+         <result column="order_sn" property="order_sn" />  
+         <result column="offline_type" property="offline_type" />  
+         <result column="branch_id" property="branch_id" />  
+         <result column="branch_name" property="branch_name" />  
+         <result column="openid" property="openid" />  
+         <result column="nickname" property="nickname" /> 
+         <result column="offline_totalprice" property="offline_totalprice" />  
+         <result column="order_totalprice" property="order_totalprice" />  
+         <result column="order_discount_price" property="order_discount_price" />
+         <result column="order_nodiscount_price" property="order_nodiscount_price" />
+         <result column="create_datetime" property="create_datetime" />  
+         <result column="update_datetime" property="update_datetime" />  
+         <result column="offline_remark" property="offline_remark" />  
+         <result column="offline_status" property="offline_status" />  
+         <result column="branch_logo" property="branch_logo" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         order_sn,
+         offline_type,
+         branch_id,
+         branch_name,
+         openid,
+         nickname,
+         offline_totalprice,
+         order_totalprice,
+         order_discount_price,
+         order_nodiscount_price,
+         create_datetime,
+         update_datetime,
+         offline_remark,
+         offline_status
+    </sql>
+    
+    <sql id="insertSql">
+         order_sn,
+         offline_type,
+         branch_id,
+         branch_name,
+         openid,
+         nickname,
+         offline_totalprice,
+         order_totalprice,
+         order_discount_price,
+         order_nodiscount_price,
+         create_datetime,
+         update_datetime,
+         offline_remark,
+         offline_status
+    </sql>
+    
+    <sql id="unionSql">
+         o.id,
+         o.order_sn,
+         o.offline_type,
+         o.branch_id,
+         o.branch_name,
+         o.openid,
+         o.nickname,
+         o.offline_totalprice,
+         o.order_totalprice,
+         o.order_discount_price,
+         o.order_nodiscount_price,
+         o.create_datetime,
+         o.update_datetime,
+         o.offline_remark,
+         o.offline_status
+    </sql>
+    
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+            <if test="offline_type != null and offline_type != '' ">
+	          and offline_type = #{offline_type}
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	          and branch_id = #{branch_id}
+	        </if>
+            <if test="branch_name != null and branch_name != '' ">
+	          and branch_name = #{branch_name}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+            <if test="nickname != null and nickname != '' ">
+	          and nickname = #{nickname}
+	        </if>
+	        <if test="offline_totalprice != null and offline_totalprice != '' ">
+	          and offline_totalprice = #{offline_totalprice}
+	        </if>
+            <if test="order_totalprice != null and order_totalprice != '' ">
+	          and order_totalprice = #{order_totalprice}
+	        </if>
+            <if test="order_discount_price != null and order_discount_price != '' ">
+	          and order_discount_price = #{order_discount_price}
+	        </if>
+	        <if test="order_nodiscount_price != null and order_nodiscount_price != '' ">
+	          and order_nodiscount_price = #{order_nodiscount_price}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="offline_remark != null and offline_remark != '' ">
+	          and offline_remark = #{offline_remark}
+	        </if>
+            <if test="offline_status != null and offline_status != '' ">
+	          and offline_status = #{offline_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+            <if test="offline_type != null and offline_type != '' ">
+	          and offline_type = #{offline_type}
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	          and branch_id = #{branch_id}
+	        </if>
+            <if test="branch_name != null and branch_name != '' ">
+	          and branch_name = #{branch_name}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and openid = #{openid}
+	        </if>
+            <if test="nickname != null and nickname != '' ">
+	          and nickname = #{nickname}
+	        </if>
+	        <if test="offline_totalprice != null and offline_totalprice != '' ">
+	          and offline_totalprice = #{offline_totalprice}
+	        </if>
+            <if test="order_totalprice != null and order_totalprice != '' ">
+	          and order_totalprice = #{order_totalprice}
+	        </if>
+            <if test="order_discount_price != null and order_discount_price != '' ">
+	          and order_discount_price = #{order_discount_price}
+	        </if>
+	        <if test="order_nodiscount_price != null and order_nodiscount_price != '' ">
+	          and order_nodiscount_price = #{order_nodiscount_price}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="offline_remark != null and offline_remark != '' ">
+	          and offline_remark = #{offline_remark}
+	        </if>
+            <if test="offline_status != null and offline_status != '' ">
+	          and offline_status = #{offline_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and o.id = #{id}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and o.order_sn = #{order_sn}
+	        </if>
+            <if test="offline_type != null and offline_type != '' ">
+	          and o.offline_type = #{offline_type}
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	          and o.branch_id = #{branch_id}
+	        </if>
+            <if test="branch_name != null and branch_name != '' ">
+	          and o.branch_name = #{branch_name}
+	        </if>
+            <if test="openid != null and openid != '' ">
+	          and o.openid = #{openid}
+	        </if>
+            <if test="nickname != null and nickname != '' ">
+	          and o.nickname = #{nickname}
+	        </if>
+	        <if test="offline_totalprice != null and offline_totalprice != '' ">
+	          and o.offline_totalprice = #{offline_totalprice}
+	        </if>
+            <if test="order_totalprice != null and order_totalprice != '' ">
+	          and o.order_totalprice = #{order_totalprice}
+	        </if>
+            <if test="order_discount_price != null and order_discount_price != '' ">
+	          and o.order_discount_price = #{order_discount_price}
+	        </if>
+	        <if test="order_nodiscount_price != null and order_nodiscount_price != '' ">
+	          and o.order_nodiscount_price = #{order_nodiscount_price}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and o.create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and o.update_datetime = #{update_datetime}
+	        </if>
+            <if test="offline_remark != null and offline_remark != '' ">
+	          and o.offline_remark = #{offline_remark}
+	        </if>
+            <if test="offline_status != null and offline_status != '' ">
+	          and o.offline_status = #{offline_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwOrderOffline">
+		insert into yw_order_offline(<include refid="insertSql"/>) 
+		values(
+	             #{order_sn},
+	             #{offline_type},
+	             #{branch_id},
+	             #{branch_name},
+	             #{openid},
+	             #{nickname},
+	             #{offline_totalprice},
+	             #{order_totalprice},
+	             #{order_discount_price},
+	             #{order_nodiscount_price},
+	             #{create_datetime},
+	             #{update_datetime},
+	             #{offline_remark},
+	             #{offline_status}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_order_offline(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.order_sn},
+	             #{item.offline_type},
+	             #{item.branch_id},
+	             #{item.branch_name},
+	             #{item.openid},
+	             #{item.nickname},
+	             #{item.offline_totalprice},
+	             #{item.order_totalprice},
+	             #{item.order_discount_price},
+	             #{item.order_nodiscount_price},
+	             #{item.create_datetime},
+	             #{item.update_datetime},
+	             #{item.offline_remark},
+	             #{item.offline_status}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwOrderOffline">
+		select <include refid="sql"/> from yw_order_offline
+		<include refid="whereSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwOrderOffline">
+		select 
+		 o.id,
+         o.order_sn,
+         o.offline_type,
+         o.branch_id,
+         o.branch_name,
+         o.openid,
+         o.nickname,
+         o.offline_totalprice,
+         o.order_totalprice,
+         o.order_discount_price,
+         o.order_nodiscount_price,
+         o.create_datetime,
+         o.update_datetime,
+         o.offline_remark,
+         o.offline_status,
+         b.branch_logo
+			 from yw_order_offline o
+			 left join yw_system_usercenter.yw_branches b on o.branch_id = b.id
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(或分页联合查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_order_offline as o
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id desc
+	</select>
+
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_order_offline
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_order_offline
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="order_sn != null and order_sn != '' ">
+	           order_sn = #{order_sn},
+	        </if>
+            <if test="offline_type != null and offline_type != '' ">
+	           offline_type = #{offline_type},
+	        </if>
+            <if test="branch_id != null and branch_id != '' ">
+	           branch_id = #{branch_id},
+	        </if>
+            <if test="branch_name != null and branch_name != '' ">
+	           branch_name = #{branch_name},
+	        </if>
+            <if test="openid != null and openid != '' ">
+	           openid = #{openid},
+	        </if>
+            <if test="nickname != null and nickname != '' ">
+	           nickname = #{nickname},
+	        </if>
+	        <if test="offline_totalprice != null and offline_totalprice != '' ">
+	           offline_totalprice = #{offline_totalprice},
+	        </if>
+            <if test="order_totalprice != null and order_totalprice != '' ">
+	           order_totalprice = #{order_totalprice},
+	        </if>
+            <if test="order_discount_price != null and order_discount_price != '' ">
+	           order_discount_price = #{order_discount_price},
+	        </if>
+	        <if test="order_nodiscount_price != null and order_nodiscount_price != '' ">
+	           order_nodiscount_price = #{order_nodiscount_price},
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	           create_datetime = #{create_datetime},
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	        </if>
+            <if test="offline_remark != null and offline_remark != '' ">
+	           offline_remark = #{offline_remark},
+	        </if>
+            <if test="offline_status != null and offline_status != '' ">
+	           offline_status = #{offline_status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_order_offline
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_order_offline
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

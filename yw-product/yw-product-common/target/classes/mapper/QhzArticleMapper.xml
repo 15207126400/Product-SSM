@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.QhzArticleDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.QhzArticle" id="resultMap">
+         <id column="id" property="id" />
+         <result column="type" property="type" />  
+         <result column="scene_type" property="scene_type" />  
+         <result column="title" property="title" />  
+         <result column="img" property="img" />  
+         <result column="content" property="content" />  
+         <result column="create_name" property="create_name" />  
+         <result column="create_time" property="create_time" />  
+         <result column="update_name" property="update_name" />  
+         <result column="update_time" property="update_time" />  
+         <result column="read_num" property="read_num" />  
+         <result column="help_num" property="help_num" />  
+         <result column="comment" property="comment" />  
+         <result column="status" property="status" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         type,
+         scene_type,
+         title,
+         img,
+         content,
+         create_name,
+         create_time,
+         update_name,
+         update_time,
+         read_num,
+         help_num,
+         comment,
+         status
+    </sql>
+    
+    <sql id="insertSql">
+         type,
+         scene_type,
+         title,
+         img,
+         content,
+         create_name,
+         create_time,
+         update_name,
+         update_time,
+         read_num,
+         help_num,
+         comment,
+         status
+    </sql>
+    
+    <sql id="unionSql">
+         a.id,
+         a.type,
+         a.scene_type,
+         a.title,
+         a.img,
+         a.content,
+         a.create_name,
+         a.create_time,
+         a.update_name,
+         a.update_time,
+         a.read_num,
+         a.help_num,
+         a.comment,
+         a.status
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="type != null and type != '' ">
+	          and type = #{type}
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	          and scene_type = #{scene_type}
+	        </if>
+            <if test="title != null and title != '' ">
+	          and title = #{title}
+	        </if>
+            <if test="img != null and img != '' ">
+	          and img = #{img}
+	        </if>
+            <if test="content != null and content != '' ">
+	          and content = #{content}
+	        </if>
+            <if test="create_name != null and create_name != '' ">
+	          and create_name = #{create_name}
+	        </if>
+            <if test="create_time != null and create_time != '' ">
+	          and create_time = #{create_time}
+	        </if>
+	        <if test="update_name != null and update_name != '' ">
+	          and update_name = #{update_name}
+	        </if>
+	        <if test="update_time != null and update_time != '' ">
+	          and update_time = #{update_time}
+	        </if>
+            <if test="read_num != null and read_num != '' ">
+	          and read_num = #{read_num}
+	        </if>
+            <if test="help_num != null and help_num != '' ">
+	          and help_num = #{help_num}
+	        </if>
+            <if test="comment != null and comment != '' ">
+	          and comment = #{comment}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and a.id = #{id}
+	        </if>
+            <if test="type != null and type != '' ">
+	          and a.type = #{type}
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	          and a.scene_type = #{scene_type}
+	        </if>
+            <if test="title != null and title != '' ">
+	          and a.title = #{title}
+	        </if>
+            <if test="img != null and img != '' ">
+	          and a.img = #{img}
+	        </if>
+            <if test="content != null and content != '' ">
+	          and a.content = #{content}
+	        </if>
+            <if test="create_name != null and create_name != '' ">
+	          and a.create_name = #{create_name}
+	        </if>
+            <if test="create_time != null and create_time != '' ">
+	          and a.create_time = #{create_time}
+	        </if>
+	        <if test="update_name != null and update_name != '' ">
+	          and a.update_name = #{update_name}
+	        </if>
+	        <if test="update_time != null and update_time != '' ">
+	          and a.update_time = #{update_time}
+	        </if>
+            <if test="read_num != null and read_num != '' ">
+	          and a.read_num = #{read_num}
+	        </if>
+            <if test="help_num != null and help_num != '' ">
+	          and a.help_num = #{help_num}
+	        </if>
+            <if test="comment != null and comment != '' ">
+	          and a.comment = #{comment}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and a.status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.QhzArticle">
+		insert into qhz_article(<include refid="insertSql"/>) 
+		values(
+	             #{type},
+	             #{scene_type},
+	             #{title},
+	             #{img},
+	             #{content},
+	             #{create_name},
+	             #{create_time},
+	             #{update_name},
+	             #{update_time},
+	             #{read_num},
+	             #{help_num},
+	             #{comment},
+	             #{status}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into qhz_article(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.type},
+	             #{item.scene_type},
+	             #{item.title},
+	             #{item.img},
+	             #{item.content},
+	             #{item.create_name},
+	             #{item.create_time},
+	             #{item.update_name},
+	             #{item.update_time},
+	             #{item.read_num},
+	             #{item.help_num},
+	             #{item.comment},
+	             #{item.status}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzArticle">
+		select <include refid="sql"/> from qhz_article
+		<include refid="whereSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzArticle">
+		<!-- 
+		select <include refid="sql"/> from qhz_article
+		<include refid="whereSql"/>
+		order by id
+		limit #{begin},#{end}
+		 -->
+		select <include refid="unionSql"/> from qhz_article a
+		inner join (select id from qhz_article <include refid="whereUnionSql" /> order by id limit #{begin},#{end}) b on a.id = b.id
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_article as a
+		<include refid="whereUnionSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_article as a
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from qhz_article
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update qhz_article
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="type != null and type != '' ">
+	           type = #{type},
+	        </if>
+	        <if test="scene_type != null and scene_type != '' ">
+	           scene_type = #{scene_type},
+	        </if>
+            <if test="title != null and title != '' ">
+	           title = #{title},
+	        </if>
+            <if test="img != null and img != '' ">
+	           img = #{img},
+	        </if>
+            <if test="content != null and content != '' ">
+	           content = #{content},
+	        </if>
+            <if test="create_name != null and create_name != '' ">
+	           create_name = #{create_name},
+	        </if>
+            <if test="create_time != null and create_time != '' ">
+	           create_time = #{create_time},
+	        </if>
+	        <if test="update_name != null and update_name != '' ">
+	           update_name = #{update_name},
+	        </if>
+	        <if test="update_time != null and update_time != '' ">
+	           update_time = #{update_time},
+	        </if>
+            <if test="read_num != null and read_num != '' ">
+	           read_num = #{read_num},
+	        </if>
+            <if test="help_num != null and help_num != '' ">
+	           help_num = #{help_num},
+	        </if>
+            <if test="comment != null and comment != '' ">
+	           comment = #{comment},
+	        </if>
+	        <if test="status != null and status != '' ">
+	           status = #{status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update qhz_article
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from qhz_article
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from qhz_article
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

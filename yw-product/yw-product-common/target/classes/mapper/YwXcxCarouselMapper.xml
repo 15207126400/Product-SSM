@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwXcxCarouselDao">
+
+    <sql id="sql">
+         id,
+         carousel_type,
+         carousel_name,
+         carousel_url,
+         create_datetime,
+         update_datetime,
+         sort,
+         navigation,
+         status
+    </sql>
+    
+    <sql id="insertSql">
+         carousel_type,
+         carousel_name,
+         carousel_url,
+         create_datetime,
+         update_datetime,
+         sort,
+         navigation,
+         status
+    </sql>
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="carousel_type != null and carousel_type != '' ">
+	          and carousel_type = #{carousel_type}
+	        </if>
+            <if test="carousel_name != null and carousel_name != '' ">
+	          and carousel_name = #{carousel_name}
+	        </if>
+            <if test="carousel_url != null and carousel_url != '' ">
+	          and carousel_url = #{carousel_url}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="sort != null and sort != '' ">
+	          and sort = #{sort}
+	        </if>
+            <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="carousel_type != null and carousel_type != '' ">
+	          and carousel_type = #{carousel_type}
+	        </if>
+            <if test="carousel_name != null and carousel_name != '' ">
+	          and carousel_name = #{carousel_name}
+	        </if>
+            <if test="carousel_url != null and carousel_url != '' ">
+	          and carousel_url = #{carousel_url}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="sort != null and sort != '' ">
+	          and sort = #{sort}
+	        </if>
+            <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwXcxCarousel">
+		insert into yw_xcx_carousel(<include refid="insertSql"/>) 
+		values(
+	             #{carousel_type},
+	             #{carousel_name},
+	             #{carousel_url},
+	             #{create_datetime},
+	             #{update_datetime},
+	             #{sort},
+	             #{navigation},
+	             #{status}
+		     )
+	</insert>
+	
+	<!-- 通过id查询对应的图片编号 -->
+	<select id="queryByImageId" parameterType="String" resultType="String">
+		select carousel_url from yw_xcx_carousel where id = #{id}
+	</select>
+	
+	<!-- 当前表查询(Map参数) -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwXcxCarousel">
+		select 
+		 c.id,
+         c.carousel_type,
+         c.carousel_name,
+         c.create_datetime,
+         c.update_datetime,
+         c.status,
+         c.sort,
+         n.nav_name,
+         n.nav_path navigation,
+		 b.image_url carousel_url 
+		from yw_xcx_carousel c 
+		left join yw_system_usercenter.yw_xcx_navigation n on c.navigation = n.id
+		left join yw_images b on c.carousel_url = b.image_id
+		 
+		<where>
+			<if test="id != null and id != '' ">
+	          and c.id = #{id}
+	        </if>
+            <if test="carousel_type != null and carousel_type != '' ">
+	          and c.carousel_type = #{carousel_type}
+	        </if>
+            <if test="carousel_name != null and carousel_name != '' ">
+	          and c.carousel_name = #{carousel_name}
+	        </if>
+            <if test="carousel_url != null and carousel_url != '' ">
+	          and c.carousel_url = #{carousel_url}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and c.create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and c.update_datetime = #{update_datetime}
+	        </if>
+            <if test="sort != null and sort != '' ">
+	          and c.sort = #{sort}
+	        </if>
+            <if test="status != null and status != '' ">
+	          and c.status = #{status}
+	        </if>
+		</where>
+		order by sort
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwXcxCarousel">
+		select 
+		 c.id,
+         c.carousel_name,
+         c.carousel_type,
+         c.create_datetime,
+         c.update_datetime,
+         c.sort,
+         c.navigation,
+         c.status,
+         n.nav_name,
+         n.nav_path,
+         b.image_url as carousel_url
+         from yw_xcx_carousel c left join yw_images b on c.carousel_url = b.image_id
+								left join yw_system_usercenter.yw_xcx_navigation n on c.navigation = n.id
+		<include refid="whereSql"/>
+		order by c.id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_xcx_carousel
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="com.yunwei.product.common.model.YwXcxCarousel">
+	    update yw_xcx_carousel
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="carousel_type != null and carousel_type != '' ">
+	           carousel_type = #{carousel_type},
+	        </if>
+            <if test="carousel_name != null and carousel_name != '' ">
+	           carousel_name = #{carousel_name},
+	        </if>
+            <if test="carousel_url != null">
+	           carousel_url = #{carousel_url},
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	           create_datetime = #{create_datetime},
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	        </if>
+            <if test="sort != null and sort != '' ">
+	           sort = #{sort},
+	        </if>
+	        <if test="navigation != null and navigation != '' ">
+	           navigation = #{navigation},
+	        </if>
+            <if test="status != null and status != '' ">
+	           status = #{status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and yw_xcx_carousel.id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_xcx_carousel 
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_xcx_carousel
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

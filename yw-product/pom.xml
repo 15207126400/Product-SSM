@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+		<groupId>com.yunwei</groupId>
+		<artifactId>yw-base</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../../yw-base/pom.xml</relativePath>
+	</parent>
+  <artifactId>yw-product</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>yw-product</name>
+  <dependencyManagement>
+     <dependencies>
+         <dependency>
+	      <groupId>com.yunwei</groupId>
+	      <artifactId>yw-product-common</artifactId>
+	      <version>1.0.0</version>
+	    </dependency>
+     </dependencies>
+  </dependencyManagement>
+  <modules>
+    <module>yw-product-common</module>
+    <module>yw-product-backend</module>
+    <module>yw-product-infobase</module>
+    <module>yw-product-front</module>
+  </modules>
+</project>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwPointsDetailDao">
+
+    <sql id="sql">
+         detail_id,
+         user_id,
+         detail_type,
+         detail_status,
+         points_id,
+         order_sn,
+         detail_points_change,
+         detail_createtime,
+         detail_updatetime
+    </sql>
+    
+    <sql id="insertSql">
+         user_id,
+         detail_type,
+         detail_status,
+         points_id,
+         order_sn,
+         detail_points_change,
+         detail_createtime,
+         detail_updatetime
+    </sql>
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="detail_id != null and detail_id != '' ">
+	          and detail_id = #{detail_id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+            <if test="detail_type != null and detail_type != '' ">
+	          and detail_type = #{detail_type}
+	        </if>
+            <if test="detail_status != null and detail_status != '' ">
+	          and detail_status = #{detail_status}
+	        </if>
+            <if test="points_id != null and points_id != '' ">
+	          and points_id = #{points_id}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+            <if test="detail_points_change != null and detail_points_change != '' ">
+	          and detail_points_change = #{detail_points_change}
+	        </if>
+            <if test="detail_createtime != null and detail_createtime != '' ">
+	          and detail_createtime = #{detail_createtime}
+	        </if>
+            <if test="detail_updatetime != null and detail_updatetime != '' ">
+	          and detail_updatetime = #{detail_updatetime}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="detail_id != null and detail_id != '' ">
+	          and detail_id = #{detail_id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+            <if test="detail_type != null and detail_type != '' ">
+	          and detail_type = #{detail_type}
+	        </if>
+            <if test="detail_status != null and detail_status != '' ">
+	          and detail_status = #{detail_status}
+	        </if>
+            <if test="points_id != null and points_id != '' ">
+	          and points_id = #{points_id}
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	        </if>
+            <if test="detail_points_change != null and detail_points_change != '' ">
+	          and detail_points_change = #{detail_points_change}
+	        </if>
+            <if test="detail_createtime != null and detail_createtime != '' ">
+	          and detail_createtime = #{detail_createtime}
+	        </if>
+            <if test="detail_updatetime != null and detail_updatetime != '' ">
+	          and detail_updatetime = #{detail_updatetime}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="detail_id != null and detail_id != '' ">
+				and detail_id in
+				<foreach collection="detail_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwPointsDetail">
+		insert into yw_points_detail(<include refid="insertSql"/>) 
+		values(
+	             #{user_id},
+	             #{detail_type},
+	             #{detail_status},
+	             #{points_id},
+	             #{order_sn},
+	             #{detail_points_change},
+	             #{detail_createtime},
+	             #{detail_updatetime}
+		     )
+	</insert>
+	
+	<!-- 查询表该表与其他表关联信息-->
+	<select id="queryUnionMemberList" parameterType="java.util.Map"
+		resultType="com.yunwei.product.common.backend.model.dto.YwPointsDetailDto">
+		select
+			 p.detail_id,
+	         p.user_id,
+	         p.detail_type,
+	         p.detail_status,
+	         p.points_id,
+	         p.order_sn,
+	         p.detail_points_change,
+	         p.detail_createtime,
+	         p.detail_updatetime,
+	         m.openid,
+	         m.nickname
+			
+		from yw_points_detail p
+			left join yw_member m on p.user_id = m.openid
+			<where>
+				<if test="detail_id != null and detail_id != '' ">
+		          and detail_id = #{detail_id}
+		        </if>
+		    </where> 
+			order by detail_createtime desc
+			limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwPointsDetail">
+		select <include refid="sql"/> from yw_points_detail
+		<include refid="whereSql"/>
+		order by detail_createtime desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwPointsDetail">
+		select <include refid="sql"/> from yw_points_detail
+		<include refid="whereSql"/>
+		order by detail_createtime desc
+		<if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_points_detail
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_points_detail
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	        </if>
+            <if test="detail_type != null and detail_type != '' ">
+	           detail_type = #{detail_type},
+	        </if>
+            <if test="detail_status != null and detail_status != '' ">
+	           detail_status = #{detail_status},
+	        </if>
+            <if test="points_id != null and points_id != '' ">
+	           points_id = #{points_id},
+	        </if>
+            <if test="order_sn != null and order_sn != '' ">
+	           order_sn = #{order_sn},
+	        </if>
+            <if test="detail_points_change != null and detail_points_change != '' ">
+	           detail_points_change = #{detail_points_change},
+	        </if>
+            <if test="detail_createtime != null and detail_createtime != '' ">
+	           detail_createtime = #{detail_createtime},
+	        </if>
+            <if test="detail_updatetime != null and detail_updatetime != '' ">
+	           detail_updatetime = #{detail_updatetime},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="detail_id != null and detail_id != '' ">
+	           and detail_id = #{detail_id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_PointsDetail 
+	    <where>
+            <if test="detail_id != null and detail_id != '' ">
+	           and detail_id = #{detail_id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_points_detail
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

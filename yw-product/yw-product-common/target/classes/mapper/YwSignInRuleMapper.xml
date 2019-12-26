@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSignInRuleDao">
+
+    <sql id="sql">
+         rule_id,
+         rule_continue_days,
+         rule_type,
+         rule_reward_points,
+         rule_reward_coupon,
+         rule_status
+    </sql>
+    
+    <sql id="insertSql">
+         rule_continue_days,
+         rule_type,
+         rule_reward_points,
+         rule_reward_coupon,
+         rule_status
+    </sql>
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="rule_id != null and rule_id != '' ">
+	          and rule_id = #{rule_id}
+	        </if>
+            <if test="rule_continue_days != null and rule_continue_days != '' ">
+	          and rule_continue_days = #{rule_continue_days}
+	        </if>
+            <if test="rule_type != null and rule_type != '' ">
+	          and rule_type = #{rule_type}
+	        </if>
+            <if test="rule_reward_points != null and rule_reward_points != '' ">
+	          and rule_reward_points = #{rule_reward_points}
+	        </if>
+	        <if test="rule_reward_coupon != null and rule_reward_coupon != '' ">
+	          and rule_reward_coupon = #{rule_reward_coupon}
+	        </if>
+            <if test="rule_status != null and rule_status != '' ">
+	          and rule_status = #{rule_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="rule_id != null and rule_id != '' ">
+	          and rule_id = #{rule_id}
+	        </if>
+            <if test="rule_continue_days != null and rule_continue_days != '' ">
+	          and rule_continue_days = #{rule_continue_days}
+	        </if>
+            <if test="rule_type != null and rule_type != '' ">
+	          and rule_type = #{rule_type}
+	        </if>
+            <if test="rule_reward_points != null and rule_reward_points != '' ">
+	          and rule_reward_points = #{rule_reward_points}
+	        </if>
+	        <if test="rule_reward_coupon != null and rule_reward_coupon != '' ">
+	          and rule_reward_coupon = #{rule_reward_coupon}
+	        </if>
+            <if test="rule_status != null and rule_status != '' ">
+	          and rule_status = #{rule_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="rule_id != null and rule_id != '' ">
+				and rule_id in
+				<foreach collection="rule_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSignInRule">
+		insert into yw_signIn_rule(<include refid="insertSql"/>) 
+		values(
+	             #{rule_continue_days},
+	             #{rule_type},
+	             #{rule_reward_points},
+	             #{rule_reward_coupon},
+	             #{rule_status}
+		     )
+	</insert>
+	
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSignInRule">
+		select <include refid="sql"/> from yw_signIn_rule
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSignInRule">
+		select <include refid="sql"/> from yw_signIn_rule
+		<include refid="whereSql"/>
+		order by rule_id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_signIn_rule
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_signIn_rule
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="rule_continue_days != null and rule_continue_days != '' ">
+	           rule_continue_days = #{rule_continue_days},
+	        </if>
+            <if test="rule_type != null and rule_type != '' ">
+	           rule_type = #{rule_type},
+	        </if>
+            <if test="rule_reward_points != null and rule_reward_points != '' ">
+	           rule_reward_points = #{rule_reward_points},
+	        </if>
+	        <if test="rule_reward_coupon != null and rule_reward_coupon != '' ">
+	           rule_reward_coupon = #{rule_reward_coupon},
+	        </if>
+            <if test="rule_status != null and rule_status != '' ">
+	           rule_status = #{rule_status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="rule_id != null and rule_id != '' ">
+	           and rule_id = #{rule_id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_SignInRule 
+	    <where>
+            <if test="rule_id != null and rule_id != '' ">
+	           and rule_id = #{rule_id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_signIn_rule
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

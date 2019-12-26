@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwCouponDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.YwCoupon" id="resultMap">
+         <id column="id" property="id" />
+         <result column="coupon_name" property="coupon_name" />  
+         <result column="coupon_type" property="coupon_type" />  
+         <result column="coupon_scene_type" property="coupon_scene_type" />  
+         <result column="coupon_function_type" property="coupon_function_type" />  
+         <result column="coupon_use_scope_type" property="coupon_use_scope_type" />  
+         <result column="coupon_use_scope" property="coupon_use_scope" />  
+         <result column="coupon_price" property="coupon_price" />  
+         <result column="coupon_use_condition_type" property="coupon_use_condition_type" />  
+         <result column="coupon_use_condition" property="coupon_use_condition" />  
+         <result column="coupon_collection_condition_type" property="coupon_collection_condition_type" />  
+         <result column="coupon_collection_condition" property="coupon_collection_condition" />  
+         <result column="coupon_count" property="coupon_count" />  
+         <result column="coupon_limit_count_type" property="coupon_limit_count_type" />  
+         <result column="coupon_limit_day" property="coupon_limit_day" />  
+         <result column="coupon_limit_count" property="coupon_limit_count" />  
+         <result column="coupon_time_type" property="coupon_time_type" />  
+         <result column="coupon_starttime" property="coupon_starttime" />  
+         <result column="coupon_endtime" property="coupon_endtime" />  
+         <result column="coupon_time_day" property="coupon_time_day" />  
+         <result column="coupon_received_count" property="coupon_received_count" />  
+         <result column="coupon_introduce" property="coupon_introduce" />  
+         <result column="coupon_status" property="coupon_status" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         coupon_name,
+         coupon_type,
+         coupon_scene_type,
+         coupon_function_type,
+         coupon_use_scope_type,
+         coupon_use_scope,
+         coupon_price,
+         coupon_use_condition_type,
+         coupon_use_condition,
+         coupon_collection_condition_type,
+         coupon_collection_condition,
+         coupon_count,
+         coupon_limit_count_type,
+         coupon_limit_day,
+         coupon_limit_count,
+         coupon_time_type,
+         coupon_starttime,
+         coupon_endtime,
+         coupon_time_day,
+         coupon_received_count,
+         coupon_introduce,
+         coupon_status
+    </sql>
+    
+    <sql id="insertSql">
+         coupon_name,
+         coupon_type,
+         coupon_scene_type,
+         coupon_function_type,
+         coupon_use_scope_type,
+         coupon_use_scope,
+         coupon_price,
+         coupon_use_condition_type,
+         coupon_use_condition,
+         coupon_collection_condition_type,
+         coupon_collection_condition,
+         coupon_count,
+         coupon_limit_count_type,
+         coupon_limit_day,
+         coupon_limit_count,
+         coupon_time_type,
+         coupon_starttime,
+         coupon_endtime,
+         coupon_time_day,
+         coupon_received_count,
+         coupon_introduce,
+         coupon_status
+    </sql>
+    
+    <sql id="unionSql">
+         c.id,
+         c.coupon_name,
+         c.coupon_type,
+         c.coupon_scene_type,
+         c.coupon_function_type,
+         c.coupon_use_scope_type,
+         c.coupon_use_scope,
+         c.coupon_price,
+         c.coupon_use_condition_type,
+         c.coupon_use_condition,
+         c.coupon_collection_condition_type,
+         c.coupon_collection_condition,
+         c.coupon_count,
+         c.coupon_limit_count_type,
+         c.coupon_limit_day,
+         c.coupon_limit_count,
+         c.coupon_time_type,
+         c.coupon_starttime,
+         c.coupon_endtime,
+         c.coupon_time_day,
+         c.coupon_received_count,
+         c.coupon_introduce,
+         c.coupon_status
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="coupon_name != null and coupon_name != '' ">
+	          and coupon_name = #{coupon_name}
+	        </if>
+            <if test="coupon_type != null and coupon_type != '' ">
+	          and coupon_type = #{coupon_type}
+	        </if>
+            <if test="coupon_scene_type != null and coupon_scene_type != '' ">
+	          and coupon_scene_type = #{coupon_scene_type}
+	        </if>
+            <if test="coupon_function_type != null and coupon_function_type != '' ">
+	          and coupon_function_type = #{coupon_function_type}
+	        </if>
+            <if test="coupon_use_scope_type != null and coupon_use_scope_type != '' ">
+	          and coupon_use_scope_type = #{coupon_use_scope_type}
+	        </if>
+            <if test="coupon_use_scope != null and coupon_use_scope != '' ">
+	          and coupon_use_scope = #{coupon_use_scope}
+	        </if>
+            <if test="coupon_price != null and coupon_price != '' ">
+	          and coupon_price = #{coupon_price}
+	        </if>
+            <if test="coupon_use_condition_type != null and coupon_use_condition_type != '' ">
+	          and coupon_use_condition_type = #{coupon_use_condition_type}
+	        </if>
+            <if test="coupon_use_condition != null and coupon_use_condition != '' ">
+	          and coupon_use_condition = #{coupon_use_condition}
+	        </if>
+            <if test="coupon_collection_condition_type != null and coupon_collection_condition_type != '' ">
+	          and coupon_collection_condition_type = #{coupon_collection_condition_type}
+	        </if>
+            <if test="coupon_collection_condition != null and coupon_collection_condition != '' ">
+	          and coupon_collection_condition = #{coupon_collection_condition}
+	        </if>
+            <if test="coupon_count != null and coupon_count != '' ">
+	          and coupon_count = #{coupon_count}
+	        </if>
+            <if test="coupon_limit_count_type != null and coupon_limit_count_type != '' ">
+	          and coupon_limit_count_type = #{coupon_limit_count_type}
+	        </if>
+            <if test="coupon_limit_day != null and coupon_limit_day != '' ">
+	          and coupon_limit_day = #{coupon_limit_day}
+	        </if>
+            <if test="coupon_limit_count != null and coupon_limit_count != '' ">
+	          and coupon_limit_count = #{coupon_limit_count}
+	        </if>
+            <if test="coupon_time_type != null and coupon_time_type != '' ">
+	          and coupon_time_type = #{coupon_time_type}
+	        </if>
+            <if test="coupon_starttime != null and coupon_starttime != '' ">
+	          and coupon_starttime = #{coupon_starttime}
+	        </if>
+            <if test="coupon_endtime != null and coupon_endtime != '' ">
+	          and coupon_endtime = #{coupon_endtime}
+	        </if>
+            <if test="coupon_time_day != null and coupon_time_day != '' ">
+	          and coupon_time_day = #{coupon_time_day}
+	        </if>
+            <if test="coupon_received_count != null and coupon_received_count != '' ">
+	          and coupon_received_count = #{coupon_received_count}
+	        </if>
+            <if test="coupon_introduce != null and coupon_introduce != '' ">
+	          and coupon_introduce = #{coupon_introduce}
+	        </if>
+            <if test="coupon_status != null and coupon_status != '' ">
+	          and coupon_status = #{coupon_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and c.id = #{id}
+	        </if>
+            <if test="coupon_name != null and coupon_name != '' ">
+	          and c.coupon_name = #{coupon_name}
+	        </if>
+            <if test="coupon_type != null and coupon_type != '' ">
+	          and c.coupon_type = #{coupon_type}
+	        </if>
+            <if test="coupon_scene_type != null and coupon_scene_type != '' ">
+	          and c.coupon_scene_type = #{coupon_scene_type}
+	        </if>
+            <if test="coupon_function_type != null and coupon_function_type != '' ">
+	          and c.coupon_function_type = #{coupon_function_type}
+	        </if>
+            <if test="coupon_use_scope_type != null and coupon_use_scope_type != '' ">
+	          and c.coupon_use_scope_type = #{coupon_use_scope_type}
+	        </if>
+            <if test="coupon_use_scope != null and coupon_use_scope != '' ">
+	          and c.coupon_use_scope = #{coupon_use_scope}
+	        </if>
+            <if test="coupon_price != null and coupon_price != '' ">
+	          and c.coupon_price = #{coupon_price}
+	        </if>
+            <if test="coupon_use_condition_type != null and coupon_use_condition_type != '' ">
+	          and c.coupon_use_condition_type = #{coupon_use_condition_type}
+	        </if>
+            <if test="coupon_use_condition != null and coupon_use_condition != '' ">
+	          and c.coupon_use_condition = #{coupon_use_condition}
+	        </if>
+            <if test="coupon_collection_condition_type != null and coupon_collection_condition_type != '' ">
+	          and c.coupon_collection_condition_type = #{coupon_collection_condition_type}
+	        </if>
+            <if test="coupon_collection_condition != null and coupon_collection_condition != '' ">
+	          and c.coupon_collection_condition = #{coupon_collection_condition}
+	        </if>
+            <if test="coupon_count != null and coupon_count != '' ">
+	          and c.coupon_count = #{coupon_count}
+	        </if>
+            <if test="coupon_limit_count_type != null and coupon_limit_count_type != '' ">
+	          and c.coupon_limit_count_type = #{coupon_limit_count_type}
+	        </if>
+            <if test="coupon_limit_day != null and coupon_limit_day != '' ">
+	          and c.coupon_limit_day = #{coupon_limit_day}
+	        </if>
+            <if test="coupon_limit_count != null and coupon_limit_count != '' ">
+	          and c.coupon_limit_count = #{coupon_limit_count}
+	        </if>
+            <if test="coupon_time_type != null and coupon_time_type != '' ">
+	          and c.coupon_time_type = #{coupon_time_type}
+	        </if>
+            <if test="coupon_starttime != null and coupon_starttime != '' ">
+	          and c.coupon_starttime = #{coupon_starttime}
+	        </if>
+            <if test="coupon_endtime != null and coupon_endtime != '' ">
+	          and c.coupon_endtime = #{coupon_endtime}
+	        </if>
+            <if test="coupon_time_day != null and coupon_time_day != '' ">
+	          and c.coupon_time_day = #{coupon_time_day}
+	        </if>
+            <if test="coupon_received_count != null and coupon_received_count != '' ">
+	          and c.coupon_received_count = #{coupon_received_count}
+	        </if>
+            <if test="coupon_introduce != null and coupon_introduce != '' ">
+	          and c.coupon_introduce = #{coupon_introduce}
+	        </if>
+            <if test="coupon_status != null and coupon_status != '' ">
+	          and c.coupon_status = #{coupon_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwCoupon">
+		insert into yw_coupon(<include refid="insertSql"/>) 
+		values(
+	             #{coupon_name},
+	             #{coupon_type},
+	             #{coupon_scene_type},
+	             #{coupon_function_type},
+	             #{coupon_use_scope_type},
+	             #{coupon_use_scope},
+	             #{coupon_price},
+	             #{coupon_use_condition_type},
+	             #{coupon_use_condition},
+	             #{coupon_collection_condition_type},
+	             #{coupon_collection_condition},
+	             #{coupon_count},
+	             #{coupon_limit_count_type},
+	             #{coupon_limit_day},
+	             #{coupon_limit_count},
+	             #{coupon_time_type},
+	             #{coupon_starttime},
+	             #{coupon_endtime},
+	             #{coupon_time_day},
+	             #{coupon_received_count},
+	             #{coupon_introduce},
+	             #{coupon_status}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_coupon(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.coupon_name},
+	             #{item.coupon_type},
+	             #{item.coupon_scene_type},
+	             #{item.coupon_function_type},
+	             #{item.coupon_use_scope_type},
+	             #{item.coupon_use_scope},
+	             #{item.coupon_price},
+	             #{item.coupon_use_condition_type},
+	             #{item.coupon_use_condition},
+	             #{item.coupon_collection_condition_type},
+	             #{item.coupon_collection_condition},
+	             #{item.coupon_count},
+	             #{item.coupon_limit_count_type},
+	             #{item.coupon_limit_day},
+	             #{item.coupon_limit_count},
+	             #{item.coupon_time_type},
+	             #{item.coupon_starttime},
+	             #{item.coupon_endtime},
+	             #{item.coupon_time_day},
+	             #{item.coupon_received_count},
+	             #{item.coupon_introduce},
+	             #{item.coupon_status}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwCoupon">
+		select <include refid="sql"/> from yw_coupon
+		<include refid="whereSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwCoupon">
+		select <include refid="sql"/> from yw_coupon
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_coupon as c
+		<include refid="whereUnionSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from yw_coupon as c
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id desc
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_coupon
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_coupon
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="coupon_name != null and coupon_name != '' ">
+	           coupon_name = #{coupon_name},
+	        </if>
+            <if test="coupon_type != null and coupon_type != '' ">
+	           coupon_type = #{coupon_type},
+	        </if>
+            <if test="coupon_scene_type != null and coupon_scene_type != '' ">
+	           coupon_scene_type = #{coupon_scene_type},
+	        </if>
+            <if test="coupon_function_type != null and coupon_function_type != '' ">
+	           coupon_function_type = #{coupon_function_type},
+	        </if>
+            <if test="coupon_use_scope_type != null and coupon_use_scope_type != '' ">
+	           coupon_use_scope_type = #{coupon_use_scope_type},
+	        </if>
+            <if test="coupon_use_scope != null and coupon_use_scope != '' ">
+	           coupon_use_scope = #{coupon_use_scope},
+	        </if>
+            <if test="coupon_price != null and coupon_price != '' ">
+	           coupon_price = #{coupon_price},
+	        </if>
+            <if test="coupon_use_condition_type != null and coupon_use_condition_type != '' ">
+	           coupon_use_condition_type = #{coupon_use_condition_type},
+	        </if>
+            <if test="coupon_use_condition != null and coupon_use_condition != '' ">
+	           coupon_use_condition = #{coupon_use_condition},
+	        </if>
+            <if test="coupon_collection_condition_type != null and coupon_collection_condition_type != '' ">
+	           coupon_collection_condition_type = #{coupon_collection_condition_type},
+	        </if>
+            <if test="coupon_collection_condition != null and coupon_collection_condition != '' ">
+	           coupon_collection_condition = #{coupon_collection_condition},
+	        </if>
+            <if test="coupon_count != null and coupon_count != '' ">
+	           coupon_count = #{coupon_count},
+	        </if>
+            <if test="coupon_limit_count_type != null and coupon_limit_count_type != '' ">
+	           coupon_limit_count_type = #{coupon_limit_count_type},
+	        </if>
+            <if test="coupon_limit_day != null and coupon_limit_day != '' ">
+	           coupon_limit_day = #{coupon_limit_day},
+	        </if>
+            <if test="coupon_limit_count != null and coupon_limit_count != '' ">
+	           coupon_limit_count = #{coupon_limit_count},
+	        </if>
+            <if test="coupon_time_type != null and coupon_time_type != '' ">
+	           coupon_time_type = #{coupon_time_type},
+	        </if>
+            <if test="coupon_starttime != null and coupon_starttime != '' ">
+	           coupon_starttime = #{coupon_starttime},
+	        </if>
+            <if test="coupon_endtime != null and coupon_endtime != '' ">
+	           coupon_endtime = #{coupon_endtime},
+	        </if>
+            <if test="coupon_time_day != null and coupon_time_day != '' ">
+	           coupon_time_day = #{coupon_time_day},
+	        </if>
+            <if test="coupon_received_count != null and coupon_received_count != '' ">
+	           coupon_received_count = #{coupon_received_count},
+	        </if>
+            <if test="coupon_introduce != null and coupon_introduce != '' ">
+	           coupon_introduce = #{coupon_introduce},
+	        </if>
+            <if test="coupon_status != null and coupon_status != '' ">
+	           coupon_status = #{coupon_status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update yw_coupon
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item[${field}]}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_coupon
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_coupon
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductAttributenameDao">
+
+    <sql id="insertSql">
+       attrname_name,classify_id,product_id,parent_id
+    </sql>
+    
+    <sql id="sql">
+       attrname_id,attrname_name,classify_id,product_id,parent_id
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="attrname_id != null and attrname_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{attrname_id}),'%') -->
+	          and attrname_id = #{attrname_id}
+	        </if>
+	        <if test="classify_id != null and classify_id != '' ">
+	          and classify_id = #{classify_id}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwProductAttributename" useGeneratedKeys="true" keyProperty="attrname_id">
+		insert into yw_product_attributename(<include refid="insertSql"/>) values(#{attrname_name},#{classify_id},#{product_id},#{parent_id})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductAttributename">
+		select <include refid="sql"/> from yw_product_attributename
+		<include refid="whereSql"/>
+		order by attrname_id
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductAttributename">
+		select <include refid="sql"/> from yw_product_attributename
+		<include refid="whereSql"/>
+		order by attrname_id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_product_attributename
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_product_attributename
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="attrname_id != null and attrname_id != '' ">
+	           attrname_id = #{attrname_id},
+	      </if>
+	      <if test="attrname_name != null and attrname_name != ''">
+	           attrname_name = #{attrname_name},
+	      </if>
+	      <if test="classify_id != null and classify_id != '' ">
+	           classify_id = #{classify_id},
+	      </if>
+	      <if test="product_id != null and product_id != '' ">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="parent_id != null and parent_id != '' ">
+	           parent_id = #{parent_id},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_product_attributename 
+	    <include refid="whereSql"/>
+	</delete>
+	
+</mapper>

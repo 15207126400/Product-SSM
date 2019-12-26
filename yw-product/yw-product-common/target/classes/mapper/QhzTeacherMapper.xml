@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.QhzTeacherDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.product.common.model.QhzTeacher" id="resultMap">
+         <id column="id" property="id" />
+         <result column="name" property="name" />  
+         <result column="photo" property="photo" />  
+         <result column="card" property="card" />  
+         <result column="age" property="age" />  
+         <result column="sex" property="sex" />  
+         <result column="phone" property="phone" />  
+         <result column="address" property="address" />  
+         <result column="post" property="post" />  
+         <result column="dept" property="dept" />  
+         <result column="brief" property="brief" />  
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         name,
+         photo,
+         card,
+         age,
+         sex,
+         phone,
+         address,
+         post,
+         dept,
+         brief
+    </sql>
+    
+    <sql id="insertSql">
+         name,
+         photo,
+         card,
+         age,
+         sex,
+         phone,
+         address,
+         post,
+         dept,
+         brief
+    </sql>
+    
+    <sql id="unionSql">
+         t.id,
+         t.name,
+         t.photo,
+         t.card,
+         t.age,
+         t.sex,
+         t.phone,
+         t.address,
+         t.post,
+         t.dept,
+         t.brief
+    </sql>
+    
+    <!-- 当前表参数条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and name = #{name}
+	        </if>
+            <if test="photo != null and photo != '' ">
+	          and photo = #{photo}
+	        </if>
+            <if test="card != null and card != '' ">
+	          and card = #{card}
+	        </if>
+            <if test="age != null and age != '' ">
+	          and age = #{age}
+	        </if>
+            <if test="sex != null and sex != '' ">
+	          and sex = #{sex}
+	        </if>
+            <if test="phone != null and phone != '' ">
+	          and phone = #{phone}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and address = #{address}
+	        </if>
+            <if test="post != null and post != '' ">
+	          and post = #{post}
+	        </if>
+            <if test="dept != null and dept != '' ">
+	          and dept = #{dept}
+	        </if>
+            <if test="brief != null and brief != '' ">
+	          and brief = #{brief}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and t.id = #{id}
+	        </if>
+            <if test="name != null and name != '' ">
+	          and t.name = #{name}
+	        </if>
+            <if test="photo != null and photo != '' ">
+	          and t.photo = #{photo}
+	        </if>
+            <if test="card != null and card != '' ">
+	          and t.card = #{card}
+	        </if>
+            <if test="age != null and age != '' ">
+	          and t.age = #{age}
+	        </if>
+            <if test="sex != null and sex != '' ">
+	          and t.sex = #{sex}
+	        </if>
+            <if test="phone != null and phone != '' ">
+	          and t.phone = #{phone}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and t.address = #{address}
+	        </if>
+            <if test="post != null and post != '' ">
+	          and t.post = #{post}
+	        </if>
+            <if test="dept != null and dept != '' ">
+	          and t.dept = #{dept}
+	        </if>
+            <if test="brief != null and brief != '' ">
+	          and t.brief = #{brief}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.QhzTeacher">
+		insert into qhz_teacher(<include refid="insertSql"/>) 
+		values(
+	             #{name},
+	             #{photo},
+	             #{card},
+	             #{age},
+	             #{sex},
+	             #{phone},
+	             #{address},
+	             #{post},
+	             #{dept},
+	             #{brief}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into qhz_teacher(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.name},
+	             #{item.photo},
+	             #{item.card},
+	             #{item.age},
+	             #{item.sex},
+	             #{item.phone},
+	             #{item.address},
+	             #{item.post},
+	             #{item.dept},
+	             #{item.brief}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzTeacher">
+		select <include refid="sql"/> from qhz_teacher
+		<include refid="whereSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.QhzTeacher">
+		select <include refid="sql"/> from qhz_teacher
+		<include refid="whereSql"/>
+		order by id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表联合查询(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_teacher as t
+		<include refid="whereUnionSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表联合分页查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionListPage" parameterType="java.util.Map" resultMap="resultMap">
+		select <include refid="unionSql"/> from qhz_teacher as t
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+		order by id
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from qhz_teacher
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update qhz_teacher
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != '' ">
+	           name = #{name},
+	        </if>
+            <if test="photo != null and photo != '' ">
+	           photo = #{photo},
+	        </if>
+            <if test="card != null and card != '' ">
+	           card = #{card},
+	        </if>
+            <if test="age != null and age != '' ">
+	           age = #{age},
+	        </if>
+            <if test="sex != null and sex != '' ">
+	           sex = #{sex},
+	        </if>
+            <if test="phone != null and phone != '' ">
+	           phone = #{phone},
+	        </if>
+            <if test="address != null and address != '' ">
+	           address = #{address},
+	        </if>
+            <if test="post != null and post != '' ">
+	           post = #{post},
+	        </if>
+            <if test="dept != null and dept != '' ">
+	           dept = #{dept},
+	        </if>
+            <if test="brief != null and brief != '' ">
+	           brief = #{brief},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表批量更新 -->
+	<update id="updateBatch">
+	     update qhz_teacher
+	     <trim prefix="set" suffixOverrides=",">
+	        <foreach collection="fields" item="field" separator="end,">
+	          ${field} = CASE id
+	          <foreach collection="lists" item="item">
+	              when #{item.id} then #{item.${field}}
+	          </foreach>
+	        </foreach>
+	     </trim>
+	     <where>
+	         and id in
+	        <foreach collection="lists" item="item" separator="," open="(" close=")">
+	             #{item.id}
+	        </foreach>
+	     </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from qhz_teacher
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from qhz_teacher
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

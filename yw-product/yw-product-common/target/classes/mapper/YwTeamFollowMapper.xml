@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwTeamFollowDao">
+
+    <sql id="insertSql">
+       follow_user_id,follow_user_nickname,follow_user_head_pic,follow_time,order_id,found_id,found_user_id,team_id,status,is_win
+    </sql>
+    
+    <sql id="sql">
+       follow_id,follow_user_id,follow_user_nickname,follow_user_head_pic,follow_time,order_id,found_id,found_user_id,team_id,status,is_win
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="follow_id != null and follow_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{follow_id}),'%') -->
+	          and follow_id = #{follow_id}
+	        </if>
+	        <if test="order_id != null and order_id != '' ">
+	          and order_id = #{order_id}
+	        </if>
+	        <if test="found_id != null and found_id != '' ">
+	          and found_id = #{found_id}
+	        </if>
+	        <if test="status != null and status != '' ">
+	          and status = #{status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="follow_id != null and follow_id != '' ">
+				and follow_id in
+				<foreach collection="follow_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwTeamFollow" useGeneratedKeys="true" keyColumn="follow_id" keyProperty="follow_id">
+		insert into yw_team_follow(<include refid="insertSql"/>) values(#{follow_user_id},#{follow_user_nickname},#{follow_user_head_pic},#{follow_time},
+		#{order_id},#{found_id},#{found_user_id},#{team_id},#{status},#{is_win})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwTeamFollow">
+		select <include refid="sql"/> from yw_team_follow
+		<include refid="whereSql"/>
+	</select>
+	
+
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwTeamFollow">
+		select <include refid="sql"/> from yw_team_follow
+		<include refid="whereSql"/>
+		order by follow_id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_team_follow
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_team_follow
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="follow_user_id != null and follow_user_id != ''">
+	           follow_user_id = #{follow_user_id},
+	      </if>
+	      <if test="follow_user_nickname != null and follow_user_nickname != '' ">
+	           follow_user_nickname = #{follow_user_nickname},
+	      </if>
+	      <if test="follow_user_head_pic != null and follow_user_head_pic != '' ">
+	           follow_user_head_pic = #{follow_user_head_pic},
+	      </if>
+	      <if test="follow_time != null and follow_time != '' ">
+	           follow_time = #{follow_time},
+	      </if>
+	      <if test="found_id != null and found_id != '' ">
+	           found_id = #{found_id},
+	      </if>
+	      <if test="found_user_id != null and found_user_id != '' ">
+	           found_user_id = #{found_user_id},
+	      </if>
+	      <if test="team_id != null and team_id != '' ">
+	           team_id = #{team_id},
+	      </if>
+	      <if test="status != null and status != '' ">
+	           status = #{status},
+	      </if>
+	      <if test="is_win != null and is_win != '' ">
+	           is_win = #{is_win},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="follow_id != null and follow_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{follow_id}),'%') -->
+	          and follow_id = #{follow_id}
+	        </if>
+	        <if test="found_id != null and found_id != '' ">
+	          and found_id = #{found_id}
+	        </if>
+	    </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_team_follow 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_team_follow
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

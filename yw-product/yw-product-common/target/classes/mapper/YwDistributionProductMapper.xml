@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwDistributionProductDao">
+
+	<sql id="insertSql">
+	    product_id ,
+	    product_name,
+		dis_pro_onescale ,
+		dis_pro_twoscale,
+		dis_pro_showlogo ,
+		dis_pro_createtime,
+		dis_pro_endtime ,
+		dis_pro_status ,
+		dis_pro_discounts ,
+		dis_pro_saleatotal
+	</sql>
+
+	<sql id="updateSql">
+        #{product_id },
+        #{product_name },
+		#{dis_pro_onescale },
+		#{dis_pro_twoscale },
+		#{dis_pro_showlogo },
+		#{dis_pro_createtime },
+		#{dis_pro_endtime },
+		#{dis_pro_status },
+		#{dis_pro_discounts },
+        #{dis_pro_saleatotal }
+	</sql>
+
+	<sql id="sql">
+	    dis_pro_id,
+		product_id ,
+		product_name,
+		dis_pro_onescale ,
+		dis_pro_twoscale,
+		dis_pro_showlogo ,
+		dis_pro_createtime,
+		dis_pro_endtime ,
+		dis_pro_status ,
+		dis_pro_discounts ,
+		dis_pro_saleatotal
+	</sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="product_id != null and product_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{product_id}),'%') -->
+	          and product_id = #{product_id}
+	        </if>
+	        <if test="dis_pro_id != null and dis_pro_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{dis_pro_id}),'%') -->
+	          and dis_pro_id = #{dis_pro_id}
+	        </if>
+	    </where>
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="dis_pro_id != null and dis_pro_id != '' ">
+				and dis_pro_id in
+				<foreach collection="dis_pro_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="product_id != null and product_id != '' ">
+				and product_id in
+				<foreach collection="product_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwDistributionProduct">
+		insert into yw_distribution_product(<include refid="insertSql"/>) values(<include refid="updateSql" />)
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributionProduct">
+		select 
+		d.dis_pro_id,
+		d.product_id ,
+		d.product_name,
+		d.dis_pro_onescale ,
+		d.dis_pro_twoscale,
+		d.dis_pro_createtime,
+		d.dis_pro_endtime ,
+		d.dis_pro_status ,
+		d.dis_pro_discounts ,
+		d.dis_pro_saleatotal,
+		b.thumbnail_url dis_pro_showlogo 
+		from yw_distribution_product d left join yw_images_xcxthumbnail b on d.dis_pro_showlogo = b.image_id and b.thumbnail_type = '1'
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwDistributionProduct">
+		select 
+		d.dis_pro_id,
+		d.product_id ,
+		d.product_name,
+		d.dis_pro_onescale ,
+		d.dis_pro_twoscale,
+		d.dis_pro_createtime,
+		d.dis_pro_endtime ,
+		d.dis_pro_status ,
+		d.dis_pro_discounts ,
+		d.dis_pro_saleatotal,
+		b.thumbnail_url dis_pro_showlogo
+		from yw_distribution_product d left join yw_images_xcxthumbnail b on d.dis_pro_showlogo = b.image_id and b.thumbnail_type = '1'
+		<include refid="whereSql"/>
+		order by dis_pro_createtime desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_distribution_product
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_distribution_product
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="product_id != null and product_id != '' ">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="product_name != null and product_name != '' ">
+	           product_name = #{product_name},
+	      </if>
+	      <if test="dis_pro_onescale != null and dis_pro_onescale != ''">
+	           dis_pro_onescale = #{dis_pro_onescale},
+	      </if>
+	      <if test="dis_pro_twoscale != null and dis_pro_twoscale != ''">
+	           dis_pro_twoscale = #{dis_pro_twoscale},
+	      </if>
+	      <if test="dis_pro_showlogo != null and dis_pro_showlogo != ''">
+	           dis_pro_showlogo = #{dis_pro_showlogo},
+	      </if>
+	      <if test="dis_pro_createtime != null and dis_pro_createtime != ''">
+	           dis_pro_createtime = #{dis_pro_createtime},
+	      </if>
+	      <if test="dis_pro_endtime != null and dis_pro_endtime != ''">
+	           dis_pro_endtime = #{dis_pro_endtime},
+	      </if>
+	      <if test="dis_pro_status != null and dis_pro_status != ''">
+	           dis_pro_status = #{dis_pro_status},
+	      </if>
+	      <if test="dis_pro_discounts != null and dis_pro_discounts != ''">
+	           dis_pro_discounts = #{dis_pro_discounts},
+	      </if>
+	      <if test="dis_pro_saleatotal != null and dis_pro_saleatotal != ''">
+	           dis_pro_saleatotal = #{dis_pro_saleatotal},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="dis_pro_id != null and dis_pro_id != '' ">
+	          and dis_pro_id = #{dis_pro_id}
+	        </if>
+	    </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_distribution_product 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_distribution_product
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

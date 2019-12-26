@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwMemberTokenDao">
+
+	<!-- 保存token信息 -->
+	<insert id="addToken" parameterType="String">
+		insert into yw_member_token(access_token,expires_in,createBy,startTime,endTime) values(#{access_token},#{expires_in},#{createBy},#{startTime},#{endTime})
+	</insert>
+	
+	<!-- 查询所有token信息 -->
+	<select id="queryAllToken" resultType="YwMemberToken">
+		select * from yw_member_token
+	</select>
+	
+	<!-- 通过id查找指定token信息 -->
+	<select  id="queryByToken" resultType="YwMemberToken" parameterType="int">
+		select * from yw_member_token where id = #{id}
+	</select>
+	
+	<!-- 修改token信息 -->
+	<update id="updateToken" parameterType="YwMemberToken">
+		update yw_member_token set access_token=#{access_token},createBy=#{createBy},startTime=#{startTime},endTime=#{endTime} where id=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwSmsBuyDao">
+
+    <sql id="sql">
+       buy_id,user_id,combo_id,buy_number,buy_usenumber,buy_price,buy_createtime,buy_updatetime,order_sn,buy_status,buy_remark
+    </sql>
+    
+    <sql id="insertSql">
+       user_id,combo_id,buy_number,buy_usenumber,buy_price,buy_createtime,buy_updatetime,order_sn,buy_status,buy_remark
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="buy_id != null and buy_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{buy_id}),'%') -->
+	          and buy_id = #{buy_id}
+	        </if>
+	        <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	      </if>
+	    </where> 
+    </sql>
+
+    <sql id = "whereUpdateSql">
+	     <where>
+	        <if test="buy_id != null and buy_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{buy_id}),'%') -->
+	          and buy_id = #{buy_id}
+	        </if>
+	        <if test="order_sn != null and order_sn != '' ">
+	          and order_sn = #{order_sn}
+	      </if>
+	    </where> 
+    </sql>
+    
+	<sql id="whereBatchSql">
+		<where>
+			<if test="buy_id != null and buy_id != '' ">
+				and buy_id in
+				<foreach collection="buy_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwSmsBuy" useGeneratedKeys="true" keyProperty="buy_id" keyColumn="buy_id">
+		insert into yw_sms_buy(<include refid="insertSql"/>) values(#{user_id},#{combo_id},#{buy_number},#{buy_usenumber},#{buy_price},#{buy_createtime},#{buy_updatetime},#{order_sn},#{buy_status},#{buy_remark})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsBuy">
+		select <include refid="sql"/> from yw_sms_buy
+		<include refid="whereSql"/>
+		order by buy_createtime desc
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwSmsBuy">
+		select <include refid="sql"/> from yw_sms_buy
+		<include refid="whereSql"/>
+		order by buy_createtime desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_sms_buy
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_sms_buy
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="combo_id != null and combo_id != '' ">
+	           combo_id = #{combo_id},
+	      </if>
+	      <if test="buy_number != null and buy_number != '' ">
+	           buy_number = #{buy_number},
+	      </if>
+	      <if test="buy_usenumber != null and buy_usenumber != '' ">
+	           buy_usenumber = #{buy_usenumber},
+	      </if>
+	      <if test="buy_price != null and buy_price != '' ">
+	           buy_price = #{buy_price},
+	      </if>
+	      <if test="buy_createtime != null and buy_createtime != '' ">
+	           buy_createtime = #{buy_createtime},
+	      </if>
+	      <if test="buy_updatetime != null and buy_updatetime != '' ">
+	           buy_updatetime = #{buy_updatetime},
+	      </if>
+	      <if test="buy_status != null and buy_status != '' ">
+	           buy_status = #{buy_status},
+	      </if>
+	      <if test="buy_remark != null and buy_remark != '' ">
+	           buy_remark = #{buy_remark},
+	      </if>
+	    </trim>
+	    <include refid="whereUpdateSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_sms_buy 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_sms_buy
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

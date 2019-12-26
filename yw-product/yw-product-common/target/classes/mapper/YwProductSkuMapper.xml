@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.product.common.dao.YwProductSkuDao">
+
+    <sql id="insertSql">
+       product_id,sku_attr,sku_image,sku_price,sku_virtualprice,sku_stock,sku_sales
+    </sql>
+    
+    <sql id="sql">
+       sku_id,product_id,sku_attr,sku_image,sku_price,sku_virtualprice,sku_stock,sku_sales
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="sku_id != null and sku_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{sku_id}),'%') -->
+	          and sku_id = #{sku_id}
+	        </if>
+	        <if test="sku_attr != null and sku_attr != '' ">
+	          and sku_attr = #{sku_attr}
+	        </if>
+	        <if test="product_id != null and product_id != '' ">
+	          and product_id = #{product_id}
+	        </if>
+	    </where> 
+    </sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.product.common.model.YwProductSku">
+		insert into yw_product_sku(<include refid="insertSql"/>) values(#{product_id},#{sku_attr},#{sku_image},#{sku_price},#{sku_virtualprice},#{sku_stock},#{sku_sales})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductSku">
+		select 
+		    s.sku_id,
+		    s.product_id,
+		    s.sku_attr,
+		    s.sku_price,
+		    s.sku_virtualprice,
+		    s.sku_stock,
+		    s.sku_sales,
+		    b.image_id as image_id,
+		    b.thumbnail_url as sku_image
+		    from yw_product_sku s left join yw_images_backthumbnail b on s.sku_image = b.image_id and b.thumbnail_type = '4'
+		<include refid="whereSql"/>
+		order by sku_id
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.product.common.model.YwProductSku">
+		select <include refid="sql"/> from yw_product_sku
+		<include refid="whereSql"/>
+		order by sku_id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_product_sku
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_product_sku
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="product_id != null and product_id != ''">
+	           product_id = #{product_id},
+	      </if>
+	      <if test="sku_attr != null and sku_attr != '' ">
+	           sku_attr = #{sku_attr},
+	      </if>
+	      <if test="sku_image != null and sku_image != '' ">
+	           sku_image = #{sku_image},
+	      </if>
+	      <if test="sku_price != null and sku_price != '' ">
+	           sku_price = #{sku_price},
+	      </if>
+	      <if test="sku_virtualprice != null and sku_virtualprice != '' ">
+	           sku_virtualprice = #{sku_virtualprice},
+	      </if>
+	      <if test="sku_stock != null and sku_stock != '' ">
+	           sku_stock = #{sku_stock},
+	      </if>
+	      <if test="sku_sales != null and sku_sales != '' ">
+	           sku_sales = #{sku_sales},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="sku_id != null and sku_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{sku_id}),'%') -->
+	          and sku_id = #{sku_id}
+	        </if>
+	    </where> 
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_product_sku 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_product_sku (<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.product_id},#{item.sku_attr},#{item.sku_image},#{item.sku_price},#{item.sku_virtualprice},#{item.sku_stock},#{item.sku_sales})
+        </foreach>
+    </insert>
+	
+</mapper>
