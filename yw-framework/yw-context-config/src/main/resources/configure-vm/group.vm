@@ -1,0 +1,18 @@
+#if (!$f.define)
+
+<div id='$f.id' class='relatable
+#if ($f.hasLabel())
+ sections
+#end
+' $f.generalDealDisplay() >
+#if ($f.hasLabel())
+<h1 class="title">$f.label</h1>
+#end
+
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+
+</div>
+
+#end

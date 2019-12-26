@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 顶点柜台接口访问设置 -->
+<root id="root">
+    <elem id="livebosuserid" note="webservice服务用户ID">${livebos_userid}</elem>
+	<elem id="livebosuser" note="webservice服务用户名">${livebos_user}</elem>
+	<elem id="livebospwd" note="webservice服务密码">${livebos_pwd}</elem>
+	<elem id="livebosserviceurl" note="webservice服务地址">${livebos_service_url}</elem>
+
+	<elem id="crhfixapiip" note="fix接口转发程序IP">${crh_fixapi_ip}</elem>
+	<elem id="crhfixapiport" note="fix接口转发程序端口">${crh_fixapi_port}</elem>
+</root>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.usercenter.dao.YwUserCustomerXcxDao">
+
+    <sql id="sql">
+         id,
+         user_id,
+         xcx_name,
+         xcx_type,
+         app_id,
+         app_secret,
+         mch_id,
+         xcx_pay_key,
+         sign_type,
+         param_type,
+         xcx_order_ip,
+         xcx_order_body,
+         cert_path,
+         cert_type,
+         xcx_createtime,
+         xcx_updatetime,
+         xcx_status
+    </sql>
+    
+    <sql id="insertSql">
+         user_id,
+         xcx_name,
+         xcx_type,
+         app_id,
+         app_secret,
+         mch_id,
+         xcx_pay_key,
+         sign_type,
+         param_type,
+         xcx_order_ip,
+         xcx_order_body,
+         cert_path,
+         cert_type,
+         xcx_createtime,
+         xcx_updatetime,
+         xcx_status
+    </sql>
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+	        <if test="xcx_name != null and xcx_name != '' ">
+	          and xcx_name = #{xcx_name}
+	        </if>
+            <if test="xcx_type != null and xcx_type != '' ">
+	          and xcx_type = #{xcx_type}
+	        </if>
+            <if test="app_id != null and app_id != '' ">
+	          and app_id = #{app_id}
+	        </if>
+            <if test="app_secret != null and app_secret != '' ">
+	          and app_secret = #{app_secret}
+	        </if>
+            <if test="mch_id != null and mch_id != '' ">
+	          and mch_id = #{mch_id}
+	        </if>
+            <if test="xcx_pay_key != null and xcx_pay_key != '' ">
+	          and xcx_pay_key = #{xcx_pay_key}
+	        </if>
+            <if test="sign_type != null and sign_type != '' ">
+	          and sign_type = #{sign_type}
+	        </if>
+            <if test="param_type != null and param_type != '' ">
+	          and param_type = #{param_type}
+	        </if>
+            <if test="xcx_order_ip != null and xcx_order_ip != '' ">
+	          and xcx_order_ip = #{xcx_order_ip}
+	        </if>
+            <if test="xcx_order_body != null and xcx_order_body != '' ">
+	          and xcx_order_body = #{xcx_order_body}
+	        </if>
+            <if test="cert_path != null and cert_path != '' ">
+	          and cert_path = #{cert_path}
+	        </if>
+            <if test="cert_type != null and cert_type != '' ">
+	          and cert_type = #{cert_type}
+	        </if>
+            <if test="xcx_createtime != null and xcx_createtime != '' ">
+	          and xcx_createtime = #{xcx_createtime}
+	        </if>
+            <if test="xcx_updatetime != null and xcx_updatetime != '' ">
+	          and xcx_updatetime = #{xcx_updatetime}
+	        </if>
+            <if test="xcx_status != null and xcx_status != '' ">
+	          and xcx_status = #{xcx_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+	        <if test="xcx_name != null and xcx_name != '' ">
+	          and xcx_name = #{xcx_name}
+	        </if>
+            <if test="xcx_type != null and xcx_type != '' ">
+	          and xcx_type = #{xcx_type}
+	        </if>
+            <if test="app_id != null and app_id != '' ">
+	          and app_id = #{app_id}
+	        </if>
+            <if test="app_secret != null and app_secret != '' ">
+	          and app_secret = #{app_secret}
+	        </if>
+            <if test="mch_id != null and mch_id != '' ">
+	          and mch_id = #{mch_id}
+	        </if>
+            <if test="xcx_pay_key != null and xcx_pay_key != '' ">
+	          and xcx_pay_key = #{xcx_pay_key}
+	        </if>
+            <if test="sign_type != null and sign_type != '' ">
+	          and sign_type = #{sign_type}
+	        </if>
+            <if test="param_type != null and param_type != '' ">
+	          and param_type = #{param_type}
+	        </if>
+            <if test="xcx_order_ip != null and xcx_order_ip != '' ">
+	          and xcx_order_ip = #{xcx_order_ip}
+	        </if>
+            <if test="xcx_order_body != null and xcx_order_body != '' ">
+	          and xcx_order_body = #{xcx_order_body}
+	        </if>
+            <if test="cert_path != null and cert_path != '' ">
+	          and cert_path = #{cert_path}
+	        </if>
+            <if test="cert_type != null and cert_type != '' ">
+	          and cert_type = #{cert_type}
+	        </if>
+            <if test="xcx_createtime != null and xcx_createtime != '' ">
+	          and xcx_createtime = #{xcx_createtime}
+	        </if>
+            <if test="xcx_updatetime != null and xcx_updatetime != '' ">
+	          and xcx_updatetime = #{xcx_updatetime}
+	        </if>
+            <if test="xcx_status != null and xcx_status != '' ">
+	          and xcx_status = #{xcx_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.context.sys.usercenter.model.YwUserCustomerXcx">
+		insert into yw_system_usercenter.yw_user_customer_xcx(<include refid="insertSql"/>) 
+		values(
+	             #{user_id},
+	             #{xcx_name},
+	             #{xcx_type},
+	             #{app_id},
+	             #{app_secret},
+	             #{mch_id},
+	             #{xcx_pay_key},
+	             #{sign_type},
+	             #{param_type},
+	             #{xcx_order_ip},
+	             #{xcx_order_body},
+	             #{cert_path},
+	             #{cert_type},
+	             #{xcx_createtime},
+	             #{xcx_updatetime},
+	             #{xcx_status}
+		     )
+	</insert>
+	
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.usercenter.model.YwUserCustomerXcx">
+		select <include refid="sql"/> from yw_system_usercenter.yw_user_customer_xcx
+		<include refid="whereSql"/>
+	</select>
+
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.usercenter.model.YwUserCustomerXcx">
+		select <include refid="sql"/> from yw_system_usercenter.yw_user_customer_xcx
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_user_customer_xcx
+		<include refid="whereSql"/>
+	</select>
+
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_user_customer_xcx
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	        </if>
+	        <if test="xcx_name != null and xcx_name != '' ">
+	           xcx_name = #{xcx_name},
+	        </if>
+            <if test="xcx_type != null and xcx_type != '' ">
+	           xcx_type = #{xcx_type},
+	        </if>
+            <if test="app_id != null and app_id != '' ">
+	           app_id = #{app_id},
+	        </if>
+            <if test="app_secret != null and app_secret != '' ">
+	           app_secret = #{app_secret},
+	        </if>
+            <if test="mch_id != null and mch_id != '' ">
+	           mch_id = #{mch_id},
+	        </if>
+            <if test="xcx_pay_key != null and xcx_pay_key != '' ">
+	           xcx_pay_key = #{xcx_pay_key},
+	        </if>
+            <if test="sign_type != null and sign_type != '' ">
+	           sign_type = #{sign_type},
+	        </if>
+            <if test="param_type != null and param_type != '' ">
+	           param_type = #{param_type},
+	        </if>
+            <if test="xcx_order_ip != null and xcx_order_ip != '' ">
+	           xcx_order_ip = #{xcx_order_ip},
+	        </if>
+            <if test="xcx_order_body != null and xcx_order_body != '' ">
+	           xcx_order_body = #{xcx_order_body},
+	        </if>
+            <if test="cert_path != null and cert_path != '' ">
+	           cert_path = #{cert_path},
+	        </if>
+            <if test="cert_type != null and cert_type != '' ">
+	           cert_type = #{cert_type},
+	        </if>
+            <if test="xcx_createtime != null and xcx_createtime != '' ">
+	           xcx_createtime = #{xcx_createtime},
+	        </if>
+            <if test="xcx_updatetime != null and xcx_updatetime != '' ">
+	           xcx_updatetime = #{xcx_updatetime},
+	        </if>
+            <if test="xcx_status != null and xcx_status != '' ">
+	           xcx_status = #{xcx_status},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_user_customer_xcx 
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_user_customer_xcx
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

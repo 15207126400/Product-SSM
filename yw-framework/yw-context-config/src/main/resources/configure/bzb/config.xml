@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	
+	<property name="bzb_security_path" label="倍赚宝版本" default="cnht" description="选择券商，此配置会影响样式文件的调用目录">
+		<validator type="select">
+			<option value="cnht" label="恒泰证券" related="" />
+		</validator>
+	</property>
+	
+    <validator id="judge_checkbox" type="checkbox">
+        <option label="开" value="true"></option>
+        <option label="关" value="false"></option>
+    </validator>
+    <validator id="display_checkbox" type="checkbox">
+        <option label="显示" value="visble"></option>
+        <option label="隐藏" value="invisble"></option>
+    </validator>
+    
+	<group id="security" label="券商基本配置内容（仅适用于网厅）" display="true">
+        <property name="bzb_security_name" label="券商名称" default="中华证券"  description="券商名称, 此名称将全局显示在各网页文字部分" />
+        <property name="bzb_security_short" label="券商名称简称" default="中华"  description="券商名称简称, 此名称将全局显示在各网页文字部分" />
+        <property name="bzb_security_servicephone" label="客服电话" default="4008696336"  description="券商客服电话, 此电话将显示在各网页文字部分,有多个客服热显示以“;”分隔" />
+        <property name="bzb_security_image_logo" label="券商LOGO图片" default="zhzq.png"  description="券商LOGO图片名称" />
+        <property name="bzb_security_controlpkg_path" label="安装包名" default="CRHSetup.exe"  description="券商控件安装包名称"/>
+        <property name="wt_address" label="前往网厅的Url"  default="" description=""></property> 
+        <property name="kh_address" label="前往网上开户的Url"  default="" description=""></property> 
+        <property name="bzb_channel_shorturl" label="使用开户渠道短链接"  default="" description=""></property> 
+        <property name="bzb_video_queue_root_inner" label="视频队列服务地址" default="http://115.238.108.41:8088"  description="视频队列服务内网根地址（必配）">
+            <validator type="url" />
+            <validator type="required" />
+        </property>
+        <property name="bzb_video_default_branchno" label="提供视频服务的默认营业部编号" default=""  description="提供视频服务的默认营业部编号,不输入时，视频服务为客户所属的营业部"/>
+        
+       <property name="bzb_login_passwd_show" label="是否显示忘记密码"  default="visble" description="登录界面是否消失忘记密码链接">
+        	<validator type="checkbox" ref="display_checkbox"></validator>
+       </property>
+       <property name="bzb_verify_code_time" label="手机验证码倒计时" default="60" description="获取手机验证码倒计时设置 ,单位秒">
+            <validator type="range" value="[30,3200]" />
+       </property>
+       <property name="login_check_ifsuser" label="检查是否是IFS网络金融客户"  default="true" description="登录界面是否消失忘记密码链接">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       </property>
+       <!-- add by wangsz 2015-5-27 -->
+       <property name="bzb_login_check_clientgroup" label="检查是否是倍赚宝客户" default="true" description="检查登陆用户是否是倍赚宝客户">
+            <validator type="checkbox" ref="judge_checkbox"></validator>
+       </property>
+        <property name="wt_xdt_link_address" label="非倍赚宝用户登录错误提示信息的链接地址" default="http://wt.cnht.com.cn/ " description="非倍赚宝用户登录错误提示信息的链接地址">
+        <validator type="url"/>
+        <validator type="required"/>
+        </property>
+        <property name="bzb_account_select_credit" label="显示信用账户" default="invisble" description="登录界面是否显示信用账户">
+        <validator type="checkbox" ref="display_checkbox"></validator>
+        </property> 
+      <!-- add by wangsz 2015-5-27 -->  
+    </group>
+    
+    <group id="conn" label="连接配置" display="true">
+    	<property name="bzb_webaddr_type" label="倍赚宝http类型" default="http">
+            <validator type="radio">
+                <option label="http" value="http"></option>
+                <option label="https" value="https"></option>
+            </validator>
+        </property>
+        <property name="bzb_first_cookie_domain" label="倍赚宝一级域名" default="obs">
+            <validator type="required" />
+        </property>
+        <property name="bzb_second_cookie_domain" label="倍赚宝二级域名" default="dev.com">
+            <validator type="required" />
+        </property>
+        <property name="bzb_webaddr_port" label="倍赚宝端口" default="80" description="Nginx提供访问的端口">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        <property name="ifs_counter_type" label="连接IFS柜台系统" default="06">
+            <validator type="radio">
+                <option label="06" value="06"></option>
+                <option label="UF" value="UF"></option>
+            </validator>
+        </property>
+    </group>
+     
+    <group id="cert" label="证书配置" display="true">
+    	<property name="ca_interface_bean" label="CA证书服务" default="itrus"
+			description="CA证书接口方式">
+			<validator type="select">
+				<option value="itrus" label="天威CA" />
+				<option value="csdcca" label="直连中登CA" />
+				<option value="hscsdcca" label="恒生T2代理CA服务" />
+				<option value="htcsdcca" label="海通代理CA服务" />
+				<option value="hnca" label="河南CA" />
+			</validator>
+		</property>
+		<property name="display_cert_item" label="网厅支持的证书" default="zd"
+			description="">
+			<validator type="select">
+				<option value="zjandzd" label="自建中登都支持" />
+				<option value="zd" label="仅支持中登" />
+				<option value="zj" label="仅支持自建" />
+			</validator>
+		</property>
+		<property name="zd_cert_need_verify" label="中登证书申请需要颁发步骤" default="false" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="zd_cert_apply_need_sm" label="中登证书申请需要短信验证步骤" default="true" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="zj_cert_need_verify" label="自建证书申请需要颁发步骤" default="false" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="zj_cert_apply_need_sms" label="自建证书申请需要短信验证步骤" default="true" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+    </group>
+
+    <group id="oos" label="开户相关配置" display="true">
+    	<property name="open_support_branch_locate" label="开户营业部定位功能"  default="0" description="0不定位营业部 ；1定位所有地区的营业部；2定位所在省份的营业部；3定位所在城市营业部">
+        	<validator type="select">
+        		<option label="不定位营业部" value="0"></option>
+                <option label="定位所有地区的营业部" value="1"></option>
+                <option label="定位所在省份的营业部" value="2"></option>
+                <option label="定位所在城市营业部" value="3"></option>
+        	</validator>
+       	</property>
+		<property name="open_support_branchtype" label="开户支持选择营业部的类型" default="2,3" description="1=总部，2=分公司，3=普通营业部，以“,”分隔，例如：2,3">
+        </property>
+        <property name="id_info_name" label="显示姓名开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+        <property name="id_info_idNum" label="显示身份证号开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="id_info_idaddress" label="显示身份证住址开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="id_info_detailAddress" label="显示联系地址开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="id_info_zipCode" label="显示邮政编码开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="callback_flag" label="显示问卷回访开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="id_info_career" label="显示职业开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+        <property name="id_info_education" label="显示学历开关" default="false" description=" 开(显示)，关（不显示）">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="client_download_pic_path" label="交易软件下载图片地址" default="" description="属于结果页的链接"></property>
+		<property name="client_download_url" label="交易软件下载地址" default="" description="属于结果页的链接"></property>
+		<property name="audit_app_picturePath" label="手机app二维码图片地址" default="" description="属于结果页的链接"></property>
+		<property name="audit_wechat_picturePath" label="微信二维码图片地址" default="" description="属于结果页的链接"></property>
+        
+    </group>
+    
+    <group id="fund" label="我的资金相关配置" display="true">
+    	<property name="bank2sec_display_bankpwd" label="银行转证券是否显示银行密码"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="bank2sec_display_fundpwd" label="银行转证券是否显示资金密码"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="sec2bank_display_bankpwd" label="证券转银行是否显示银行密码"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="sec2bank_display_fundpwd" label="证券转银行是否显示资金密码"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="quota.relate.asset" label="是否额度和资产相关联"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt.quota.relate.credit.asset" label="设置额度 获取总资产是否包含信用资产"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt.max.credit.quota" label="股票质押额度上限"  default="3000000" description="">
+      	</property> 
+       	<property name="open.Margin.Balace" label="开通融资融券所需资产"  default="5000000" description="">
+      	</property> 
+       	<property name="open.Margin.Date" label="开通融资融券所需天数"  default="180" description="">
+      	</property> 
+      	<property name="margin.adjustModel" label="融资融券额度计算模式 "  default="1" description="  1：普通资产+信用资产    2：普通资产    3：信用资产">
+      	</property> 
+       	<property name="margin.maxCreditValue" label="融资融券额度上限"  default="3000000" description="">
+      	</property> 
+       	<property name="investment_product" label="投顾产品代码"  default="ty0003" description="激进型">
+      	</property> 
+      	<property name="investment_product_noRadical" label="投顾产品代码"  default="ty0003" description="非激进型">
+      	</property> 
+    </group>
+    
+    <group id="xdt" label="小贷相关配置" display="true">
+    	<property name="xdt_open_newplay" label="小贷是否开通融资打新"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt_open_use" label="小贷是否开通融资可用"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt_open_exchange" label="小贷是否开通融资可取"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	
+       	<property name="xdt_opencheck_risk" label="小贷开通是否检测风险测评"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt_min_asset" label="小贷开通最低资产要求" default="0" description=""></property>
+       	<property name="xdt_opencheck_risk_limitcode" label="允许开通小贷最低风险评测等级"  default="0" description="0:默认型，1：保守型，2：稳健型，3：积极型，4：激进型">
+      	</property>
+      	<property name="xdt_opencheck_risk_limitname" label="允许开通小贷最低风险评测等级名称"  default="稳健型" description="0:默认型，1：保守型，2：稳健型，3：积极型，4：激进型">
+      	</property>
+      	<property name="xdt_borrow_limitmoney_newplay" label="小贷融资打新的最大借款金额限制"  default="5000000" description="">
+      	</property>
+      	<property name="xdt_borrow_limitmoney_use" label="小贷融资可用的最大借款金额限制"  default="5000000" description="">
+      	</property>
+      	<property name="xdt_borrow_limitmoney_exchange" label="小贷融资可取的最大借款金额限制"  default="5000000" description="">
+      	</property> 
+      	 <property name="xdt_borrow_exchangetype_differentiate" label="股票质押期限利率是否区分市场"  default="false" description="false：不区分市场，该种情况要求借款周期深圳和上海两个市场完全一致，包括各个借款周期的融出方；true：区分市场，该情况无要求">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="xdt_date_back_warn" label="还款提醒天数"  default="2" description="当还款时间距离当天小于配置的值时，在借款记录页面标红显示该记录">
+      	</property> 
+      	<property name="xdt_help_assure_price" label="折算价提示文字"  default="折算价格\=min（前一日收盘价，前20日均价）" description="">
+      	</property> 
+      	<property name="xdt_help_assure_ratio" label="折算率提示文字"  default="证券充当保证金要打折，其市值或净值将按一定的折算率打折。" description="">
+      	</property> 
+      	<property name="xdt_cancel_lation_time" label="小贷通撤单时间限制"  default="" description="以9:30-15:30格式配置">
+      	</property> 
+       	
+    </group>
+    
+    <!--
+    <group id="margn" label="融资融券相关配置" display="true">
+    </group>
+     -->
+     
+</config>

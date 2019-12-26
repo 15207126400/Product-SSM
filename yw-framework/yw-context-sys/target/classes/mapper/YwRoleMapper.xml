@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.dao.YwRoleDao">
+
+    <sql id="insertSql">
+       ro_name,ro_status,ro_remark,mu_ids
+    </sql>
+    
+    <sql id="sql">
+       ro_id,ro_name,ro_status,ro_remark,mu_ids
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="ro_id != null and ro_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{ro_id}),'%') -->
+	          and ro_id = #{ro_id}
+	        </if>
+	        <if test="ro_status != null and ro_status != '' ">
+	          and ro_status = #{ro_status}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="ro_id != null and ro_id != '' ">
+				and ro_id in
+				<foreach collection="ro_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.sys.model.YwRole">
+		insert into yw_system_usercenter.yw_role(<include refid="insertSql"/>) values(#{ro_name},#{ro_status},#{ro_remark},#{mu_ids})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwRole">
+		select <include refid="sql"/> from yw_system_usercenter.yw_role
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwRole">
+		select <include refid="sql"/> from yw_system_usercenter.yw_role
+		<include refid="whereSql"/>
+		order by ro_id
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_role
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_role
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="ro_id != null and ro_id != '' ">
+	           ro_id = #{ro_id},
+	      </if>
+	      <if test="ro_name != null and ro_name != ''">
+	           ro_name = #{ro_name},
+	      </if>
+	      <if test="ro_status != null and ro_status != '' ">
+	           ro_status = #{ro_status},
+	      </if>
+	      <if test="ro_remark != null and ro_remark != '' ">
+	           ro_remark = #{ro_remark},
+	      </if>
+	           mu_ids = #{mu_ids},
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_role 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_role
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

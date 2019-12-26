@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 网厅公共模块配置修改（高伟星）开始 -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="personinfo" label="个人资料配置" display="true">
+		<property name="pwdset_display_passwd_connect" label="设置密码-通讯密码是否显示"
+			default="0" description="网厅密码修改，通讯密码修改配置是否显示。0隐藏 1显示。默认0">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="pwdset_display_passwd_capital" label="设置密码-资金密码是否显示"
+			default="0" description="网厅密码修改，资金密码修改配置是否显示。0隐藏 1显示。默认0">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		
+		<property name="pwdrset_display_passwd_connect" label="密码重置-通讯密码是否显示"
+			default="0" description="网厅密码重置，重置通讯密码是否显示。0隐藏 1显示。默认0">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="pwdrset_display_passwd_capital" label="密码重置-资金密码是否显示"
+			default="0" description="网厅密码重置，重置资金密码配置是否显示。0隐藏 1显示。默认0">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+
+		<property name="wt_pwdreset_jyma" label="交易密码归属" default="1"
+			description="密码重置的时候需要选用重置客户号所属的交易密码：0，资金账号下所属的交易密码：1。默认1" />
+			
+		<property name="wt_login_IDtype" label="交易密码归属" default="all"
+			description="#用户登录的时候，允许哪些证件类别登录，以逗号分割，例如0,1,2,3。默认为all，为all的时候允许所有类别登录。身份证类别参照恒生数据字典A00003" />
+		
+		<property name="old_mobile_verify" label="是否需要通过原手机获取验证码验证"
+			default="1" description="手机设置 更换手机号码时:是否需要通过原手机获取验证码验证">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="wt_show_mail" label="是否需要显示邮箱配置功能" default="1"
+			description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="idinfo_update_need_verify" label="重要资料修改是否需要审核" default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="mobile_bind_support_videoverify" label="网厅手机绑定是否支持视频验证绑定" default="0" description="0不视频验证,1做视频">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="wt_show_mobile" label="个人资料模块是否显示设置手机号码" default="1"
+			description="个人资料模块是否显示设置手机号码">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+		<property name="wt_bind_mail_need_confim" label="是否通过发送邮箱绑定" default="1"
+			description="网厅个人资料邮箱修改通过邮箱绑定或则直接绑定，1发邮件，0不发,默认1">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="identity_check_info_complete" label="重要资料校验完整性" default="0"
+			description="网厅重要资料个人信息完整性校验 0不校验,1是校验 默认是0">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="wt_importantinfo_namecard_upd" label="网厅重要资料是否允许修改 姓名和身份证号 " default="0"
+			description="网厅重要资料是否允许修改 姓名和身份证号 ，，0不允许,1允许,默认0">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_login_manager_check" label="网厅个人资料董监高信息是否展示" default="0"
+			description="网厅个人资料董监高信息是否需要，1需要，0不允许,默认0">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="userInfo_modify_pwd_need_send_sms" label="个人资料修改密码后是否需要发送短信" default="0"
+			description="个人资料修改密码后是否需要发送短信">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+
+		<property name="identity_update_police_show" label="重要资料修改是否需要上传公安认证材料" default="0"
+			description="重要资料修改是否需要上传公安认证材料">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+	</group>
+
+</config>

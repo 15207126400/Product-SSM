@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<group label="视频配置">
+		<property name="videoswitch_queue_addr" label="视频服务IP" default="127.0.0.1">
+			<validator type="required" />
+			<validator type="host" />
+		</property>
+		<property name="videoswitch_queue_port" label="视频服务端口" default="8906">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="videoswitch_queue_type" label="视频服务http类型" default="http">
+           		<validator type="radio">
+               		<option label="http" value="http"></option>
+               		<option label="https" value="https"></option>
+           		</validator>
+       	</property>
+		<property name="videoswitch_connectInnerIpFlag" label="坐席端通过内网连接视频服务器标志" default="false"
+		description="如果不配置此项默认通过外网ip连接视频流服务器">
+			<validator type="checkbox">
+				<option label="内网" value="true"></option>
+				<option label="外网" value="false"></option>
+			</validator>
+		</property>
+		<property name="video_auto_assign" label="是否自动分配客户" default="0"
+			description="开启后自动分配任务给坐席，且抢答模式失效">
+			<validator type="checkbox">
+				<option label="是" value="1"></option>
+				<option label="否" value="0"></option>
+			</validator>
+		</property>
+		<property name="video_auto_assign_timeout" label="坐席未接自动分配任务超时时间(秒)" default="5"
+			description="超过配置时间，任务将被分配给下一个坐席">
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="video_view_model" label="视频显示模式" default="0"
+		description="0：默认模式；1：重叠模式；2：缩小模式；3：平铺模式；4：动态模式；模式效果见：http://bbs.anychat.cn/forum.php?mod=viewthread&amp;tid=1071.">
+			<validator type="required" />
+		</property>
+		<property name="video_capture_model" label="立即处理预抢答模式" default="0"
+			description="自动分配客户关闭时才有效">
+			<validator type="checkbox">
+				<option label="打开" value="1"></option>
+				<option label="关闭" value="0"></option>
+			</validator>
+		</property>
+		<property name="videoswitch_isVideoPlay" label="是否需要回放视频" default="true"
+		  description="当配置为true时:视频验证需要回放视频才可到下一步，当配置为false时，不用回放视频就能到下一步"
+		>
+		    <validator type="checkbox">
+				<option label="开" value="true"></option>
+				<option label="关" value="false"></option>
+			</validator>
+		</property>
+		<property name="video_upload_async" label="视频异步上传" default="false"
+		description="当配置true时:录像上传与视频分离，当配置false时，录像上传只能在视频过程中上传">
+			<validator type="checkbox">
+				<option label="开" value="true"></option>
+				<option label="关" value="false"></option>
+			</validator>
+		</property>
+		<property name="video_successAndUpload" label="验证通过并补传视频" default="false"
+		description="当配置true时:显示验证通过并补传视频按钮，当配置false时，不显示显示验证通过并补传视频按钮">
+			<validator type="checkbox">
+				<option label="开" value="true"></option>
+				<option label="关" value="false"></option>
+			</validator>
+		</property>
+		<property name="video_upload_timeout_mins" label="视频异步上传时用户视频步骤超时设置（分钟）" default="6"
+		description="当配置视频异步上传=true时，此配置生效；用户前端的请求时间-视频结束录制时间>此超时设置，则默认用户需重新进入视频环节"></property>
+		<property name="video_record_leastTime" label="后台坐席视频录制最短时间" default="5">
+			<validator type="required" />
+		</property>
+		<property name="video_isSelfOrg_waitPosition" label="用户排队位置是否为自己所在营业部排队位置" default="false"
+		description="当配置true时:显示用户所在营业部的排队位置，当配置false时，显示所有营业部总的排队位置">
+			<validator type="checkbox">
+				<option label="开" value="true"></option>
+				<option label="关" value="false"></option>
+			</validator>
+		</property>
+	    <property name="video_client_leasttime" label="坐席接通视频超时时间（秒）" />
+		<property name="video_show_words" label="是否显示话术" default="false">
+			<validator type="checkbox">
+				<option label="是" value="true"></option>
+				<option label="否" value="false"></option>
+			</validator>
+		</property>
+		<property name="need_login_video_queue_monitor" label="视频队列监控页面是否需要登陆" default="true">
+			<validator type="checkbox">
+				<option label="是" value="true"></option>
+				<option label="否" value="false"></option>
+			</validator>
+		</property>
+	</group>
+	<group label="AnyChat配置">
+		<property name="anyChatStreamIpInner" label="视频内网服务器IP" default="127.0.0.1">
+			<validator type="required" />
+			<validator type="host" />
+		</property>
+		<property name="anyChatStreamIpOut" label="视频外网服务器IP" default="127.0.0.1">
+			<validator type="required" />
+			<validator type="host" />
+		</property>
+		<property name="anyChatStreamPort" label="视频服务器端口" default="8906">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="anychat_version" label="anychat版本" description="集群版需要anychat 6.2以上版本" default="v5_2">
+			<validator type="select">
+	            <option label="5.2" value="v5_2"></option>
+	            <option label="6.2" value="v6_2"></option>
+	            <option label="6.3" value="v6_3"></option>
+	        </validator>
+		</property>
+		<property name="anychat_group_flag" label="是否为集群版" description="集群版需要anychat 6.2及以上版本" default="false">
+			<validator type="checkbox">
+	            <option label="是" value="true"></option>
+	            <option label="否" value="false"></option>
+	        </validator>
+		</property>
+		<property name="anychat_app_guid" label="anychat集群版分配的appguid" />
+		<property name="anychat_busin_server_standalone_mode" label="是否开启anychat业务服务器独立模式" description="如果是，那么视频组件通过xpe-sisap-video-anychat连接anychat。如果否
+		，视频组件直连anychat" default="false">
+			<validator type="checkbox">
+	            <option label="是" value="true"></option>
+	            <option label="否" value="false"></option>
+	        </validator>
+		</property>
+	</group>
+</config>

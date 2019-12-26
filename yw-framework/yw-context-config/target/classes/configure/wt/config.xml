@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 网厅公共模块配置修改（高伟星）开始 -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+<!-- 网厅公用配置（高伟星改）结束 -->
+<!-- 网厅金信冬负责模块（金信冬改）开始 -->
+<!-- 网厅金信冬负责模块（金信冬改）结束 -->
+<!-- 网厅潘凌霄负责模块（潘凌霄改）开始  -->
+<!-- 网厅潘凌霄负责模块（潘凌霄改）结束 -->
+<!-- 小贷通模块（程洋洋，孙文帅改）开始 -->
+	
+<!-- 小贷通模块（赖登艺，孙文帅改）结束 -->
+
+	<group id="securities" label="针对各券商的个性化配置" display="false">
+		<property name="sxzq_index_holiday_show" label="山西证券节假日期间是否更换主页图片"
+			default="invisible" description="网厅节假日期间是否更换主页图片，并显示公告 ">
+			<validator type="checkbox" ref="visible_checkbox"></validator>
+		</property>
+		<property name="kyzq_zg_link" label="开源证券资管链接"
+			default="" description="开源证券资管界面的资管链接，不填为空则不显示" />
+	</group>
+
+</config>

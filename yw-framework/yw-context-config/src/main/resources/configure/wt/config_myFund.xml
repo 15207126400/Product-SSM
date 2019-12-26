@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="fund" label="我的资金配置" display="true">
+		<property name="transfer_bank_to_sec_bankpwd" label="银行转证券是否需要银行密码"
+			default="1" description="用于银证转帐界面">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="transfer_bank_to_sec_zjpwd" label="银行转证券是否需要资金密码"
+			default="1" description="用于银证转帐界面">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="transfer_sec_to_bank_bankpwd" label="证券转银行是否需要银行密码"
+			default="1" description="用于银证转帐界面">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="transfer_sec_to_bank_zjpwd" label="证券转银行是否需要资金密码"
+			default="1" description="用于银证转帐界面">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+	</group>
+
+</config>

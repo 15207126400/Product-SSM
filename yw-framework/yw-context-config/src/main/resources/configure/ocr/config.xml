@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <property name="sisap_ocr_vendor" label="供应商选择" default="yunmai">
+         <validator type="select">
+         	<option value="camcard" label="合合信息科技(万能名片王)" related="ocr_yunmai" />
+            <option value="yunmai" label="云脉" related="ocr_yunmai" />
+            <option value="xyzq" label="兴业证券" related="" />
+        </validator>
+    </property>
+
+    <property name="sisap_ocr_webservice_url" label="接口的服务地址" default="http://eng.ccyunmai.com:9000/PIM_CaiRenHui/SrvXMLAPI">
+        <validator type="required" />
+        <validator type="url" />
+    </property>
+
+    <group id="ocr_yunmai" display="false">
+        <property name="ocr_yunmai_tmp_dir" label="本地图片临时存放路径" default="/var/www/yunmai/img" description="云脉OCR身份证解析接口的本地图片临时存放路径">
+            <validator type="required" />
+        </property>
+    </group>
+
+    <property name="sisap_ocr_validate" label="是否校验身份" default="true" description="是否需要校验身份证的有效期和发证机关">
+        <validator type="checkbox">
+            <option value="true" label="是" />
+            <option value="false" label="否" />
+        </validator>
+    </property>
+
+    <property name="sisap_ocr_webservice_timeout" label="接口连接超时时间" default="10" description="OCR身份证解析接口连接超时时间：单位秒">
+        <validator type="digits" />
+    </property>
+
+</config>

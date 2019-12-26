@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="upload">
+        <property name="server_staticfile_cdn_server" label="上传文件浏览服务主机地址" default=""
+            description="上传文件浏览服务主机地址，最后不要有/，如http://static.cairenhui.com">
+            <validator type="required" />
+            <validator type="pattern" value="[^/]$" />
+        </property>
+        <property name="server_staticfile_cdn_serviceContext" label="上传文件浏览服务路径" default=""
+            description="上传文件浏览服务路径，如果上传文件浏览服务的完整URL为http://static.cairenhui.com/uploadFiles，则此处填写/uploadFiles">
+            <validator type="required" />
+            <validator type="pattern" value="^/.+" />
+        </property>
+        <property name="homedir_uploader_cdn" label="上传文件服务器本地路径" default="">
+            <validator type="required" />
+        </property>
+        <property name="homedir_uploader_cdn_classification" label="上传文件是否需要分类存储" default="0" description="此处配置为需要时，将在[上传文件服务器本地路径]下进行分类（video，image）">
+            <validator type="checkbox">
+               <option label="是" value="1" related="upload_classification"></option>
+        	   <option label="否" value="0"></option>
+            </validator>
+        </property>
+        <group id="upload_classification">
+        	<property name="homedir_video_uploader_cdn" label="视频文件本地文件夹（路径）名" default="video" description="最终路径:[上传文件服务器本地路径][视频文件本地文件夹（路径）名]">
+            	<validator type="required" />
+        	</property>
+        	<property name="homedir_image_uploader_cdn" label="图片文件本地文件夹（路径）名" default="image" description="最终路径:[上传文件服务器本地路径][图片文件本地文件夹（路径）名]">
+            	<validator type="required" />
+        	</property>
+        </group>
+        <property name="homedir_uploader_file" label="上传协议文件服务器本地路径" default="D:\\doc\\uploadObsFiles">
+            <validator type="required" />
+        </property> 
+        <property name="homedir_down_adress" label="下载视频取视频播放时长" default="C:\\var">
+            <validator type="required" />
+        </property> 
+        <property name="middle_cluster_nodes" label="中台集群其余节点地址" default="" description="不包括当前节点，示例:middle.cluster.nodes=http://localhost:8888/xpe-sisap-arch/,http://localhost:9999/xpe-sisap-arch/">
+        </property>
+        <property name="middle_cluster_count" label="中台集群最多同步次数" default="24" description="只支持正整数">
+        </property>
+        <property name="middle_cluster_interval" label="中台集群同步时间间隔" default="1" description="只支持正整数（单位：小时）">
+        </property>
+        
+    </group>
+</config>

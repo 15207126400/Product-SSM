@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.usercenter.dao.YwUserCustomerDao">
+
+    <!-- 过滤查询结果(主要用于联合查询) -->
+    <resultMap type="com.yunwei.context.sys.usercenter.model.YwUserCustomer" id="resultMap">
+         <id column="id" property="id" />
+         <result column="user_id" property="user_id" />  
+         <result column="cust_name" property="cust_name" />  
+         <result column="cust_type" property="cust_type" />  
+         <result column="id_no" property="id_no" />  
+         <result column="mobile_tel" property="mobile_tel" />  
+         <result column="phone_tel" property="phone_tel" />  
+         <result column="header_url" property="header_url" />  
+         <result column="wx_code" property="wx_code" />  
+         <result column="qq_code" property="qq_code" />  
+         <result column="e_mail" property="e_mail" />  
+         <result column="sex" property="sex" />  
+         <result column="city" property="city" />  
+         <result column="address" property="address" />  
+         <result column="birthday" property="birthday" />  
+         <result column="cust_status" property="cust_status" />  
+         <result column="industry_type" property="industry_type" />  
+         <result column="company_name" property="company_name" />  
+         <result column="company_site" property="company_site" />  
+         <result column="create_datetime" property="create_datetime" />  
+         <result column="update_datetime" property="update_datetime" />  
+         <result column="ro_ids" property="ro_ids" />
+         <association property="ywUser" javaType="com.yunwei.context.sys.usercenter.model.YwUser" column="user_id" resultMap="com.yunwei.context.sys.usercenter.dao.YwUserDao.resultMap">
+         	
+         </association>   
+    </resultMap>
+    
+    <sql id="sql">
+         id,
+         user_id,
+         cust_name,
+         cust_type,
+         id_no,
+         mobile_tel,
+         phone_tel,
+         header_url,
+         wx_code,
+         qq_code,
+         e_mail,
+         sex,
+         city,
+         address,
+         birthday,
+         cust_status,
+         industry_type,
+         company_name,
+         company_site,
+         create_datetime,
+         update_datetime,
+         ro_ids
+    </sql>
+    
+    <sql id="insertSql">
+         user_id,
+         cust_name,
+         cust_type,
+         id_no,
+         mobile_tel,
+         phone_tel,
+         header_url,
+         wx_code,
+         qq_code,
+         e_mail,
+         sex,
+         city,
+         address,
+         birthday,
+         cust_status,
+         industry_type,
+         company_name,
+         company_site,
+         create_datetime,
+         update_datetime,
+         ro_ids
+    </sql>
+    
+    <sql id="unionSql">
+         uc.id,
+         uc.user_id,
+         uc.cust_name,
+         uc.cust_type,
+         uc.id_no,
+         uc.mobile_tel,
+         uc.phone_tel,
+         uc.header_url,
+         uc.wx_code,
+         uc.qq_code,
+         uc.e_mail,
+         uc.sex,
+         uc.city,
+         uc.address,
+         uc.birthday,
+         uc.cust_status,
+         uc.industry_type,
+         uc.company_name,
+         uc.company_site,
+         uc.create_datetime,
+         uc.update_datetime,
+         uc.ro_ids
+    </sql>
+    
+    <sql id="unionUserSql">
+         uc.id,
+         uc.user_id,
+         uc.cust_name,
+         uc.cust_type,
+         uc.id_no,
+         uc.mobile_tel,
+         uc.phone_tel,
+         uc.header_url,
+         uc.wx_code,
+         uc.qq_code,
+         uc.e_mail,
+         uc.sex,
+         uc.city,
+         uc.address,
+         uc.birthday,
+         uc.cust_status,
+         uc.industry_type,
+         uc.company_name,
+         uc.company_site,
+         uc.create_datetime,
+         uc.update_datetime,
+         uc.ro_ids,
+         u.pay_datetime,
+         u.expire_datetime
+    </sql>
+    
+    <!-- 当前表条件 -->
+    <sql id = "whereSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and id = #{id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and user_id = #{user_id}
+	        </if>
+            <if test="cust_name != null and cust_name != '' ">
+	          and cust_name = #{cust_name}
+	        </if>
+            <if test="cust_type != null and cust_type != '' ">
+	          and cust_type = #{cust_type}
+	        </if>
+            <if test="id_no != null and id_no != '' ">
+	          and id_no = #{id_no}
+	        </if>
+            <if test="mobile_tel != null and mobile_tel != '' ">
+	          and mobile_tel = #{mobile_tel}
+	        </if>
+            <if test="phone_tel != null and phone_tel != '' ">
+	          and phone_tel = #{phone_tel}
+	        </if>
+            <if test="header_url != null and header_url != '' ">
+	          and header_url = #{header_url}
+	        </if>
+            <if test="wx_code != null and wx_code != '' ">
+	          and wx_code = #{wx_code}
+	        </if>
+            <if test="qq_code != null and qq_code != '' ">
+	          and qq_code = #{qq_code}
+	        </if>
+            <if test="e_mail != null and e_mail != '' ">
+	          and e_mail = #{e_mail}
+	        </if>
+            <if test="sex != null and sex != '' ">
+	          and sex = #{sex}
+	        </if>
+            <if test="city != null and city != '' ">
+	          and city = #{city}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and address = #{address}
+	        </if>
+            <if test="birthday != null and birthday != '' ">
+	          and birthday = #{birthday}
+	        </if>
+            <if test="cust_status != null and cust_status != '' ">
+	          and cust_status = #{cust_status}
+	        </if>
+            <if test="industry_type != null and industry_type != '' ">
+	          and industry_type = #{industry_type}
+	        </if>
+            <if test="company_name != null and company_name != '' ">
+	          and company_name = #{company_name}
+	        </if>
+            <if test="company_site != null and company_site != '' ">
+	          and company_site = #{company_site}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and update_datetime = #{update_datetime}
+	        </if>
+            <if test="ro_ids != null and ro_ids != '' ">
+	          and ro_ids = #{ro_ids}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表(或不存在当前表)条件(Map参数) -->
+    <sql id = "whereMapSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and uc.id = #{id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and uc.user_id = #{user_id}
+	        </if>
+            <if test="cust_name != null and cust_name != '' ">
+	          and uc.cust_name = #{cust_name}
+	        </if>
+            <if test="cust_type != null and cust_type != '' ">
+	          and uc.cust_type = #{cust_type}
+	        </if>
+            <if test="id_no != null and id_no != '' ">
+	          and uc.id_no = #{id_no}
+	        </if>
+            <if test="mobile_tel != null and mobile_tel != '' ">
+	          and uc.mobile_tel = #{mobile_tel}
+	        </if>
+            <if test="phone_tel != null and phone_tel != '' ">
+	          and uc.phone_tel = #{phone_tel}
+	        </if>
+            <if test="header_url != null and header_url != '' ">
+	          and uc.header_url = #{header_url}
+	        </if>
+            <if test="wx_code != null and wx_code != '' ">
+	          and uc.wx_code = #{wx_code}
+	        </if>
+            <if test="qq_code != null and qq_code != '' ">
+	          and uc.qq_code = #{qq_code}
+	        </if>
+            <if test="e_mail != null and e_mail != '' ">
+	          and uc.e_mail = #{e_mail}
+	        </if>
+            <if test="sex != null and sex != '' ">
+	          and uc.sex = #{sex}
+	        </if>
+            <if test="city != null and city != '' ">
+	          and uc.city = #{city}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and uc.address = #{address}
+	        </if>
+            <if test="birthday != null and birthday != '' ">
+	          and uc.birthday = #{birthday}
+	        </if>
+            <if test="cust_status != null and cust_status != '' ">
+	          and uc.cust_status = #{cust_status}
+	        </if>
+            <if test="industry_type != null and industry_type != '' ">
+	          and uc.industry_type = #{industry_type}
+	        </if>
+            <if test="company_name != null and company_name != '' ">
+	          and uc.company_name = #{company_name}
+	        </if>
+            <if test="company_site != null and company_site != '' ">
+	          and uc.company_site = #{company_site}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and uc.create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and uc.update_datetime = #{update_datetime}
+	        </if>
+            <if test="ro_ids != null and ro_ids != '' ">
+	          and uc.ro_ids = #{ro_ids}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表联合查询条件(Map参数) -->
+    <sql id = "whereUnionSql">
+	   <where>
+            <if test="id != null and id != '' ">
+	          and uc.id = #{id}
+	        </if>
+            <if test="user_id != null and user_id != '' ">
+	          and uc.user_id = #{user_id}
+	        </if>
+            <if test="cust_name != null and cust_name != '' ">
+	          and uc.cust_name = #{cust_name}
+	        </if>
+            <if test="cust_type != null and cust_type != '' ">
+	          and uc.cust_type = #{cust_type}
+	        </if>
+            <if test="id_no != null and id_no != '' ">
+	          and uc.id_no = #{id_no}
+	        </if>
+            <if test="mobile_tel != null and mobile_tel != '' ">
+	          and uc.mobile_tel = #{mobile_tel}
+	        </if>
+            <if test="phone_tel != null and phone_tel != '' ">
+	          and uc.phone_tel = #{phone_tel}
+	        </if>
+            <if test="header_url != null and header_url != '' ">
+	          and uc.header_url = #{header_url}
+	        </if>
+            <if test="wx_code != null and wx_code != '' ">
+	          and uc.wx_code = #{wx_code}
+	        </if>
+            <if test="qq_code != null and qq_code != '' ">
+	          and uc.qq_code = #{qq_code}
+	        </if>
+            <if test="e_mail != null and e_mail != '' ">
+	          and uc.e_mail = #{e_mail}
+	        </if>
+            <if test="sex != null and sex != '' ">
+	          and uc.sex = #{sex}
+	        </if>
+            <if test="city != null and city != '' ">
+	          and uc.city = #{city}
+	        </if>
+            <if test="address != null and address != '' ">
+	          and uc.address = #{address}
+	        </if>
+            <if test="birthday != null and birthday != '' ">
+	          and uc.birthday = #{birthday}
+	        </if>
+            <if test="cust_status != null and cust_status != '' ">
+	          and uc.cust_status = #{cust_status}
+	        </if>
+            <if test="industry_type != null and industry_type != '' ">
+	          and uc.industry_type = #{industry_type}
+	        </if>
+            <if test="company_name != null and company_name != '' ">
+	          and uc.company_name = #{company_name}
+	        </if>
+            <if test="company_site != null and company_site != '' ">
+	          and uc.company_site = #{company_site}
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	          and uc.create_datetime = #{create_datetime}
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	          and uc.update_datetime = #{update_datetime}
+	        </if>
+            <if test="ro_ids != null and ro_ids != '' ">
+	          and uc.ro_ids = #{ro_ids}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <!-- 当前表批量删除条件 -->
+    <sql id="whereBatchSql">
+		<where>
+			<if test="id != null and id != '' ">
+				and id in
+				<foreach collection="id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 分页sql条件 -->
+	<sql id="pageSql">
+       <if test="begin == 0 || begin > 0">
+             limit #{begin},#{end}
+        </if>
+    </sql>
+
+	<!-- 当前表添加-->
+	<insert id="insert" parameterType="com.yunwei.context.sys.usercenter.model.YwUserCustomer">
+		insert into yw_system_usercenter.yw_user_customer(<include refid="insertSql"/>) 
+		values(
+	             #{user_id},
+	             #{cust_name},
+	             #{cust_type},
+	             #{id_no},
+	             #{mobile_tel},
+	             #{phone_tel},
+	             #{header_url},
+	             #{wx_code},
+	             #{qq_code},
+	             #{e_mail},
+	             #{sex},
+	             #{city},
+	             #{address},
+	             #{birthday},
+	             #{cust_status},
+	             #{industry_type},
+	             #{company_name},
+	             #{company_site},
+	             #{create_datetime},
+	             #{update_datetime},
+	             #{ro_ids}
+		     )
+	</insert>
+	
+	<!-- 当前表批量添加 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+        insert into yw_system_usercenter.yw_user_customer(<include refid="insertSql"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+	             #{item.user_id},
+	             #{item.cust_name},
+	             #{item.cust_type},
+	             #{item.id_no},
+	             #{item.mobile_tel},
+	             #{item.phone_tel},
+	             #{item.header_url},
+	             #{item.wx_code},
+	             #{item.qq_code},
+	             #{item.e_mail},
+	             #{item.sex},
+	             #{item.city},
+	             #{item.address},
+	             #{item.birthday},
+	             #{item.cust_status},
+	             #{item.industry_type},
+	             #{item.company_name},
+	             #{item.company_site},
+	             #{item.create_datetime},
+	             #{item.update_datetime},
+	             #{item.ro_ids}
+	       )
+        </foreach>
+    </insert>
+    
+	<!-- 当前表查询 -->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.usercenter.model.YwUserCustomer">
+		select <include refid="sql"/> from yw_system_usercenter.yw_user_customer
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表联合查询(或分页联合查询)(Map参数)(1、子表关联查询，2、不同类型表关联查询) -->
+	<select id="queryUnionList" parameterType="java.util.Map" resultMap="resultMap">
+		select 
+		<if test="table_name = 'yw_user' ">
+			<include refid="unionUserSql"/>
+		</if>
+		from yw_system_usercenter.yw_user_customer as uc
+		<if test="table_name = 'yw_user' ">
+			left join yw_system_usercenter.yw_user as u on uc.user_id = u.user_id
+		</if>
+		<include refid="whereUnionSql"/>
+		<!-- 分页查询，通过begin条件区别 -->
+		<include refid="pageSql"/>
+	</select>
+	
+	<!-- 当前表分页查询(Map参数) -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.usercenter.model.YwUserCustomer">
+		select <include refid="sql"/> from yw_system_usercenter.yw_user_customer
+		<include refid="whereSql"/>
+		order by id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 当前表查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_user_customer
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 当前表更新 -->
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_user_customer
+	     <trim prefix="set" suffixOverrides=",">
+            <if test="cust_name != null and cust_name != '' ">
+	           cust_name = #{cust_name},
+	        </if>
+            <if test="cust_type != null and cust_type != '' ">
+	           cust_type = #{cust_type},
+	        </if>
+            <if test="id_no != null and id_no != '' ">
+	           id_no = #{id_no},
+	        </if>
+            <if test="mobile_tel != null and mobile_tel != '' ">
+	           mobile_tel = #{mobile_tel},
+	        </if>
+            <if test="phone_tel != null and phone_tel != '' ">
+	           phone_tel = #{phone_tel},
+	        </if>
+            <if test="header_url != null and header_url != '' ">
+	           header_url = #{header_url},
+	        </if>
+            <if test="wx_code != null and wx_code != '' ">
+	           wx_code = #{wx_code},
+	        </if>
+            <if test="qq_code != null and qq_code != '' ">
+	           qq_code = #{qq_code},
+	        </if>
+            <if test="e_mail != null and e_mail != '' ">
+	           e_mail = #{e_mail},
+	        </if>
+            <if test="sex != null and sex != '' ">
+	           sex = #{sex},
+	        </if>
+            <if test="city != null and city != '' ">
+	           city = #{city},
+	        </if>
+            <if test="address != null and address != '' ">
+	           address = #{address},
+	        </if>
+            <if test="birthday != null and birthday != '' ">
+	           birthday = #{birthday},
+	        </if>
+            <if test="cust_status != null and cust_status != '' ">
+	           cust_status = #{cust_status},
+	        </if>
+            <if test="industry_type != null and industry_type != '' ">
+	           industry_type = #{industry_type},
+	        </if>
+            <if test="company_name != null and company_name != '' ">
+	           company_name = #{company_name},
+	        </if>
+            <if test="company_site != null and company_site != '' ">
+	           company_site = #{company_site},
+	        </if>
+            <if test="create_datetime != null and create_datetime != '' ">
+	           create_datetime = #{create_datetime},
+	        </if>
+            <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	        </if>
+            <if test="ro_ids != null and ro_ids != '' ">
+	           ro_ids = #{ro_ids},
+	        </if>
+	    </trim>
+	    <where>
+             <if test="id != null and id != '' ">
+	           and id = #{id}
+	         </if>
+	         <if test="user_id != null and user_id != '' ">
+	           and user_id = #{user_id}
+	        </if>
+	    </where>
+	</update>
+	
+	<!-- 当前表删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_user_customer
+	    <where>
+            <if test="id != null and id != '' ">
+	           and id = #{id}
+	        </if>
+	        <if test="user_id != null and user_id != '' ">
+	           and user_id = #{user_id}
+	        </if>
+	    </where>
+	</delete>
+	
+	<!-- 当前批量删除 -->
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_user_customer
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

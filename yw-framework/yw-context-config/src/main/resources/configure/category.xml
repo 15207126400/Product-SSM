@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure xmlns="http://www.hundsun.com/ooas/category" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/category category.xsd">
+
+    <!-- 配置功能列表， id 必须唯一的不能重复  config 为配置规则文件，  generate为配置内容模板， 通过占位符替换  -->
+    
+    <!-- 数据库配置
+    <catalog id="db" name="数据库配置" description="数据库地址配置" config="/db/config.xml">
+        <generate template="/db/jdbc.properties" />
+    </catalog> -->
+    
+    <!-- 域名配置 -->
+    <catalog id="conn" name="域名配置" description="前中后台域名配置" config="/conn/config.xml">
+        <generate template="/conn/connection.properties" />
+    </catalog>
+    
+    
+    <!-- 功能显示开发 -->
+    <catalog id="func" name="功能开关" description="前、中、后台显示功能开关" config="/func/config.xml">
+        <generate template="/func/func.properties" />
+    </catalog>
+    
+    <!-- 地区配置 
+    <catalog id="area" name="地区配置" description="小程序限制地区购买" config="/area/config.xml">
+        <generate template="/area/area.properties" />
+    </catalog>-->
+</configure>

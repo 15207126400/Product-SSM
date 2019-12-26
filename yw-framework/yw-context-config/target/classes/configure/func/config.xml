@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="开" value="visible"></option>
+		<option label="关" value="invisible"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="是" value="1"></option>
+		<option label="否" value="0"></option>
+	</validator>
+	<group id="frontVisibleSwitch" label="前台功能开关">
+        <property name="func_org_locate_scope" label="定位适配经营范围" default="visible" description="在什么范围内定位适配经营范围，会从城市开始查找，如果没有相应营业部且设定的范围更大，则在更大范围内再次查找">
+            <validator type="select">
+                <option value="0" label="不定位" />
+                <option value="1" label="全国" />
+                <option value="2" label="省级" />
+                <option value="3" label="城市" />
+            </validator>
+        </property>
+		<property name="oosweb_notice_button" label="前台公告开关" default="false" description="前台公告开关打开时，首页显示公告信息，并不允许进行开户操作">
+			<validator type="checkbox">
+				<option label="开" value="true"></option>
+				<option label="关" value="false"></option>
+			</validator>
+		</property>
+		<property name="oosweb_notice_content" label="前台公告信息" default="您好：由于服务器升级维护，致使开户系统受到影响，由此给您带来的不便，敬请谅解！" description="前台公告开关打开时，首页显示的公告信息内容。" />
+  		
+  		<property name="xcx_commission_locked_days" label="佣金锁定天数" default="2" description="佣金结算锁定多少天才能提现" />
+		
+	<property name="fix_time_start" label="维护起始时间" default="" 
+        description="维护起始时间,格式如下:YYYYMMDDHHSS"></property>
+        <property name="fix_time_end" label="维护截止时间" default="" 
+        description="维护截止时间,格式如下:YYYYMMDDHHSS"></property>
+        <property name="fix_tip" label="维护页页面提示内容" default="" 
+        description="维护页页面提示内容,可写html内容."></property>
+	</group>
+	<group id="middleVisibleSwitch" label="中台功能开关">
+		<property name="validatecode_super" label="超级验证码" default="2222" description="请设置超级验证码数量长度与 手机验证码长度一致">
+			<validator type="required" />
+			<validator type="range" value="[0,999999]" />
+		</property>
+		<property name="validatecode_timeout" label="验证码有效时间" default="900" description="">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="validatecode_fail_daily_threshold" label="每天验证码出错次数阈值" default="5" description="">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="mobile_validatecode_length" label="手机验证码长度" default="4" description="请手机验证码长度与验证码数量长度一致">
+			<validator type="required" />
+			<validator type="range" value="[1,15]" />
+		</property>
+		
+		
+	</group>
+	<group id="backVisibleSwitch" label="后台功能开关">
+		<property name="is_use_baiduAPI" label="是否启用百度API进行定位，去获取用户所在省份和城市地址" default="false" description="是否启用百度API进行定位，去获取用户所在省份和城市地址">
+	            <validator type="checkbox">
+	                <option label="是" value="true"></option>
+	                <option label="否" value="false"></option>
+	            </validator>
+	        </property>
+		<property name="validateCode_type" label="4位验证码类型" default="number" description="">
+			<validator type="checkbox">
+				<option label="数字" value="number"></option>
+				<option label="字母" value="character"></option>
+			</validator>
+		</property>
+		<property name="excel_export_max" label="导出excel最大条数" default="1000" description="查询的条数必须小于最大值才允许导出">
+			<validator type="required" />
+			<validator type="range" value="[0,65536]" />
+		</property>
+		<property name="open_in_new_tab" label="是否在新页面打开" default="0" description="在后台列表页面点击操作按钮，是否在新页面展示内容">
+			<validator type="checkbox">
+				<option label="是" value="1"></option>
+				<option label="否" value="0"></option>
+			</validator>
+		</property>
+	</group>
+	
+	
+
+	<group id="cookiesmaxage" label="cookies有效期配置">
+		<property name="cookie_max_age" label="有效期" default="" description="分钟" >
+		<validator type="digits" />
+		</property>
+	</group>
+	<group id="userImagePath" label="用户管理图片路径配置">
+		<property name="user_image_path" label="图片路径" default="" description="默认是用户目录下的/upload/image/" />
+	</group>
+
+
+	<group id="account_error_config" label="账号出错配置">
+		<property name="xpe_login_count" label="账号登录出错限制次数" default="5">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="xpe_login_time" label="账号登录出错后时限(分)" default="30"  description="登录出错超过限制次数将限制登录XX分钟">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+	</group>
+	
+	
+	
+</config>

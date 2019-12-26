@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="需要" value="1"></option>
+		<option label="不需要" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+     <group id="funds" label="证书配置" display="true">
+		<property name="zd_cert_need_verify" label="中登证书申请是否需要颁发步骤"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="zj_cert_need_verify" label="自建证书申请是否需要颁发步骤"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+	
+	
+	<group id="product" label="公安认证" display="true">
+		<property name="wt_pwd_reset_need_ga_verify" label="网厅密码重置视频步骤，后台是否需要公安认证"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+	
+	<group id="margin_ht" label="后台融资融券配置" display="true">
+		<property name="margin_backend_editIdentityInfo" label="后台客服接到的融资融券视频，是否可以修改用户资料"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+	<group id="importsh_ht" label="后台重要资料审核发送短信内容" display="true">
+		<property name="sms_important_data_modificationt" label="配置内容为发送，不配置为不发送"
+			default="" description="">
+		</property>
+	</group>
+
+</config>

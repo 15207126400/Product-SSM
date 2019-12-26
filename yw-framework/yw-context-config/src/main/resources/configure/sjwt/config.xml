@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="true"></option>
+		<option label="关" value="false"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	<validator id="apply_type" type="radio">
+		<option label="不验证" value="0"></option>
+		<option label="身份证验证" value="1"></option>
+		<option label="手机验证码验证" value="2"></option>
+	</validator>
+
+
+
+	<group id="sjwt_config" label="手机网厅配置" display="true">
+		<property name="sjwt_template" label="券商个性化版本"
+		description="选择券商，同时会设置券商简称, 此配置会影响样式文件的调用目录">
+			<validator type="select">
+				<option value="" label="标准版网厅"/>
+				<option value="cf" label="财富证券" />
+			</validator>
+		</property>
+		<property name="sjwt_resource_usecache" label="是否进行公共数据缓存处理"
+			default="true" description="涉及缓存内容有:风险测评题库,协议">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	
+		<property name="sjwt_resource_cache_expires" label="资源缓存失效时间"
+			default="86400000" description="资源缓存失效时间,单位为毫秒" />
+	
+		<property name="agreement_title_display" label="协议显示时,是否展示协议标题"
+			default="invisible" description="协议显示时,是否展示协议标题,协议内容中已配置了标题内容,防止显示冲突">
+			<validator type="checkbox" ref="visible_checkbox"></validator>
+		</property>
+		<property name="risk_question_no_display" label="风险测评题目序号是否显示"
+			default="invisible" description="风险测评显示题目序号(例如A,B,C)是否显示">
+			<validator type="checkbox" ref="visible_checkbox"></validator>
+		</property>
+		<property name="sjwt_register_url" label="手机开户访问地址"
+			 description="配置后可在登陆页面点注册跳转到手机开户" />
+		<property name="anychat_server_url" label="anychat视频的外网地址"
+			 description="anychat视频的外网地址,提供手机客户端连接" />
+		<property name="anychat_server_port" label="anychat视频的外网端口"
+			 default="8906" description="anychat视频的外网端口,提供手机客户端连接,一般情况下是8906" />
+		<property name="sjwt_cert_apply_type" label="自建证书申请,安装验证方式"
+			 default="0" description="自建证书申请,安装验证方式 0为不验证 1为输入身份证验证 2为手机验证码验证">
+			 <validator type="checkbox" ref="apply_type"></validator>
+		</property>
+		<property name="sjwt_reset_password_communication_display" label="重置密码是否显示通讯密码"
+			default="invisible" description="重置密码是否显示通讯密码">
+			<validator type="checkbox" ref="visible_checkbox"></validator>
+		</property>
+		
+			 
+	</group>
+
+	<group id="sjwt_authorize" label="手机网厅授权码" display="true">
+		<property name="sjwt_business_key" label="手机网厅授权码"
+			default=""  />
+	</group>
+
+</config>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <property name="interface_identify_bean_ref" label="公安验证实现" default="debugidentify">
+        <validator type="select">
+            <option value="debugidentify" label="模拟公安"></option>
+            <option value="identifyClientServiceImpl" label="众融" related="nciis_url,nciis_basic,identifyClientServiceImpl"></option>
+            <option value="hsidentify" label="恒生统一网关"></option>
+            <option value="livebosidentify" label="顶点cif"></option>
+            <option value="hollyidentify" label="昊一科技" related="nciis_url,nciis_basic"></option>
+            <option value="id5ClientService" label="国政通" related="nciis_url,nciis_basic"></option>
+            <option value="zlClientService" label="证联网" related="nciis_url,nciis_basic,zhenglian"></option>
+            <option value="ailkIdCardService" label="亚信联创" related="nciis_url,nciis_ailk"></option>
+            <option value="bjcaIdentifyClientService" label="北京CA" related="nciis_bjca,nciis_bjca_sf"></option>
+            <option value="bjcaIdentifyClientServiceV2" label="北京CA_V2" related="nciis_bjca_v2,nciis_bjca_sf"></option>
+            <option value="csdcDirectIdentify" label="中登公安" related="nciis_csdc"></option>
+            <option value="ifsCSDCIdentify" label="中登公安认证调IFS"></option>
+            <option value="cjzqIdCardServiceImpl" label="长江证券公安认证"></option>
+            <option value="zhengtIdentify" label="政通" related="nciis_url,nciis_basic,zhengtIdentify"></option>
+        </validator>
+    </property>
+	<validator id="judge_checkbox" type="checkbox">
+        <option label="开" value="true"></option>
+        <option label="关" value="false"></option>
+    </validator>
+    <group id="nciis_url" display="false">
+        <property name="sisap_identifier_webservice_url" label="接口服务地址" default="">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+    </group>
+    <group id="nciis_basic" display="false">
+        <property name="sisap_identifier_user" label="接口访问用户名" default="">
+            <validator type="required" />
+        </property>
+        <property name="sisap_identifier_pwd" id="password" label="接口访问密码" default="">
+            <validator type="required" />
+        </property>
+    </group>
+    <group id="identifyClientServiceImpl" display="false">
+        <property name="sisap_identifier_uniqueid" label="访问接口的唯一客户端标识号" default="00-00-00-00-00-00-00-E0">
+            <validator type="required" />
+        </property>
+    </group>
+    <group id="zhenglian" display="false">
+        <property name="zl_trust_store_url" label="HTTPS证书设置路径" default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/policy/ias.cer">
+            <validator type="required" />
+        </property>
+        <property name="zl_trust_store_pwd" id="password" label="HTTPS密钥" default="changeit">
+            <validator type="required" />
+        </property>
+    </group>
+    <group id="nciis_ailk" display="false">
+        <property name="sisap_ailk_webservice_servicename" label="接口访问服务名" default="IDCardService" description="">
+            <validator type="required" />
+        </property>
+        <property name="sisap_ailk_webservice_userid" label="接口访问认证用户ID" default="">
+            <validator type="required" />
+        </property>
+    </group>
+    <group id="nciis_bjca" display="false">
+        <property name="bjca_identifier_webservice_url" label="接口服务地址" default="https://205.164.14.76:16001/idservice/services/IdentityService">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="bjca_identifier_user" label="接口访问用户名" default="htzq1">
+            <validator type="required" />
+        </property>
+        <property name="bjca_identifier_pwd" id="password" label="接口访问密码" default="admin">
+            <validator type="required" />
+        </property>
+        <property name="bjca_trust_store_url" label="HTTPS证书设置路径" default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/trustbjca.jks">
+            <validator type="required" />
+        </property>
+        <property name="bjca_trust_store_pwd" id="password" label="HTTPS密钥" default="changeit">
+            <validator type="required" />
+        </property>
+        <property name="bjca_identifier_image" label="接口返回是否带图片（开->带图:关->不带图）"  default="true" description="">
+        	<validator type="checkbox" ref="judge_checkbox"></validator>
+       	</property>
+       	<property name="police_verify_daily_limit_times"  label="公安认证每日限制次数" default="0">
+            <validator type="required" />
+        </property>
+       	
+    </group>
+    
+    
+    <group id="nciis_csdc" display="false">
+        <property name="csdc_nciis_CSDCNciisMonitorTime" label="查询间隔时间" default="1000">
+            <validator type="required" />
+        </property>
+       	<property name="csdc_nciis_CSDCNciisMonitorCount"  label="查询监控阀值" default="10">
+            <validator type="required" />
+        </property>
+    </group>
+    
+    <group id="nciis_bjca_v2" display="false">
+        <property name="bjca_identifier_post_url" label="接口服务地址" default="https://api.faceid.com/faceid/v1/getidface">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="bjca_trust_api_key" label="接口访问key" default="" description="用于验证客户身份的API Key；对于每一个客户此字段不会变更，相当于用户名">
+            <validator type="required" />
+        </property>
+        <property name="bjca_trust_api_secret" id="password" label="接口访问密钥" default="" description="用于验证客户身份的API Secret；对于每一个客户可以申请变更此字段，相当于密码">
+            <validator type="required" />
+        </property>
+	</group>
+    <group id="nciis_bjca_sf" display="false">
+       	<property name="police_verify_daily_limit_times"  label="公安认证每日限制次数" default="0">
+            <validator type="required" />
+        </property>
+        <property name="bjca_charge_limit_time" label="限制公安认证收费次数" default="0" description="0表示不限制次数">
+        </property>
+    </group>
+    <property name="wt_show_police_verify" label="网厅视频是否显示公安认证" default="0"
+			description="">
+			<validator type="checkbox">
+				<option label="显示" value="0"></option>
+				<option label="隐藏" value="1"></option>
+			</validator>
+	</property>
+	<group id="zhengtIdentify" display="false">
+        <property name="sisap_identifier_ztuniqueid" label="访问接口的唯一客户端标识号" default="">
+            <validator type="required" />
+        </property>
+       	<property name="sisap_identifier_ztuserid"  label="UserId" default="">
+            <validator type="required" />
+        </property>
+        <property name="sisap_identifier_ztclientid"  label="ClientId" default="">
+            <validator type="required" />
+        </property>
+    </group>
+</config>

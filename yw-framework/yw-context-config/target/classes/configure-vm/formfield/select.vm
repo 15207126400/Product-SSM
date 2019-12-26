@@ -1,0 +1,9 @@
+#if (!$f.define)
+
+<select id="$f.formFieldId" name="$f.property.name"  class="relatedTrigger" onchange="onOptionChanged(this, 'option')">
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+</select>
+
+#end

@@ -1,0 +1,20 @@
+#if(!$f.define)
+
+<span 
+$f.generalDealDisplay()
+>
+
+<input type="radio" 
+id="$f.id" name="$f.property.name" value="$f.value" 
+#if($f.checked)
+checked="checked" 
+#end
+#if($f.related)
+related='$f.related' 
+#end
+/>
+<label for="$f.id"  style="width:200px !important;">$f.label</label>
+
+</span>
+
+#end

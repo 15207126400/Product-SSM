@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="gem" label="创业板配置" display="true">
+		<property name="gem_do_open_check" label="是否校验创业板开户条件检查"
+			default="1" description="开户条件包括，交易时间限制和用户年龄及学历判断等">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="gem_precondition_checkAge" label="开户条件校验是否包含年龄"
+			default="1" description="打开校验开户条件检查，配置才生效">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="gem_precondition_checkDegree" label="开户条件校验是否包含学历"
+			default="1" description="打开校验开户条件检查，配置才生效">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="gem_pre_ageAndDegree" label="创业板开通条件相关信息配置"
+			default="70#7#初中及以下" description="开通条件相关信息包括：年龄#学历代码#学历名称，如：70#7#初中及以下" />
+			
+		<property name="gem_do_trade_check" label="是否校验创业板首次交易日年限检查"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="gem_min_tradeAge" label="创业板最低交易年限" default="2"
+			description="单位：年" />
+		<property name="gem_risk_reminder" label="是否在视频页面显示风险揭示语句"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="gem_reg_doOpen" label="创业板转签检查到没有开通创业板功能后是否让客户在网厅开通"
+			default="0" description="创业板转签检查到没有开通创业板功能后是否提示让客户去柜台开通">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="gem_reg_doAgreement" label="创业板转签是否签署协议"
+			default="1" description="湘财目前不签，其他默认都需要签">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="busin_gem_effective_date" label="创业板流水有效天数"
+			default="5" description="单位：天" />
+		<property name="secrelation_show" label="创业板是否显示第二联系人"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="wt_second_contact" label="创业板 第二联系人是否必须项控制"
+			default="0" description="创业板 第二联系人(姓名+电话)是否必须项控制">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="gem_do_risk_check" label="创业板 是否检查用户的风险等级"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="gem_do_risk_check_date" label="检查用户的风险等级评测时间"
+			default="0.5" description="检查用户的风险评测是否大于指定时效 如半年设置0.5一年设置1" />
+		<property name="gem_risk_min" label="创业板风险测评相关信息配置" default="30#稳健型#1"
+			description="风险测评相关信息包括：测评最低分数 #测评等级提示#测评等级编号，如：30#保守型#1" />
+
+	</group>
+
+</config>

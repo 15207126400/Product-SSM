@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure xmlns="http://www.hundsun.com/ooas/category" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/category category.xsd">
+
+    <!-- 配置功能列表， id 必须唯一的不能重复  config 为配置规则文件，  generate为配置内容模板， 通过占位符替换  -->
+    
+    <!-- 数据库配置
+    <catalog id="db" name="数据库配置" description="数据库地址配置" config="/db/config.xml">
+        <generate template="/db/jdbc.properties" />
+    </catalog> -->
+    
+    <!-- 域名配置 -->
+    <catalog id="conn" name="域名配置" description="前中后台域名配置" config="/conn/config.xml">
+        <generate template="/conn/connection.properties" />
+    </catalog>
+    
+    <!-- 券商个性化 -->
+    <catalog id="sec" name="券商个性化配置" description="券商个性化显示配置" config="/sec/config.xml">
+        <generate template="/sec/securities.properties" />
+        <generate template="/sec/systemGreeting.properties" />
+    </catalog>
+    
+    <!-- 功能显示开发 -->
+    <catalog id="func" name="功能开关" description="券商显示功能开关" config="/func/config.xml">
+        <generate template="/func/func.properties" />
+    </catalog>
+    
+    <!-- redis配置 
+    <catalog id="redis" name="Redis配置" description="Redis配置" config="/redis/config.xml">
+        <generate template="/redis/jedis.xml" />
+    </catalog>
+    -->
+    <!-- CA配置 -->
+    <catalog id="ca" name="CA配置" description="中登、天威、同花顺等CA配置" config="/ca/config.xml">
+        <generate template="/ca/ca.properties" />
+        <generate template="/ca/netsignagent.properties"/>
+        <generate template="/ca/systemNos.properties"/>
+         <generate template="/ca/BJCAROOT/SVSClient.properties"/>
+    </catalog>
+    
+     <!-- 公安配置 -->
+    <catalog id="nciis" name="公安配置" description="公安认证地址配置" config="/nciis/config.xml">
+        <generate template="/nciis/nciis.properties" />
+    </catalog>
+    
+    <!--ocr配置 -->
+    <catalog id="ocr" name="OCR识别配置" description="身份证图片识别厂商参数配置" config="/ocr/config.xml">
+        <generate template="/ocr/ocr.properties" />
+    </catalog>
+    
+    <!-- 短信配置 -->
+    <catalog id="sms" name="短信配置" description="短信发送参数配置" config="/sms/config.xml">
+        <generate template="/sms/sms.properties" />
+    </catalog>
+    
+    <!-- 视频配置 -->
+    <catalog id="video" name="视频配置" description="视频服务地址配置" config="/video/config.xml">
+        <generate template="/video/video.properties" />
+    </catalog>
+    
+    <!-- 柜台配置 -->
+    <catalog id="counter" name="柜台配置" description="柜台信息配置" config="/counter/config.xml">
+    	<generate template="/counter/counter.properties" />
+        <generate template="/counter/ifs.properties" />
+        <generate template="/counter/ws.koauth2.properties" />
+        <generate template="/counter/livebosconfig.properties" />
+        <generate template="/counter/t2sdk-config.xml" />
+        <generate template="/counter/t2.properties" />
+        <generate template="/counter/ets.properties" />
+    </catalog>
+    
+    <!-- 邮件配置 -->
+    <catalog id="mail" name="邮件配置" description="邮件地址配置" config="/mail/config.xml">
+        <generate template="/mail/mail.properties" />
+    </catalog>
+    
+    <!-- 存储配置 -->
+    <catalog id="store" name="存储配置" description="存储及发布配置" config="/store/config.xml">
+        <generate template="/store/upload.properties" />
+        <generate template="/store/upload-tomcat-context.xml" />
+    </catalog>
+    <!-- 语音验证码 -->
+    <catalog id="ccprest" name="语音验证码配置" description="语音验证码配置" config="/ccprest/config.xml">
+        <generate template="/ccprest/ccprestConfig.properties" />
+    </catalog>
+    
+    <!-- 网厅&小贷通配置
+    <catalog id="wt" name="网厅/小贷通配置" description="网厅/小贷通配置" config="/wt/config.xml">
+        <generate template="/ /wt-common.properties" />
+        <generate template="/wt/wt-biz.properties" />
+    </catalog>
+    -->
+    
+    <!-- 手机网厅&手机小贷通配置-->
+    <catalog id="sjwt" name="手机网厅/手机小贷通配置" description="手机网厅/手机小贷通配置" config="/sjwt/config.xml">
+        <generate template="/sjwt/sjwt-authorize.properties" />
+        <generate template="/sjwt/sjwt-config.properties" />
+    </catalog>
+    <!-- 网厅业务栏显示配置-->
+    <catalog id="wtBiz" name="网厅业务栏配置" description="网厅业务栏配置" config="/wtBiz/config.xml">
+        <generate template="/wtBiz/wt-bizConfig.properties" />
+    </catalog>
+    
+	<!-- 倍赚宝（网开和小贷结合版本配置） -->
+    <catalog id="bzb" name="倍赚宝配置" description="网开和小贷结合版本配置" config="/bzb/config.xml">
+        <generate template="/bzb/bzb.properties" />
+    </catalog>
+	
+	<!-- 证券公司对接民生银行直销银行配置 -->
+    <catalog id="cmbc" name="民生银行直销银行配置" description="证券公司对接民生银行直销银行配置" config="/cmbc/config.xml">
+        <generate template="/cmbc/cmbc.properties" />
+        <generate template="/cmbc/bank2048.cer" />
+    </catalog>
+    
+    <!-- 浙商证券公司个性化配置 -->
+    <catalog id="zszq" name="电子协议管理系统" description="电子协议管理系统" config="/zszq/config.xml">
+        <generate template="/zszq/zszq.properties" />
+    </catalog>
+    
+    <!-- 营销平台配置 -->
+    <catalog id="snp" name="营销平台配置" description="营销平台配置" config="/snp/config.xml">
+        <generate template="/snp/snp.properties" />
+    </catalog>
+    
+    <!-- 机构开户配置 -->
+    <catalog id="witness" name="机构开户配置" description="机构开户配置" config="/witness/config.xml">
+        <generate template="/witness/witness.properties" />
+    </catalog>
+    
+    <!-- 业务集中运营平台配置 -->
+    <catalog id="sbc" name="业务集中运营平台配置" description="业务集中运营平台配置" config="/sbc/config.xml">
+        <generate template="/sbc/sbc.properties" />
+    </catalog>
+    <!-- 档案配置 -->
+    <catalog id="arch" name="档案配置" description="档案配置" config="/arch/config.xml">
+        <generate template="/arch/arch.properties" />
+    </catalog>
+    <!-- 问卷配置 -->
+    <catalog id="risk" name="问卷配置" description="问卷配置" config="/risk/config.xml">
+        <generate template="/risk/risk.properties" />
+    </catalog>
+    <!-- 蚂蚁金服配置 -->
+    <catalog id="ant" name="蚂蚁金服配置" description="蚂蚁金服配置" config="/ant/config.xml">
+        <generate template="/ant/antfina.properties" />
+    </catalog>
+    <!-- 适当性项目配置 -->
+    <catalog id="suit" name="适当性项目配置" description="适当性项目配置" config="/suit/config.xml">
+        <generate template="/suit/suit.properties" />
+    </catalog>
+</configure>

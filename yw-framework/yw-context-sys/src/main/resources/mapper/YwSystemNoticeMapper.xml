@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.dao.YwSystemNoticeDao">
+
+    <sql id="sql">
+       notice_id,notice_type,notice_content,notice_create_time,user_id,notice_status
+    </sql>
+    
+    <sql id="insertSql">
+       notice_type,notice_content,notice_create_time,user_id,notice_status
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="notice_id != null and notice_id != '' ">
+	          and notice_id = #{notice_id}
+	        </if>
+	        <if test="notice_type != null and notice_type != '' ">
+	          and notice_type = #{notice_type}
+	        </if>
+	        <if test="notice_status != null and notice_status != '' ">
+	          and notice_status = #{notice_status}
+	        </if>
+	        <if test="notice_content != null and notice_content != '' ">
+	          and notice_content like CONCAT(CONCAT('%',#{notice_content}),'%')
+	        </if>
+	    </where> 
+    </sql>
+
+    <sql id = "whereUpdateSql">
+	     <where>
+	        <if test="notice_id != null and notice_id != '' ">
+	          and notice_id = #{notice_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="notice_id != null and notice_id != '' ">
+				and notice_id in
+				<foreach collection="notice_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.sys.model.YwSystemNotice">
+		insert into yw_system_usercenter.yw_system_notice(<include refid="insertSql"/>) values(#{notice_type},#{notice_content},#{notice_create_time},#{user_id},#{notice_status})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwSystemNotice">
+		select <include refid="sql"/> from yw_system_usercenter.yw_system_notice
+		<include refid="whereSql"/>
+		order by notice_create_time desc
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwSystemNotice">
+		select 
+			n.notice_id,
+			n.notice_type,
+			n.notice_content,
+			n.notice_create_time,
+			n.notice_status,
+			u.cust_name as user_id
+		 from yw_system_usercenter.yw_system_notice n
+		 left join yw_system_usercenter.yw_user_customer u on n.user_id = u.user_id
+		<include refid="whereSql"/>
+		order by notice_create_time desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_system_notice
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_system_notice
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="notice_type != null and notice_type != '' ">
+	           notice_type = #{notice_type},
+	      </if>
+	      <if test="notice_content != null and notice_content != '' ">
+	           notice_content = #{notice_content},
+	      </if>
+	      <if test="notice_status != null and notice_status != '' ">
+	           notice_status = #{notice_status},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	    </trim>
+	    <include refid="whereUpdateSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_system_notice 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_system_notice
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

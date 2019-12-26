@@ -1,0 +1,9 @@
+#if (!$f.define)
+
+<div>
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+</div>
+
+#end

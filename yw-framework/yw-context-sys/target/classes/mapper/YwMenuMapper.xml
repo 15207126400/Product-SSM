@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.dao.YwMenuDao">
+
+    <sql id="insertSql">
+       mu_name,mu_parentid,mu_url,mu_level,mu_issub_node,mu_sort,mu_remark,mu_icon
+    </sql>
+    
+    <sql id="sql">
+       mu_id,mu_name,mu_parentid,mu_url,mu_level,mu_issub_node,mu_sort,mu_remark,mu_icon
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="mu_id != null and mu_id != '' ">
+	          and mu_id = #{mu_id}
+	        </if>
+	        <if test="mu_parentid != null and mu_parentid != '' ">
+	          and mu_parentid = #{mu_parentid}
+	        </if>
+	        <if test="mu_level != null and mu_level != '' ">
+	          and mu_level = #{mu_level}
+	        </if>
+	        <if test="mu_name != null and mu_name != '' ">
+	        	and mu_name like CONCAT('%',#{mu_name},'%')
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id = "whereBatchSql">
+	     <where>
+	        <if test="mu_id != null and mu_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{mu_id}),'%') -->
+	          and mu_id in
+	          <foreach collection="mu_id" item="id" separator="," open="(" close=")">
+				#{id}
+			  </foreach>
+	        </if>
+	        <if test="mu_parentid != null and mu_parentid != '' ">
+	          and mu_parentid in
+	          <foreach collection="mu_parentid" item="parentid" separator="," open="(" close=")">
+				#{parentid}
+			  </foreach>
+	        </if>
+	    </where> 
+    </sql>
+    
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.sys.model.YwMenu">
+		insert into yw_system_usercenter.yw_menu(<include refid="insertSql"/>) values(#{mu_name},#{mu_parentid},#{mu_url},#{mu_level},#{mu_issub_node},#{mu_sort},#{mu_remark},#{mu_icon})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwMenu">
+		select <include refid="sql"/> from yw_system_usercenter.yw_menu
+		<include refid="whereSql"/>
+		order by mu_sort
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwMenu">
+		select <include refid="sql"/> from yw_system_usercenter.yw_menu
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_menu
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_menu
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="mu_id != null and mu_id != '' ">
+	           mu_id = #{mu_id},
+	      </if>
+	      <if test="mu_name != null and mu_name != ''">
+	           mu_name = #{mu_name},
+	      </if>
+	      <if test="mu_parentid != null and mu_parentid != '' ">
+	           mu_parentid = #{mu_parentid},
+	      </if>
+	      <if test="mu_url != null and mu_url != '' ">
+	           mu_url = #{mu_url},
+	      </if>
+	      <if test="mu_level != null and mu_level != '' ">
+	           mu_level = #{mu_level},
+	      </if>
+	      <if test="mu_issub_node != null and mu_issub_node != '' ">
+	           mu_issub_node = #{mu_issub_node},
+	      </if>
+	      <if test="mu_sort != null and mu_sort != '' ">
+	           mu_sort = #{mu_sort},
+	      </if>
+	      <if test="mu_remark != null and mu_remark != '' ">
+	           mu_remark = #{mu_remark},
+	      </if>
+	      <if test="mu_icon != null and mu_icon != '' ">
+	           mu_icon = #{mu_icon},
+	      </if>
+	    </trim>
+	    <where>
+	    	<if test="mu_id != null and mu_id != '' ">
+	    		and mu_id = #{mu_id}
+	    	</if>
+	    </where>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_menu 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_menu
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

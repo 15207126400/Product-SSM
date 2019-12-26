@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	
+    <validator id="display_checkbox" type="checkbox">
+        <option label="显示" value="show"></option>
+        <option label="隐藏" value="hide"></option>
+    </validator>
+    <validator id="display2_checkbox" type="checkbox">
+        <option label="是" value="1"></option>
+        <option label="否" value="0"></option>
+    </validator>
+    <validator id="display3_checkbox" type="checkbox">
+        <option label="显示" value="1"></option>
+        <option label="隐藏" value="0"></option>
+    </validator>
+    <group id="wt_isworking_time" label="是否检验在工作时间日内" display="true">
+    <property name="wt_isworking_time" label="是否检验在工作时间日内"  default="0" description="是否检验在工作时间日内,方便测试建议测试环境不检查">
+    	<validator type="checkbox" ref="display2_checkbox"></validator>			
+    </property>
+     </group>
+     
+     <group id="wt_not_trading_time_describe" label="网厅非业务时间提示语" display="true">
+    <property name="wt_not_trading_time_describe" label="网厅非业务时间提示语"  default="非常抱歉，当前不在业务时间，请在{0}-{1}使用此功能!" description="非常抱歉，当前不在业务时间，请在{0}-{1}使用此功能!">		
+    </property>
+     </group>
+    <group id="business_every_showTime" label="" display="true">
+    <property name="business_every_showTime" label="是否在页面显示业务办理时间段"  default="0" description="是否在每个页面，显示出业务的办理时间段。默认隐藏">
+    	<validator type="checkbox" ref="display3_checkbox"></validator>			
+    </property>
+    </group>
+    <group id="1001" label="修改客户资料" display="true">
+    <property name="1001" label="是否显示修改客户资料"  default="hide" description="是否显示修改客户资料">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1001_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1001_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_modify_information_bizid" label="业务ID" default="1001" description="默认，无需修改"/> --> 
+    </group>
+    
+     <group id="1002" label="关键信息修改" display="true">
+    <property name="1002" label="是否显示关键信息修改"  default="hide" description="是否显示关键信息修改">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1002_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1002_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" />
+    <!-- <property name="wt_key_information_bizid" label="业务ID" default="1002" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1003" label="密码修改" display="true">
+    <property name="1003" label="是否显示密码修改"  default="hide" description="是否显示密码修改">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1003_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1003_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_password_modify_bizid" label="业务ID" default="1003" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1004" label="手机绑定" display="true">
+    <property name="1004" label="是否显示手机绑定"  default="hide" description="是否显示手机绑定">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1004_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1004_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" />
+   <!--  <property name="wt_mobile_binding_bizid" label="业务ID" default="1004" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1005" label="邮箱绑定" display="true">
+    <property name="1005" label="是否显示邮箱绑定"  default="hide" description="是否显示邮箱绑定">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1005_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1005_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_mailbox_binding_bizid" label="业务ID" default="1005" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1006" label="密码重置" display="true">
+    <property name="1006" label="是否显示密码重置"  default="hide" description="是否显示密码重置">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1006_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1006_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    </group>
+    
+     <group id="1201" label="上海证券账户开立" display="true">
+    <property name="1201" label="是否显示上海证券账户开立"  default="hide" description="是否显示上海证券账户开立">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1201_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1201_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" />
+    <!-- <property name="wt_sh_account_opening_bizid" label="业务ID" default="1201" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1202" label="上海证券账户下挂" display="true">
+    <property name="1202" label="是否显示上海证券账户下挂"  default="hide" description="是否显示上海证券账户下挂">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1202_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1202_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_sh_account_under_bizid" label="业务ID" default="1202" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1501" label="风险评测" display="true">
+    <property name="1501" label="是否显示风险评测"  default="hide" description="是否显示风险评测">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1501_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1501_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_risk_bizid" label="业务ID" default="1501" description="默认，无需修改"/>  -->
+    </group>
+    
+    <group id="1602" label="三方存管 " display="true">
+    <property name="1602" label="是否显示三方存管"  default="hide" description="是否显示三方存管">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1602_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1602_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_third_depository_bizid" label="业务ID" default="1602" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="1701" label="委托方式 " display="true">
+    <property name="1701" label="是否显示委托方式"  default="hide" description="是否显示委托方式">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1701_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1701_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_way_bizid" label="业务ID" default="1701" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="2201" label="电子签名约定书 " display="true">
+    <property name="2201" label="是否显示电子签名约定书"  default="hide" description="是否显示电子签名约定书">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2201_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2201_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_digitalsign_bizid" label="业务ID" default="2201" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="2301" label="理财产品协议签署 " display="true">
+    <property name="2301" label="是否显示理财产品协议签署"  default="hide" description="是否显示理财产品协议签署">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2301_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2301_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" />
+    <!-- <property name="wt_zg_bizid" label="业务ID" default="2301" description="默认，无需修改"/>  -->
+    </group>
+    
+     <group id="1301" label="开放式基金账户 " display="true">
+    <property name="1301" label="是否显示开放式基金账户"  default="hide" description="是否显示开放式基金账户">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1301_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1301_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_openfund_bizid" label="业务ID" default="1301" description="默认，无需修改"/> --> 
+    </group>
+    
+     <group id="2801" label="银行理财账户 " display="true">
+    <property name="2801" label="是否显示银行理财账户"  default="hide" description="是否显示银行理财账户">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2801_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2801_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!--  <property name="wt_bankaccount_bizid" label="业务ID" default="2801" description="默认，无需修改"/> -->
+    </group>
+    
+     <group id="1901" label="国债逆回购 " display="true">
+    <property name="1901" label="是否显示国债逆回购"  default="hide" description="是否显示国债逆回购">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1901_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1901_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_nation_debt_bizid" label="业务ID" default="1901" description="默认，无需修改"/> -->
+    </group>
+    
+     <group id="2001" label="质押式报价回购 " display="true">
+    <property name="2001" label="是否显示质押式报价回购"  default="hide" description="是否显示质押式报价回购">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2001_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2001_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_price_repurchaset_bizid" label="业务ID" default="2001" description="默认，无需修改"/> -->
+    </group>
+    
+     <group id="2601" label="创业板开通 " display="true">
+    <property name="2601" label="是否显示创业板开通"  default="hide" description="是否显示创业板开通">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2601_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2601_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+     <!-- <property name="wt_gem_bizid" label="业务ID" default="2601" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="2603" label="创业板转签" display="true">
+    <property name="2603" label="是否显示创业板转签"  default="hide" description="是否显示创业板转签">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2603_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2603_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_gemreg_bizid" label="业务ID" default="2603" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="2701" label="融资融券" display="true">
+    <property name="2701" label="是否显示融资融券"  default="hide" description="是否显示融资融券">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2701_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2701_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_margin_bizid" label="业务ID" default="2701" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="1801" label="OTC业务" display="true">
+    <property name="1801" label="是否显示OTC业务"  default="hide" description="是否显示OTC业务">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="1801_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="1801_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_otc_bizid" label="业务ID" default="1801" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="3901" label="港股通" display="true">
+    <property name="3901" label="是否显示港股通"  default="hide" description="是否显示港股通">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="3901_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="3901_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_HKStocks_bizid" label="业务ID" default="3901" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="2901" label="退市整理" display="true">
+    <property name="2901" label="是否显示退市整理"  default="hide" description="是否显示退市整理">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2901_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2901_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_st_reg_bizid" label="业务ID" default="2901" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="3001" label="风险警示" display="true">
+    <property name="3001" label="是否显示风险警示"  default="hide" description="是否显示风险警示">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="3001_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="3001_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+   <!--  <property name="wt_riskwarn_reg_bizid" label="业务ID" default="3001" description="默认，无需修改"/> -->
+    </group>
+    
+    <group id="3101" label="佣金调整" display="true">
+    <property name="3101" label="是否显示佣金调整"  default="hide" description="是否显示佣金调整">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="3101_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="3101_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_commission_bizid" label="业务ID" default="3101" description="默认，无需修改"/> -->
+    </group>
+    
+     <group id="3201" label="现金产品签署" display="true">
+    <property name="3201" label="是否显示现金产品签署"  default="hide" description="是否显示现金产品签署">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="3201_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="3201_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" /> 
+    <!-- <property name="wt_ofcash_prod_bizid" label="业务ID" default="3201" description="默认，无需修改"/> -->
+    </group>
+    
+     <group id="2101" label="消费支付服务" display="true">
+    <property name="2101" label="是否显示消费支付服务"  default="hide" description="是否显示消费支付服务">
+    	<validator type="checkbox" ref="display_checkbox"></validator>			
+    </property>
+    <property name="2101_begin_time" label="时间段内可用开始时间" default="00:00" description="时间段内可用开始时间：如 00:00" />
+    <property name="2101_end_time" label="时间段内可用结束时间" default="23:59" description="时间段内可用结束时间：如 23:59" />
+    <!-- <property name="wt_payment_bizid" label="业务ID" default="2101" description="默认，无需修改"/> --> 
+    </group>
+</config>

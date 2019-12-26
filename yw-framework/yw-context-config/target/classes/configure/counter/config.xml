@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<group name="default" label="柜台配置">
+        <property name="interface_oos_counter_user_bean_ref" label="网上开户用户柜台接口" default="oosHSUserCounter">
+            <validator type="select">
+                <option value="oosHSUserCounter" label="恒生用户柜台" related="ifs"></option>
+                <option value="oosCtsecUserCounter" label="财通用户柜台" description="唯一性校验通过数据中心查询校验" related="ifs"></option>
+                <option value="oosLiveBosUserCounter" label="顶点用户柜台" related="livebos"></option>
+                <option value="oosKospUserCounter" label="金证资产交易系统用户柜台" related="kingdom_kosp"></option>
+                <option value="oosHSEtsUserCounter" label="恒生基金直销交易系统用户柜台" related="ets"></option>
+            </validator>
+        </property>
+
+        <property name="interface_oos_counter_teller_bean_ref" label="网上开户柜员柜台接口" default="oosHSTellerCounter">
+            <validator type="select">
+                <option value="oosHSTellerCounter" label="恒生柜员柜台" related="ifs"></option>               
+                <option value="oosLiveBosTellerCounter" label="顶点柜员柜台" related="livebos"></option>
+                <option value="oosKospTellerCounter" label="金证资产交易系统柜员柜台" related="kingdom_kosp"></option>
+                <option value="oosHSEtsTellerCounter" label="恒生基金直销交易系统柜员柜台" related="ets"></option>
+            </validator>
+        </property>
+
+        <property name="interface_obs_counter_bean_ref" label="网厅柜台接口" default="obsHSCounter">
+            <validator type="select">
+                <option value="obsHSCounter" label="恒生柜台" related="ifs"></option>               
+                <option value="obsLiveBosCounter" label="顶点柜台" related="livebos"></option>     
+            </validator>
+        </property>
+        <!-- 网厅多柜台存在时，次要柜台的接口 -->
+         <property name="interface_obs_many_counter_bean_ref" label="网厅次要柜台接口" default="obsHSManyCounter">
+            <validator type="select">
+            	<option value="obsHSManyCounter" label="恒生柜台" related="ifs"></option>
+                <option value="obsLiveBosManyCounter" label="顶点柜台" related="livebos"></option>
+            </validator>
+        </property>
+    </group>
+    <group id="ifs">
+        <property name="ifs_run_mode" label="IFS运行模式" default="run">
+            <validator type="radio">
+                <option value="run" label="生产模式" related="ifs_settings" />
+                <option value="debug" label="调试模式" />
+            </validator>
+        </property>
+
+        <group id="ifs_settings">
+            <property name="ifs_webservice_url_host" label="连接地址主机" default="" description="连接地址IP或域名">
+                <validator type="required" />
+                <validator type="host" />
+            </property>
+            <property name="ifs_webservice_url_port" label="连接地址端口" default="8080">
+                <validator type="required" />
+                <validator type="range" value="[1,65535]" />
+            </property>
+            <property name="ifs_webservice_url_serviceContext" label="连接地址服务路径" default="/WAserver"
+                description="连接地址服务路径，例如连接地址为：http://192.168.54.168:8080/WAserver，则服务路径为/WAserver">
+                <validator type="required" />
+                <validator type="pattern" value="^/.+" />
+            </property>
+
+            <property name="ifs_webservice_url_trade_host" label="交易子系统连接地址主机" default="" description="交易子系统连接地址IP或域名">
+                <validator type="required" />
+                <validator type="host" />
+            </property>
+            <property name="ifs_webservice_url_trade_port" label="交易子系统连接地址端口" default="8080">
+                <validator type="required" />
+                <validator type="range" value="[1,65535]" />
+            </property>
+            <property name="ifs_webservice_url_trade_serviceContext" label="交易子系统连接地址服务路径" default="/WAserver"
+                description="交易子系统连接地址服务路径，例如连接地址为：http://192.168.54.168:8080/WAserver，则服务路径为/WAserver">
+                <validator type="required" />
+                <validator type="pattern" value="^/.+" />
+            </property>
+
+            <property name="ifs_operator_branch_no" label="操作员(柜员)营业部编号" default="">
+                <validator type="required" />
+            </property>
+            <property name="ifs_operator_no" label="操作员(柜员)编号" default="">
+                <validator type="required" />
+            </property>
+            <property name="ifs_operator_pwd" id="password" label="操作员(柜员)密码" default="">
+                <validator type="required" />
+            </property>
+            <property name="ifs_operator_station" label="操作员站点" default="">
+                <validator type="required" />
+            </property>
+            <property name="ifs_operator_busin_owner" label="客户关系人" default=""
+                description="客户关系人（中金补丁），需与与IFS-broker_config.xml匹配">
+            </property>
+            <property name="ifs_account_unity" label="IFS接口是否支持统一账户" default="0"
+                description="0-不支持， 1-支持">
+            </property>
+        </group>
+    </group>
+    <group id="t2sdk">
+        <property name="t2_host" label="T2连接地址主机" default="" description="T2连接地址IP或域名">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="t2_port" label="T2连接地址端口" default="18001">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        <property name="t2_license_url" label="T2 License地址" default="classpath:hst2_client_license.dat" description="配置License地址，默认classpath:hst2_client_license.dat则在WEB-INF/classes目录，也可以配置绝对路径，如/usr/local/runtime_config_root/hst2_client_license.dat">
+            <validator type="required" />
+        </property>
+    </group>
+     <group id="livebos">
+     	<property name="livebos_userid" label="顶点CIF webservice服务用户ID" default="123" description="">
+            <validator type="required" />
+        </property>
+     	<property name="livebos_user" label="顶点CIF webservice服务用户名" default="webuser" description="">
+            <validator type="required" />
+        </property>
+        <property name="livebos_password" id="password" label="顶点CIF webservice服务密码" default="888888">
+            <validator type="required" />
+        </property>
+        <property name="livebos_service_url" label="顶点CIF webservice地址" default="http://10.10.16.226:8020/service/LBEBusiness?wsdl">
+            <validator type="required" />
+        </property>
+        
+        <property name="crh_fixapi_ip" label="顶点fix接口转发程序IP" default="" description="">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="crh_fixapi_port" label="顶点fix接口转发程序端口" default="6010">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        
+    </group>
+    <group id="kingdom_kosp">
+        <property name="kosp_oauth2_clientid" label="OAUTH2服务器APP_key" default="" description="OAUTH2服务器供应商提供给商家的APP_key">
+            <validator type="required" />
+        </property>
+        <property name="kosp_oauth2_clientSecret" label="OAUTH2服务器APP_Secret" default="" description="OAUTH2服务器供应商提供给商家的APP_Secret">
+            <validator type="required" />
+        </property>
+        <property name="kosp_oauth2_url" label="API的首部地址" default="http://192.168.1.102:8991/koauth2/" description="">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="kosp_oauth2_version" label="KOAUTH2版本信息" default="V2.0" description="">
+            <validator type="required" />
+        </property>
+    </group>
+    <group id="ets">
+        <property name="ets_webservice_url" label="ETS服务接口地址" default="ets.webservice.url=172.15.1.161:7100/openapi/fundbusrestful" description="">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="ets_partner_id" label="ETS银行渠道列表id" default="" description="ETS银行渠道列表id">
+            <validator type="required" />
+        </property>
+    </group>
+</config>

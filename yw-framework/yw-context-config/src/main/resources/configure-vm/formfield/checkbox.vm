@@ -1,0 +1,27 @@
+#if(!$f.define)
+
+#set ($checkedOption = $f.fragments.get(0))
+#set ($checkedOption.display = "hide")
+#set ($uncheckedOption = $f.fragments.get(1))
+#set ($uncheckedOption.display = "hide")
+
+#set ($checked = $f.checked)
+<div class="parameter-inner">
+<a href="javascript:void(0)" class='relatedTrigger status close 
+#if($checked)
+checked
+#end
+' id='$f.formFieldId'' onclick="onCheckboxSwitch(this);$(this).change()" onchange="onOptionChanged(this, ':radio')" >
+
+<span style="float:right;display:inline!important ;" class='blockon' >
+$checkedOption.label
+$checkedOption.toHTML()
+</span>
+<i></i>
+<span style="margin-left:2px; display:inline!important ;" class='blockoff' >
+$uncheckedOption.label
+$uncheckedOption.toHTML()
+</span>
+</a>
+</div>
+#end

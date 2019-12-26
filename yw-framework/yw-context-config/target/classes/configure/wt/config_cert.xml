@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 网厅公共模块配置修改（高伟星）开始 -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="cert" label="证书配置" display="true">
+		<property name="ca_interface_bean" label="CA证书" default="itrus"
+			description="CA证书接口方式">
+			<validator type="select">
+				<option value="itrus" label="天威CA" />
+				<option value="csdcca" label="直连中登CA" />
+				<option value="hscsdcca" label="恒生T2代理CA服务" />
+				<option value="htcsdcca" label="海通代理CA服务" />
+				<option value="hnca" label="河南CA" />
+			</validator>
+		</property>
+		<property name="display_cert_item" label="网厅支持的证书" default="zd"
+			description="">
+			<validator type="select">
+				<option value="" label="自建中登都支持" />
+				<option value="zd" label="仅支持中登" />
+				<option value="zj" label="仅支持自建" />
+			</validator>
+		</property>
+		
+		<property name="zd_cert_apply_need_sm" label="中登证书申请是否需要屏蔽短信验证步骤"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="zj_cert_apply_need_sms" label="自建证书申请是否需要屏蔽短信验证步骤"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+
+		<property name="wt_first_zj_cert_need_uploadpic" label="自建证书第一次申请需要上传照片"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+	</group>
+
+</config>

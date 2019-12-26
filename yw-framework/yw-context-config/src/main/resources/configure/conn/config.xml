@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="front" label="前端域名配置">
+        <property name="oos_webaddr_type" label="前台http类型" default="http">
+            <validator type="radio">
+                <option label="http" value="http"></option>
+                <option label="https" value="https"></option>
+            </validator>
+        </property>
+        <property name="oos_webaddr_domain" label="前台域名" default="wskh.xpe.com">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="oos_cookie_domain" label="前台cookie域名" default="wskh.xpe.com">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="oos_webaddr_port" label="前台端口" default="80" description="Nginx提供访问的端口">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+    </group>
+    <group id="middle" label="中台域名配置">
+        <property name="sisap_webaddr_type" label="中台http类型" default="http">
+            <validator type="radio">
+                <option label="http" value="http"></option>
+                <option label="https" value="https"></option>
+            </validator>
+        </property>
+        <property name="sisap_cookie_domain" label="中台域名" default="backend.xpe.com">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="sisap_webaddr_port" label="中台端口" default="80" description="Nginx提供访问的端口">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        <property name="sisap_webservice_connection_timeout" label="连接超时" default="90"
+            description="与中台接口通讯连接超时时间(单位秒,默认60秒)">
+            <validator type="digits" />
+        </property>
+        <property name="sisap_webservice_submit_timeout" label="提交超时" default="90" description="与中台接口通讯提交请求超时时间(单位秒，默认60秒)">
+            <validator type="digits" />
+        </property>
+    </group>
+    <group id="back" label="后台域名配置">
+        <property name="oss_webaddr_type" label="后台http类型" default="http">
+            <validator type="radio">
+                <option label="http" value="http"></option>
+                <option label="https" value="https"></option>
+            </validator>
+        </property>
+        <property name="oss_cookie_domain" label="后台域名" default="backend.xpe.com">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="oss_webaddr_port" label="后台端口" default="80" description="Nginx提供访问的端口">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+    </group>
+</config>

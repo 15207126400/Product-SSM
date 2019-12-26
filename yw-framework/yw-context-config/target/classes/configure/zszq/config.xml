@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="electronicsagreement_config" label="电子协议平台配置">
+        <property name="electronicsagreement_audit_auditlevel" label="协议发布审核级别" default="0" description="协议发布审核级别,0为不审核,1为审核,2为复核,包括审核,主二级审核">
+        </property>
+        <property name="electronicsagreement_agreetemplate_openflag" label="是否开启模板库" default="false" description="是否开启模板库功能，当开启之后，在发布协议时可以从模板库中选择文档合并">
+			<validator type="checkbox">
+				<option label="是" value="true"></option>
+				<option label="否" value="false"></option>
+			</validator>
+		</property>
+    </group>
+    
+    <group id="electronicsagreement_mail" label="邮件配置">
+    	<property name="electronicsagreement_mail_title" label="邮箱标题" default="" description="邮箱标题">
+        </property>
+        <property name="electronicsagreement_mail_context" label="邮箱内容" default="" description="邮箱内容">
+        </property>
+        <property name="electronicsagreement_mail_domain" label="邮箱域名" default="@stocke.com.com" description="邮箱域名">
+        </property>
+        <property name="electronicsagreement_mail_sendto" label="发送人邮箱地址" default="abc@cairenhui.com" description="发送人邮箱地址，支持发送多人，地址以逗号分割">
+        </property>
+    </group>
+    
+     <group id="electronicsagreement_ftp" label="FTP服务器">
+      	<property name="electronicsagreement_ftp_host" label="FTP服务IP地址" default="127.0.0.1" description="FTP服务IP地址">
+        </property>
+        <property name="electronicsagreement_ftp_port" label="FTP服务端口" default="21" description="FTP服务端口">
+        </property>
+    	<property name="electronicsagreement_ftp_username" label="FTP用户名" default="" description="FTP用户名">
+        </property>
+        <property name="electronicsagreement_ftp_password" label="FTP密码" default="" id="password" description="FTP密码">
+        </property>
+        <property name="electronicsagreement_ftp_path" label="FTP文件存放根路径" default="/" description="FTP文件存放路径">
+        </property>
+    	<property name="electronicsagreement_businesstype_100044" label="证券理财产品存放路径" default="/" description="证券理财产品存放路径">
+        </property>
+        <property name="electronicsagreement_businesstype_100045" label="银行理财产品存放路径" default="/" description="银行理财产品存放路径">
+        </property>
+        <property name="electronicsagreement_businesstype_100046" label="信托理财产品存放路径" default="/" description="信托理财产品存放路径">
+        </property>
+        <property name="electronicsagreement_businesstype_100047" label="资管理财产品存放路径" default="/" description="资管理财产品存放路径">
+        </property>
+        <property name="electronicsagreement_businesstype_100048" label="基金专户产品存放路径" default="/" description="基金专户产品存放路径">
+        </property>
+    
+    
+    </group>
+    
+    
+   <group id="filetypeconvert_ftp" label="文件转换FTP服务器">
+        <property name="filetypeconvert_ftp_port" label="FTP服务端口" default="21" description="FTP服务端口">
+        </property>
+    	<property name="filetypeconvert_ftp_username" label="FTP用户名" default="" description="FTP用户名">
+        </property>
+        <property name="filetypeconvert_ftp_password" label="FTP密码" default="" id="password" description="FTP密码">
+        </property>
+        <property name="filetypeconvert_ftp_path" label="FTP文件存放根路径" default="/" description="FTP文件存放路径">
+        </property>
+    </group>
+    
+     <group id="electronicsagreement_mess" label="短信配置">
+      	<property name="electronicsagreement_mess_content" label="发送短信内容" default="" description="发送短信内容">
+        </property>
+    </group>
+    
+     <group id="electronicsagreement_coremail" label="coremail邮箱配置">
+      	<property name="electronicsagreement_coremail_host" label="coremail主机名" default="" description="coremail主机名">
+        </property>
+        <property name="electronicsagreement_coremail_port" label="coremail端口" default="80" description="coremail端口">
+        </property>
+        <property name="electronicsagreement_coremail_domain" label="邮箱域名" default="" description="邮箱域名,不带@">
+        </property>
+        <property name="electronicsagreement_coremail_org_id" label="用户的企业id" default="" description="用户的企业id">
+        </property>
+        <property name="electronicsagreement_coremail_attrs" label="用户的其它属性" default="" description="用户的其它属性">
+        </property>
+    </group>
+    
+    <group id="electronicsagreement_thread" label="协议签署线程数配置">
+    	<property name="electronicsagreement_thread_num" label="协议签署线程数" default="40" description="协议签署线程数">
+        </property>
+    </group>
+    
+    <group id="electronicsagreement_add" label="协议发布配置">
+    	<property name="electronicsagreement_add_addr" label="本地文件协议保存路径" default="/" description="本地文件协议保存路径">
+        </property>
+    </group>
+</config>

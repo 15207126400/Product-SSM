@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+    <property name="cmbc_interface_run_model" label="民生电子银行接口运行模式" default="run">
+            <validator type="radio">
+                <option value="run" label="生产模式"  />
+                <option value="debug" label="调试模式" />
+            </validator>
+    </property>
+   <property name="cmbc_request_url" label="接口地址" default="http://111.205.207.118:55008/ltweb/ltconnect.do"  description="民生银行直销银行接口地址" />
+   <property name="cmbc_version" label="接口版本" default="1.0.0"  description="" />
+   <property name="cmbc_instid" label="商户ID" default=""  description="" />
+   <property name="cmbc_merchant_pem_sm_path" label="商户私钥文件" default=""  description="" />
+   <property name="cmbc_merchant_pem_sm_pin" label="商户私钥密码" default=""  description="" />
+   <property name="cmbc_elecaccount_bankno" label="民生银行编号" default="-1"  description="与柜台民生银行存管编号一致 , base_bank.bank_no" />
+   <property name="cmbc_bankcert_path" label="cer证书路径" default="C:\\runtime_config_root\\cmbc\\bank2048.cer"  description="" />
+   <property name="cmbc_merchant_pem_pfx_path" label="pfx证书路径" default="C:\\runtime_config_root\\cmbc\\99039.pfx"  description="" />
+   <property name="cmbc_merchant_pem_pfx_pin" label="pfx证书密码" default=""  description="" />
+   <property name="pge_Email" label="他行卡公钥" default="30818702818100D7C70626D0E7C14C730F5879DB77B824DBBEDD4E983335C3B7C179936ECB1C35BC393A96753BF9CE3E809C70F2A181CF2DD6141942A7352AAB619B038A17A2BBECDEE61301D7E8D955F4230AED8DA13C5F82F1A59C572321DD7EC7FD35BEAFEB1F24C97C123BD6AC0E1DFAF57C33DB7C941FF075E460EB3F3966B84D043CE533020103" description=""/>
+   <property name="pge_Cert" label="本行借记卡公钥" default="30818702818100B9800F6965ECCDD3621E2DF1974FEDF8B8BFCD5ECF58155DCB279CAA8F8838480B6DFC973752CC678C2A291A799927C08CCD7CB31218DB8B3A5A675C4E83B997F7D0479C3692DD53D52B52C61ECEE4708B1C0F2199001DD298A52BBF5750EDED9F03CA05B19E295D84CFB1798E084458E972A506F6629C4B22509713B9C72F5F020103" description=""/>
+   <property name="Per_pge_Cert" label="本行信用卡公钥" default="308188028180D72CFA8C301002AEA457DC10FCBBF74BF922311C32729D3698BAD833BF1ED1F8B7BEFBA48CBEA6B677295923DCC97E70B52928083FDEC91EC28C102F73AE04B59FCA996959D42EBC53CF5ADCDED65433D9E72F69A2DAA7D91E1D8E5219DCA208A9F79DBC49417E0CF525A9EBD561F5FD5E1AB12316AC313774E69D12B2E3F81D0203010001" description=""/>
+   <property name="pwd_public_key" label="密码控件公钥" default="30818702818100B9800F6965ECCDD3621E2DF1974FEDF8B8BFCD5ECF58155DCB279CAA8F8838480B6DFC973752CC678C2A291A799927C08CCD7CB31218DB8B3A5A675C4E83B997F7D0479C3692DD53D52B52C61ECEE4708B1C0F2199001DD298A52BBF5750EDED9F03CA05B19E295D84CFB1798E084458E972A506F6629C4B22509713B9C72F5F020103" description=""/>
+   <property name="cmbc_elecaccount_open" label="开通民生银行电子账户启动开关是否开启"  default="visible" description="visible开启，invisible关闭">
+		  <validator type="checkbox">
+                <option label="是" value="visible"></option>
+                <option label="否" value="invisible"></option>
+          </validator>
+   </property>
+   <property name="cmbc_maxuploadnum" label="最大上传次数" default="7" description=""/>
+   <property name="cmbcdir_uploader_cdn" label="日终上传身份证信息文件保存地址" default="CmbcIdUpload/" description=""/>
+   <property name="cmbc_maxuploadsize" label="每次上传文件最大空间限制 单位（M）" default="50" description=""/>
+   <property name="cmbc_maxusernum" label="每次最大上次用户数" default="100" description=""/>
+   <property name="cmbc_upload_key3Des" label="3des加密秘钥" default="998892015073115602993756" description=""/>
+</config>

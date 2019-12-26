@@ -1,0 +1,18 @@
+#if(!$f.define)
+
+<option 
+#if($f.description)
+$f.genAttr("title", $f.description)
+#end
+value='$f.value' 
+#if($f.checked)
+ selected='selected'
+#end
+#if($f.related)
+ related='$f.related'
+#end
+>
+$f.label
+</option>
+
+#end

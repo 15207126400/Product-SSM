@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-4.2.xsd
+    http://www.springframework.org/schema/task   
+    http://www.springframework.org/schema/task/spring-task-4.2.xsd"
+    default-lazy-init="true">
+
+	<!-- 加载配置文件 -->
+    <context:property-placeholder location="classpath*:conf/jdbc.properties"/>
+    <!-- 注解自动载入
+	<context:annotation-config /> -->
+	
+	<context:component-scan base-package="com.yunwei.context.jdbc">
+ 		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.RestController" />
+	</context:component-scan> 
+
+    <!-- 默认数据源 -->
+	<bean id="defaultDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc_driverClassName}" />
+		<property name="url" value="${jdbc_url}" />
+		<property name="username" value="${jdbc_username}" />
+		<property name="password" value="${jdbc_password}" />
+		<property name="initialSize" value="${druid.initialSize}" />
+		<property name="minIdle" value="${druid.minIdle}" />
+		<property name="maxActive" value="${druid.maxActive}" />
+		<property name="maxWait" value="${druid.maxWait}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+		<property name="testWhileIdle" value="${druid.testWhileIdle}" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+	</bean>
+	<!-- 动态数据库切换-->
+	<bean id="dataSource" class="com.yunwei.context.jdbc.datasource.DruidDynamicDataSource">
+		<property name="targetDataSources">
+		  <map>
+              <entry key="defaultDataSource" value-ref="defaultDataSource"/>
+          </map>
+		</property>
+	<property name="defaultTargetDataSource" ref="defaultDataSource"/> 
+	</bean>
+	
+	 
+	<!-- mybatis文件配置，扫描所有mapper文件,configLocation为mybatis属性 mapperLocations为所有mapper -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:configLocation="classpath:conf/mybatis-config.xml"
+		p:mapperLocations="classpath*:mapper/*.xml" >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+		
+	<!-- spring与mybatis整合配置，扫描所有dao ,生成与DAO类相同名字的bean（除了首字母小写）-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		p:basePackage="com.yunwei.**.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory" />
+
+	<!-- 事务管理器:对数据源进行事务管理  -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" order="2"/>
+		
+	<!-- 激活自动代理功能 -->
+	<aop:aspectj-autoproxy />
+</beans>

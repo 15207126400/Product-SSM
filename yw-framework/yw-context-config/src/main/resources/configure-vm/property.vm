@@ -1,0 +1,21 @@
+#if (!$f.define)
+
+<div id='$f.id' class='parameter-item item clearfix relatable' $f.generalDealDisplay() >
+<span class='name'>
+#if ($f.inDataStore)
+<font color='red'>$f.label:</font> 
+#else
+$f.label: 
+#end
+</span>
+
+$f.fixNoFormField()
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+
+<span class='itemDescription' $f.genAttr("title", $f.description) >$f.description</span>
+
+</div>
+
+#end

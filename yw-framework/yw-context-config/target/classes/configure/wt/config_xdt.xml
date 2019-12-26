@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 小贷通模块配置修改（洋洋，孙文帅） -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="xdt" label="股票质押（小额贷）" display="true">
+		<property name="system_name_xdt" label="小额贷系统命名" default="小贷通"
+			description="" />
+		<property name="xdt_risk_limit_score_name" label="风险评测阀值"
+			default="0#默认型" description="风险评测阀值：0:默认型，1：保守型，2：稳健型，3：积极型，4：激进型，配置如：0#默认型" />
+
+		<property name="xdt_max_borrow_money" label="券商对线上业务的最大借款金额限制"
+			default="5000000#5000000#5000000" description="配置项有三种，融资打新、融资可用、融资可取，中间以#号隔开，配置如：5000000#5000000#5000000" />
+
+		<property name="xdt_open_permission" label="小贷通权限配置，需要开通的权限"
+			default="o\#a\#b"
+			description="开通的权限:a:融资可取 b:融资可用，例如：o#a#b，即开通o和a和b的三个权限，开几个配几个，用#隔开，配置如：o\#a\#b" />
+
+		<property name="xdt_credit_paper_type" label="小贷通征信问卷配置"
+			default="k#k#k"
+			description="打新（k），可取（l），可用（m） 如果打新可取可用三个试卷只需要做一次，则此处只能配置为 k#k#k，并且三种试卷类型的试题必须设置一模一样" />
+
+		<property name="xdt_business_show" label="借款用途与征信管理显示哪几个功能"
+			default="#1#1" description="分别为打新，可取，可用，用#号隔开：1为显示，0为不显示，如果只显示打新，示例：1#0#0" />
+
+		<property name="xdt_j_equal_klm" label="股票质押征信问卷是否要和小贷通融资打新，可取，可用三个试卷类型一致 "
+			default="0"
+			description="股票质押征信问卷是否要和小贷通融资打新，可取，可用三个试卷类型是否也要一致,如果股票质押的征信问卷j与打新，可取，可用三个试卷类型都一致">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_pledge_ratio" label="借款页面折算金额系数" default="1"
+			description="借款页面，券商设置的系数，该系数为折算金额系数，如不需要则配1，该配置项取值范围为0~1，不能等于0；即（0＜xdt.pledge.ratio＜=1）">
+			<validator type="range" value="[0,1]" />
+		</property>
+		<property name="xdt_differentiate_user_srpkind" label="股票质押期限利率是否区分市场 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="xdt_open_digital" label="小贷通权限开通是否需要签署电子签名约定书 "
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_business_knowledge" label="开通小贷通是否需要要个人资料确认页 "
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_pledge_sign_trade_agreement" label="小贷通股票质押是否需要签署交易协议 "
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_show_user_enable_quota" label="借款页面是否显示用户可用授信额度 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_add_pledge_multiple" label="小贷通补充质押，需要补充到警告履约保障比的倍数"
+			default="1.2" description="如：1.2" />
+		<property name="xdt_bussiness_time_start" label="小贷通办理业务开始时间"
+			default="00:00" description="如：00:00" />
+		<property name="xdt_bussiness_time_end" label="小贷通业务结束时间"
+			default="23:59" description="如：23:59" />
+		<property name="quota_relate_asset" label="股票质押额度是否与资产状况关联 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="fund_usage_show" label="是否显示资金用途 " default="1"
+			description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_per_age_limited" label="开通小贷通权限的最低年龄限制"
+			default="18" description="" />
+		<property name="xdt_min_asset" label="允许开通小贷通权限的最小资产值"
+			default="0" description="" />
+		<property name="xdt_borrow_period_mode" label="申请借款页面借款周期的显示形式"
+			default="0" description="下拉框  0:radio，配置为如：0" />
+		<property name="xdt_date_back_warn" label="还款提醒天数" default="2"
+			description="单位：天" />
+
+		<property name="xdt_mail_create" label="小贷通开通是否开通邮箱 "
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="xdt_mail_address" label="开通邮箱登陆地址"
+			default="http://mail.wlzq.163.com" description="如：http://mail.wlzq.163.com" />
+		<property name="xdt_mail_prikey" label="邮箱私钥"
+			default="30820279020100300d06092a864886f70d0101010500048202633082025f02010002818100a519c82f1cae463267a0152f89deab50c4d1a4eee31b1d311f8a4d722ee09b531ad385e1d2849117ed53f5d39e0eb713d71c2b6a77e8bd38c5722e2284d61631d3d24694d975bd81896b7a6edd67dca2245a0f7066f41d962695b0b2b5a07bf4f13e45135d201b66c213030fa4a94be70f3f8c41c0b2557119534916997767c30203010001028181009436eb01704bfb74b09683ae63a4e442e40e1874e4a8a8b23ad05bea4faf0f81b1a9869d4df1f897745555709e8a334cba65ed8bed0da121600fbadefe457b31d5397f3f021dd4a6a92e4c0773228b32a316b1838420bc76d28eadaa8148430196deb2fc2cabc637252a20e2a7a5a9e85a14d43a116d7395f3ff0d5926bc3f41024100f5723844fc1e0782c55180cdf2386295a2d0523ad3bbc5d0e2ade194c9c991c4238c4d84442bdefcce88feae0eb6511d7fb59d46abba8e7e445ddf12d4fdda53024100ac332632b025ab21e3cce22f6f04d78d3254cca9f69565451e022d2f6af1b55999e3638d7681702796d15324c7868ec7fa16232a5d23af6fe7c2a124d3e5eed1024100e5436b8c047388507e3f43311bafcf66364ea080928632a08b1c2039fac26d85e82e85b9a673d4361035a6aeaecf5db5503534536ed533847e17b0e6c64cd841024100a15b2475e6bcc548f24e6fbb86ca00b91bea7e04dd3c4c32a1d5e445446ecd41f283322bc259b3a045204c4a707453a26b6306fc915df8ec613ced06b75003a1024100c07304303edc2afe1df18e442928f6663fcf5272843065119c15482be975e8e91213733516d7cd821ed2a0f141641246ba25e327676b3ff58e21a08a21628700"
+			description="" />
+		<property name="xdt_mail_product" label="邮箱企业标识" default="wlzq_163_com"
+			description="如：wlzq_163_com" />
+		<property name="xdt_mail_domain" label="邮箱域名" default="wlzq.163.com"
+			description="如：wlzq.163.com" />
+		<property name="xdt_mail_prefix" label="邮箱前缀" default="wlzq"
+			description="密码前缀 邮箱初始密码：前缀+用户身份证号后六位,如：wlzq" />
+
+		<property name="xdt_direct_open_permission" label="是否直接开通小贷通权限"
+			default="1" description="打开表示直接调用接口增加小贷权限，关闭则需要柜台手动开通小贷权限">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="xdt_max_credit_quota" label="小贷通最大授信额度"
+			default="20000000" description="小贷通最大授信额度，单位：元，该配置为空时表示最大额度不设上限">
+		</property>
+		<property name="xdt_open_digital_sign" label="开通小贷若为签署电子签名约定书，是否直接签署"
+			default="1" description="打开表示直接签署，关闭表示不签署并提示未签约电子签名约定书">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="xdt_quota_relate_credit_asset" label="小贷通的授信额度是否关联信用资产" default="1" description="(@version:3.4.1;@auth:laidy)">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="risk_satisfy_level" label="满足开通小贷通风险等级（高于保守型  ）"
+			default="2#3#4"
+			description="顶点柜台适用，满足开通小贷通风险等级（高于保守型  ） ：0:默认型，1：保守型，2：稳健型，3：积极型，4：激进型，示例：2#3#4" />
+		<property name="stock_mortgage_min_balance" label="申请股票质押，要求资金账户最低余额"
+			default="0" description="顶点柜台适用，示例：0" />
+		<property name="stock_mortgage_satisfy_level" label="邮箱企业标识"
+			default="20#21#22" description="顶点柜台适用，满足开通小额贷的征信级别（大于C）,示例：20#21#22" />
+		<property name="fund_usage_dx" label="小贷通融资打新股票质押资金用途"
+			default="太融易-小额股票质押融资申购" />
+		<property name="xdt_risk_age_need" label="是否在风险评测页面提示用户年龄过大" default="false"></property>
+		<property name="xdt_risk_warn_age" label="用户年龄超过多少提示" default="70"></property>
+		<property name="xdt.cancel.lation.time" label="小贷通股票质押可撤单时间" default="" description="小贷通股票质押可撤单时间，为空表示没有时间限制（默认为空）#示例:xdt.cancel.lation.time=09:30-15:00"></property>
+		
+		<property name="xdt_borrow_record_show_addPledge" label="借款记录是否始终显示补充质押按钮 " default="0"
+			description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="xdt_add_pledge_show_addMoney" label="补充质押页面是否显示至少补充多少钱 ，并且是否限制至少补充该钱数" default="1"
+			description="交易系统如果为06，则建议打开，交易系统如果为UF，暂时建议不打开，因为UF的钱数算法暂时还没确定，可能该钱数不对">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+
+</config>

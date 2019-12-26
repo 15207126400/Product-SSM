@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+    <property name="xpe_default_system_subsysno" label="后台管理默认使用系统编号" default="1">
+        <validator type="required" />
+    </property>
+    <property name="db_driverClass" label="数据库驱动类" default="oracle.jdbc.driver.OracleDriver" display="hide">
+        <validator type="required" />
+    </property>
+    <property name="db_jdbcUrl" label="数据库连接串URL" default="jdbc\:oracle\:thin\:@10.10.16.150\:1521\/wskhtest" description="格式：jdbc\:oracle\:thin\:@ip\:port\/servicename">
+        <validator type="required" />
+    </property>
+    <property name="db_username" label="数据库连接用户名" default="wskh_product_32">
+        <validator type="required" />
+    </property>
+    <property name="db_password" id="password" label="数据库连接密码" default="wskh">
+        <validator type="required" />
+    </property>
+    
+    <property name="crm_db_driverClass" label="财富crm数据库驱动类" default="com.microsoft.sqlserver.jdbc.SQLServerDriver" display="hide">
+        <validator type="required" />
+    </property>
+    <property name="crm_db_jdbcUrl" label="财富crm数据库连接串URL" default="jdbc:sqlserver://localhost:1433;databasename=cfzq_com" description="格式：jdbc\:oracle\:thin\:@ip\:port\/servicename">
+        <validator type="required" />
+    </property>
+    <property name="crm_db_username" label="财富crm数据库连接用户名" default="sa">
+        <validator type="required" />
+    </property>
+    <property name="crm_db_password" id="password" label="财富crm数据库连接密码" default="sa">
+        <validator type="required" />
+    </property>
+    
+    <property name="db_mot_driverClass" label="东北MOT数据库驱动类" default="oracle.jdbc.driver.OracleDriver" display="hide">
+		<validator type="required" />
+	</property>
+	<property name="db_mot_jdbcUrl" label="东北MOT数据库连接串URL" default="jdbc\:oracle\:thin\:@10.10.16.150\:1521\/wskhtest" description="格式：jdbc\:oracle\:thin\:@ip\:port\/servicename">
+		<validator type="required" />
+	</property>
+	<property name="db_mot_username" label="东北MOT数据库连接用户名" default="wskh_product_32">
+		<validator type="required" />
+	</property>
+	<property name="db_mot_password" id="password" label="东北MOT数据库连接密码" default="wskh">
+		<validator type="required" />
+	</property>
+</config>

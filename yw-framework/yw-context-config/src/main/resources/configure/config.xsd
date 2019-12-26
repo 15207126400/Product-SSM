@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.hundsun.com/ooas/config"
+    xmlns="http://www.hundsun.com/ooas/config" elementFormDefault="qualified">
+
+    <xs:element name="config" type="config">
+    </xs:element>
+
+    <xs:complexType name="option">
+        <xs:attribute name="value" type="xs:string"></xs:attribute>
+        <xs:attribute name="label" type="xs:string"></xs:attribute>
+        <xs:attribute name="description" type="xs:string"></xs:attribute>
+        <xs:attribute name="related" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="validator">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="option" type="option"></xs:element>
+        </xs:choice>
+        <xs:attribute name="type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="select"></xs:enumeration>
+                    <xs:enumeration value="radio"></xs:enumeration>
+                    <xs:enumeration value="checkbox"></xs:enumeration>
+                    <xs:enumeration value="required"></xs:enumeration>
+                    <xs:enumeration value="url"></xs:enumeration>
+                    <xs:enumeration value="email"></xs:enumeration>
+                    <xs:enumeration value="date"></xs:enumeration>
+                    <xs:enumeration value="digits"></xs:enumeration>
+                    <xs:enumeration value="equalTo"></xs:enumeration>
+                    <xs:enumeration value="extension"></xs:enumeration>
+                    <xs:enumeration value="maxlength"></xs:enumeration>
+                    <xs:enumeration value="minlength"></xs:enumeration>
+                    <xs:enumeration value="rangelength"></xs:enumeration>
+                    <xs:enumeration value="range"></xs:enumeration>
+                    <xs:enumeration value="max"></xs:enumeration>
+                    <xs:enumeration value="min"></xs:enumeration>
+                    <xs:enumeration value="pattern"></xs:enumeration>
+                    <xs:enumeration value="ipv4"></xs:enumeration>
+                    <xs:enumeration value="ipv6"></xs:enumeration>
+                    <xs:enumeration value="ip"></xs:enumeration>
+                    <xs:enumeration value="domain"></xs:enumeration>
+                    <xs:enumeration value="host"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="id" type="xs:string"></xs:attribute>
+        <xs:attribute name="value" type="xs:string"></xs:attribute>
+        <xs:attribute name="ref" type="xs:string"></xs:attribute>
+        <xs:attribute name="define">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="true"></xs:enumeration>
+                    <xs:enumeration value="false"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="property">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="validator"></xs:element>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string"></xs:attribute>
+        <xs:attribute name="name" type="xs:string"></xs:attribute>
+        <xs:attribute name="label" type="xs:string"></xs:attribute>
+        <xs:attribute name="description" type="xs:string"></xs:attribute>
+        <xs:attribute name="default" type="xs:string"></xs:attribute>
+        <xs:attribute name="ref" type="xs:string"></xs:attribute>
+        <xs:attribute name="display">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="true"></xs:enumeration>
+                    <xs:enumeration value="false"></xs:enumeration>
+                    <xs:enumeration value="hide"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="define">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="true"></xs:enumeration>
+                    <xs:enumeration value="false"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="group">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="validator"></xs:element>
+            <xs:element ref="property"></xs:element>
+            <xs:element ref="group"></xs:element>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string"></xs:attribute>
+        <xs:attribute name="name" type="xs:string"></xs:attribute>
+        <xs:attribute name="label" type="xs:string"></xs:attribute>
+        <xs:attribute name="description" type="xs:string"></xs:attribute>
+        <xs:attribute name="ref" type="xs:string"></xs:attribute>
+        <xs:attribute name="display">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="true"></xs:enumeration>
+                    <xs:enumeration value="false"></xs:enumeration>
+                    <xs:enumeration value="hide"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="define">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="true"></xs:enumeration>
+                    <xs:enumeration value="false"></xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="validator" type="validator"></xs:element>
+    <xs:element name="property" type="property"></xs:element>
+    <xs:element name="group" type="group"></xs:element>
+
+    <xs:complexType name="config">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="validator"></xs:element>
+            <xs:element ref="property"></xs:element>
+            <xs:element ref="group"></xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>

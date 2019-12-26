@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="third" label="三方存管配置" display="true">
+		
+		<property name="third.cancel.need.check" label="三方存管撤销是否需要检查"
+			default="1" description="三方存管撤销检查是否需要，目前只有东方和东吴网厅不需要撤销检查">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="third_credit_display" label="信用三方存管是否显示"
+			default="0" description="1=显示，0=隐藏">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="third_bank_limit" label="普通三方存管绑定数量上限"
+			default="5" description="">
+		</property>
+		<property name="third_more_display" label="多三方存管是否显示"
+			default="0" description="1=显示，0=隐藏">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="third_allow_same_bank" label="绑定副账号三方存管时是否允许和主账号绑定银行一致"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="wt_thirdadd_mobilecheck" label="三方存管添加的时候是否要经过手机验证，1需要，0不需要，默认0"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="third.bind.sendMessage" label="三方存管绑定是否需要发送短信，1需要，0不需要，默认0"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+
+	</group>
+
+</config>

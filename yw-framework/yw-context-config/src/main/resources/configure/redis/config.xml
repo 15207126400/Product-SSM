@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="redis">
+        <property name="redis_host" label="redis主机" default="127.0.0.1" description="redis IP或域名">
+            <validator type="required" />
+            <validator type="host" />
+        </property>
+        <property name="redis_port" label="redis端口" default="26379">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+    </group>
+</config>

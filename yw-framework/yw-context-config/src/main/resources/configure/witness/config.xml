@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<group label="机构配置">
+		<property name="witness_agent_pic_type" label="代理人证件照片类型(从档案模块查询,中间逗号隔开)" description="代理人身份证:正面[6E],反面[6F],头像[81].一事一授权委托书[61])" default="6E,6F,81,61">
+			<validator type="required" />
+		</property>
+		<property name="main_agency_pic_type" label="主要身份证明文件类型(从档案模块查询,中间逗号隔开)" description="工商营业执照[64],社团法人登记证正本[96],社团法人登记证副本[97],事业法人登记证正本[98],事业法人登记证副本[99],机关法人成立批文正本[9A],机关法人成立批文副本[9B],统一社会信用代码正本[9C],统一社会信用代码副本[9D])" default="64,96,98,9A">
+			<validator type="required" />
+		</property>
+		<property name="assist_agency_pic_type" label="辅助身份证明文件类型(从档案模块查询,中间逗号隔开)" description="组织机构代码证[32],税务登记证[33])" default="32,33">
+			<validator type="required" />
+		</property>
+		<property name="witness_transactor_pic_type" label="双人见证上传档案类型(从档案模块查询,中间逗号隔开)" description="见证人与经办人合照[9E],工作人员与经办人合照[9F]" default="9E,9F">
+			<validator type="required" />
+		</property>
+		<property name="witness_agent_default_pic_type" label="代理人开户机构资料页面默认加载的图片类型(从档案模块查询,中间逗号隔开)" description="法人身份证：正面[6K],反面[6L]、经办人身份证:正面[6G],反面[6H]、经办人头像[84]、法定代表人证明书[65]、授权委托书[30]" default="6K,6L,6G,6H,84,65">
+			<validator type="required" />
+		</property>
+		<property name="witness_corporation_default_pic_type" label="法人开户默认加载的图片类型(从档案模块查询,中间逗号隔开)" description="法人身份证：正面[6K],反面[6L]、经办人身份证:正面[6G],反面[6H]、经办人头像[84]、法定代表人证明书[65]" default="6K,6L,6G,6H,84,65">
+			<validator type="required" />
+		</property>
+		<property name="witness_survey_if_pic" label="问卷回访是否增加拍照上传" description="选择是,问卷回访需要增加拍照上传 " default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_risk_type" label="风险测评试卷类型(从风险测评模块查询)" default="1">
+			<validator type="required" />
+		</property>
+		<property name="witness_survey_type" label="问卷回访类型(从风险测评模块查询)" default="R">
+			<validator type="required" />
+		</property>
+		<property name="witness_agreements_type" label="账户设置页面的协议编号(从协议模块查询,中间逗号隔开)" default="101">
+			<validator type="required" />
+		</property>
+		<property name="witness_anti_money _risk_level" label="默认反洗钱风险等级" description="0:黑名单等级 1:高风险等级 2:中风险等级 3:低风险等级（更改了柜台反洗钱风险等级字典的券商，按已配置的值填写）" default="3">
+			<validator type="required" />
+		</property>
+		<property name="witness_model_no" label="模板编号" default="25">
+			<validator type="required" />
+		</property>
+		<property name="sms_content_witness_verify_success" label="审核通过短信提示" default="" description="审核通过短信提示(超过短信内容发送字数限制的部分不会发送)">
+        </property>
+        <property name="sms_content_witness_open_fail" label="开户失败短信提示" default=""
+            description="开户失败短信提示, 请勿修改。示例：尊敬的客户，您在证券网上开户的申请未能通过，如有疑问请拨打客服热线400********。(超过短信内容发送字数限制的部分不会发送)">
+        </property>
+        <property name="sms_content_witness_open_success" label="开户成功短信提示"
+            default=""
+            description="开户成功短信提示, 其中{0}等是占位变量, 请勿修改。示例：尊敬的{0}，您好！感谢您开户，您的账户目前{1}。若需相关咨询，请拨打财通证券客服电话400********，恭祝您投资顺利！(超过短信内容发送字数限制的部分不会发送)">
+        </property>
+        <property name="witness_op_entrust_way" label="见证机构开户委托方式" default="O" description="默认委托方式是大O（离柜委托）">
+			<validator type="required" />
+		</property>
+		<property name="witness_arch_image_sync" label="档案同步到柜台" default="9E,9F,84,64" description="配置需要同步到柜台的档案类型">
+			<validator type="required" />
+		</property>
+		 <property name="witness_if_query_gem" label="是否在账户选择页面询问开通创业板" description="当前配置项选择为是,下面2个配置不生效,以此配置为主（仅在选择深圳A股时触发）" default="true">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_if_open_gem_by_default" label="是否默认开通创业板" description="询问是否开通创业板的选项为否,当前配置项才会生效（优先级低于弹窗选择创业板）" default="true">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_if_show_gem" label="是否在账户选择页面提示用户会开创业板" description="询问是否开通创业板的选项配置为否并且默认开通创业板为是,才会弹框提示用户会开通创业板" default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_if_cancel_electronic_contract" label="是否在账户选择页面取消电子合同选项" description="选择是,账户选择页面、开户查询详情页面、结果页不显示电子合同选项" default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_if_cancel_onsite_funds" label="是否取消上海场内基金、深圳场内基金" description="选择是,账户选择页面、开户查询详情页面、结果页不显示场内基金，也不去开场内基金" default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_holder_info_if_required" label="控股股东是否去掉非必填字样" description="机构资料填写页面控股股东信息是否去掉非必填字样" default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_shdc_business_code" label="行业代码字典项" default="11002" description="同柜台行业代码字典项,目前开源和东北是11002,其他券商11006">
+			<validator type="required" />
+		</property>
+		<property name="witness_shdc_instrepr_type" label="法人类别字典项" default="1210" description="同柜台法人类别字典项,目前开源11002,其他券商是1210">
+			<validator type="required" />
+		</property>
+		<property name="witness_shdc_company_type" label="企业类别字典项" default="11008" description="同柜台企业类别字典项,目前开源11002,其他券商11008">
+			<validator type="required" />
+		</property>
+		<property name="witness_sms_params" label="调用第三方短信接口时配置的营业部的参数值" default="" description="调用第三方短信接口时配置的营业部的参数值">
+		</property>
+		<property name="witness_front_webAddr" label="集中运营平台使用此链接访问见证机构开户前台" default="" description="集中运营平台使用此链接访问见证机构开户前台">
+		</property>
+		<property name="witness_if_need_account" label="是否需要选择账户" description="选择是,账户选择页面、必须选择账户才能下一步" default="true">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="witness_transactor_id_verify" label="是否对经办人进行公安认证" description="开户见证方式是双人见证时，审核端操作员是否对经办人进行公安认证" default="true">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="suit_front_webAddr" label="适当性系统前台" default="" description="机构见证开户适当性双录时对接适当性系统前台">
+		</property>
+		<property name="suit_double_record" label="是否需要做适当性双录" description="默认不做适当性双录，如果需要做双录需要配置适当性前台地址" default="false">
+			<validator type="select">
+				<option value="true" label="是" />
+				<option value="false" label="否" />
+			</validator>
+		</property>
+		<property name="suit_prod_code" label="产品/服务编号" default="" description="适当性双录时的产品/服务编号">
+		</property>
+	</group>
+</config>

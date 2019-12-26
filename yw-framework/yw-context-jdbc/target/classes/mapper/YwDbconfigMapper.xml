@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.jdbc.dao.YwDbconfigDao">
+
+    <sql id="insertSql">
+      db_name,db_type,db_driver,db_protocol,db_port,db_username,db_password,user_id,wx_appid,db_status,db_function_type,db_sqlimport_versiontype,db_function_remark
+    </sql>
+    
+    <sql id="sql">
+       db_id,db_name,db_type,db_driver,db_protocol,db_port,db_username,db_password,user_id,wx_appid,db_status,db_function_type,db_sqlimport_versiontype,db_function_remark
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="db_id != null and db_id != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{db_id}),'%') -->
+	          and db_id = #{db_id}
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="db_id != null and db_id != '' ">
+				and db_id in
+				<foreach collection="db_id" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.jdbc.model.YwDbconfig">
+		insert into yw_system_usercenter.yw_dbconfig(<include refid="insertSql"/>) values(#{db_name},#{db_type},#{db_driver},#{db_protocol},#{db_port},#{db_username},#{db_password},#{user_id},#{wx_appid},#{db_status},#{db_function_type},#{db_sqlimport_versiontype},#{db_function_remark})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.jdbc.model.YwDbconfig">
+		select <include refid="sql"/> from yw_system_usercenter.yw_dbconfig
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.jdbc.model.YwDbconfig">
+		select <include refid="sql"/> from yw_system_usercenter.yw_dbconfig
+		<include refid="whereSql"/>
+		order by db_id desc
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_dbconfig
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_dbconfig
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="db_name != null and db_name != ''">
+	           db_name = #{db_name},
+	      </if>
+	      <if test="db_type != null and db_type != ''">
+	           db_type = #{db_type},
+	      </if>
+	      <if test="db_driver != null and db_driver != ''">
+	           db_driver = #{db_driver},
+	      </if>
+	      <if test="db_protocol != null and db_protocol != ''">
+	           db_protocol = #{db_protocol},
+	      </if>
+	      <if test="db_port != null and db_port != ''">
+	           db_port = #{db_port},
+	      </if>
+	      <if test="db_username != null and db_username != '' ">
+	           db_username = #{db_username},
+	      </if>
+	      <if test="db_password != null and db_password != '' ">
+	           db_password = #{db_password},
+	      </if>
+	      <if test="user_id != null and user_id != '' ">
+	           user_id = #{user_id},
+	      </if>
+	      <if test="wx_appid != null and wx_appid != '' ">
+	           wx_appid = #{wx_appid},
+	      </if>
+	      <if test="db_status != null and db_status != '' ">
+	           db_status = #{db_status},
+	      </if>
+	      <if test="db_function_type != null and db_function_type != '' ">
+	           db_function_type = #{db_function_type},
+	      </if>
+	      <if test="db_sqlimport_versiontype != null and db_sqlimport_versiontype != '' ">
+	           db_sqlimport_versiontype = #{db_sqlimport_versiontype},
+	      </if>
+	      <if test="db_function_remark != null and db_function_remark != '' ">
+	           db_function_remark = #{db_function_remark},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_dbconfig 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_dbconfig
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

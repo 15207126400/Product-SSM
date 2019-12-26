@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.sys.dao.YwDictionaryDao">
+
+    <sql id="sql">
+       dic_key,dic_value,dic_subkey,dic_subvalue,dic_remark,dic_status
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="dic_key != null and dic_key != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{dic_key}),'%') -->
+	          and dic_key = #{dic_key}
+	        </if>
+	        <if test="dic_subkey != null and dic_subkey != '' ">
+	          and dic_subkey = #{dic_subkey}
+	        </if>
+	        <if test="dic_value != null and dic_value != '' ">
+	          and dic_value like CONCAT(CONCAT('%',#{dic_value}),'%')
+	        </if>
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="dic_key != null and dic_key != '' ">
+				and dic_key in
+				<foreach collection="dic_key" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="dic_subkey != null and dic_subkey != '' ">
+				and dic_subkey in
+				<foreach collection="dic_subkey" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.sys.model.YwDictionary">
+		insert into yw_system_usercenter.yw_dictionary(<include refid="sql"/>) values(#{dic_key},#{dic_value},#{dic_subkey},#{dic_subvalue},#{dic_remark},#{dic_status})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwDictionary">
+		select <include refid="sql"/> from yw_system_usercenter.yw_dictionary
+		<include refid="whereSql"/>
+		order by dic_key,dic_subkey
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.sys.model.YwDictionary">
+		select <include refid="sql"/> from yw_system_usercenter.yw_dictionary
+		<include refid="whereSql"/>
+		order by dic_key,dic_subkey
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_dictionary
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_dictionary
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="dic_key != null and dic_key != '' ">
+	           dic_key = #{dic_key},
+	      </if>
+	      <if test="dic_value != null and dic_value != ''">
+	           dic_value = #{dic_value},
+	      </if>
+	      <if test="dic_subkey != null and dic_subkey != '' ">
+	           dic_subkey = #{dic_subkey},
+	      </if>
+	      <if test="dic_subvalue != null and dic_subvalue != '' ">
+	           dic_subvalue = #{dic_subvalue},
+	      </if>
+	      <if test="dic_remark != null and dic_remark != '' ">
+	           dic_remark = #{dic_remark},
+	      </if>
+	      <if test="dic_status != null and dic_status != '' ">
+	           dic_status = #{dic_status},
+	      </if>
+	    </trim>
+	    <where>
+	        <if test="dic_key != null and dic_key != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{dic_key}),'%') -->
+	          and dic_key = #{dic_key}
+	        </if>
+	        <if test="dic_subkey != null and dic_subkey != '' ">
+	          and dic_subkey = #{dic_subkey}
+	        </if>
+	    </where> 
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_dictionary 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_dictionary
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

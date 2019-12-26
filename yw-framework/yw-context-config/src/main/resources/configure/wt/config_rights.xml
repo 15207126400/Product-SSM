@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 权限类配置 -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="需要" value="1"></option>
+		<option label="不需要" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+	
+	<!-- 退市整理配置 -->
+	<group id="delistFinishing" label="退市整理配置" display="true">
+	 <property name="delist_zd_trade_right" label="退市整理股票业务，开通是否是否要判断交易权限满2年" default="0"
+	  description="退市整理股票业务，开通的是否是否要判断股票交易权限满2年。1 需要判断，0 不需要判断。默认0">
+	  <validator type="checkbox" ref="judge_checkbox2"></validator>
+	  </property>
+	 <property name="delist_security_market_value" label="退市整理股票业务，开通是否是否要判断资产市值满50W" default="0" 
+	  description="退市整理股票业务，开通的是否是否要判断普通资产满50W,1 需要判断，0 不需要判断。默认0">
+	 <validator type="checkbox" ref="judge_checkbox2"></validator>
+	 </property>	
+	</group>
+	
+	<!-- 委托方式配置 -->
+	<group id="consign_type" label="委托方式配置" display="true">
+		<property name="entruts_show_risktip" label="是否需要显示委托方式开通后风险提示"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="entruts_risktip_href" label="委托方式风险警示地址"
+			default="" description="如配置不需要开通后风险提示，此项无需配置" />
+		<property name="entruts_open_need_cert" label="开通委托方式 是否要检测证书" default="0"
+			description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="entrust_can_cancel" label="是否需要取消委托方式功能"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+	
+</config>

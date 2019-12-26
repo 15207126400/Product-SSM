@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- REDIS设置, 目前验证码存储在REDIS中 -->
+<servers>
+    <serverGroup name="xpe" initConn="10" minConn="10" maxConn="10" maxIdle="5000" maxBusyTime="5000"
+        maintSleep="5000" failover="true" timeout="20000" type= "${redis_type}">
+        <server ip="${redis_host}" port="${redis_port}" weight="1"></server>
+    </serverGroup>
+</servers>

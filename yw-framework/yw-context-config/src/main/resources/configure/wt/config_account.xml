@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 理财产品账户类配置 -->
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="需要" value="1"></option>
+		<option label="不需要" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+     <group id="funds" label="基金配置" display="true">
+		<property name="fund_account_sign_every_agreement" label="开放式基金签署协议是否每个基金都签署协议"
+			default="0" description="开放式基金签署协议是否每个基金都签署协议">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="openfundacct_check_risk" label="开放式基金开通是否要检查风险评测"
+			default="1" description="开放式基金开通是否要检查风险评测做过或者未过期">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="openfundacctfirst_check_risk" label="开放式基金首次开通是否必须先进行风险评测 "
+			default="0" description="开放式基金首次开通是否必须先进行风险评测  1需要，0不需要。默认0">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+	</group>
+	
+	
+	<group id="product" label="理财和资管产品配置" display="true">
+		<property name="zg_ta" label="支持开通的资管产品TA" default="98"
+			description="该配置项配置为，网厅支持资管产品的TA代码，多个用#隔开，但必须保证每个都能在柜台查询到" />
+		<property name="wt_isneed_otc_item" label="理财产品协议签订模块是否要包含OTC产品" default="0" description="理财产品协议签订模块是否要进行OTC产品的查询和显示 ">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+	</group>
+	
+	<group id="otc" label="OTC配置" display="true">
+		<property name="otc_min_risk_level" label="开通OTC账户最低风险等级" default="0" description="OTC风险评测必须满足一定的等级才允许开通，默认等级是 0  (@version:3.4.1;@auth:gaowx)">
+		</property>
+		<property name="otc_min_risk_score" label="OTC在线评测必须满足一定的分数才允许开通" default="0" description="OTC在线评测必须满足一定的分数才允许开通，默认分数是 60.目前只有湘财需要在线测评">
+		</property>
+		<property name="otc_open_sign_agreement" label="开通OTC账户是否需要签署协议" default="1" description="OTC账户开通是否需要签署协议，0不需要，1需要。默认1.">
+		<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>		
+	</group>
+	
+	<group id="funcbankmacct" label="银行理财配置" display="true">
+		<property name="product_funcbankmacct_risk_flag" label="银行理财账户首次开户是否去临柜风险评测" default="0" description="首次开户是否去临柜风险评测， 1：去柜台做，0：网厅做.默认0 ">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		<property name="wt_funbankopen_risk_date" label="银行理财账户开户，风险评测过期时间的长度" default="3"
+			description="银行理财账户开户，风险评测过期时间的长度。比如：做了评测“3”年才算过期,“年”为单位。目前暂时不用" />
+	</group>
+	
+
+</config>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+    <group id="security" label="金融商城基本配置">
+        <property name="security_alias" label="券商" default="hunanfae" description="选择券商，同时会设置券商简称, 此配置会影响样式文件的调用目录">
+            <validator type="select">
+                <option value="hunanfae" label="湖南金交所" related="openfundacco"/>
+                <option value="ctzg" label="财通资管" related="openfundacco"/>
+            </validator>
+        </property>
+
+        <property name="mall_security_name" label="商城名称" default="中华证券" description="金融商城名称, 此名称将全局显示在各网页文字部分"/>
+        <property name="mall_service_phone" label="客服电话" default="4008696336" description="金融商城客服电话, 此电话将显示在各网页文字部分"/>
+
+    </group>
+
+    <group id="openfundacco" label="基金开户相关配置">
+        <property name="openaccount_default_branchno" label="基金开户默认分支机构" default="" description="基金开户默认分支机构"></property>
+        <property name="mall_riskquestions_papertype" label="风险测评试卷" default="psl" description="风险测评问卷类型"></property>
+    </group>
+
+    <group id="openfundacco" label="微信绑定相关配置">
+        <property name="weixin_auth_base_url" label="微信网页授权地址"
+                  default="https://open.weixin.qq.com/connect/oauth2/authorize" description="微信网页授权地址首部地址">
+            <validator type="url"></validator>
+        </property>
+        <property name="weixin_auth_appid" label="公众号的唯一标识" default="" description="公众号的唯一标识:appid"></property>
+        <property name="weixin_auth_redirect_uri" label="授权回调地址" default="" description="授权后重定向的回调链接地址">
+            <validator type="url"></validator>
+        </property>
+        <property name="weixin_auth_scope" label="应用授权作用域" default="snsapi_base"
+                  description="snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）">
+            <validator type="select">
+                <option value="snsapi_base" label="不弹出授权页面(snsapi_base)"/>
+                <option value="snsapi_userinfo" label="弹出授权页面(snsapi_userinfo)"/>
+            </validator>
+        </property>
+    </group>
+
+</config>
+

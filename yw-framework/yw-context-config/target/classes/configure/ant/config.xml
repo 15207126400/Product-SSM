@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<group name="InterFaceConfig" label="蚂蚁金服接口服务">
+		<property name="ant_http_url" label="接口服务地址" default="">
+		</property>
+		<property name="ant_app_id" label="对端系统编号" default="">
+		</property>
+		<property name="ant_sign_publickey" label="签名加密解密公钥" default="">
+		</property>
+		<property name="interface_function_name" label="回调接口定义" default="">
+		</property>
+		<property name="ant_version_id" label="回调接口版本号" default="">
+		</property>
+		<property name="ant_open_foundaccount_defaultcode" label="开设基金账户默认编号"
+			default=""></property>
+
+		<property name="ant_protocol_defaultcode" label="默认签署开户协议编号"
+			default="" description="多个协议编号用逗号分隔">
+		</property>
+		
+		<property name="ant_risk_papertype" label="蚂蚁金服风险测评paper_type类型" default="">
+		</property>
+		
+		<property name="ant_wskh_appid" label="蚂蚁金服接入APPID" default=""/>
+	</group>
+
+	<group name="SFTPConfig" label="SFTP服务配置">
+		<property name="sftp_http_url" label="SFTP服务地址" default="">
+		</property>
+		<property name="sftp_http_port" label="SFTP服务端口号" default="">
+		</property>
+		<property name="sftp_user_name" label="用户名" default="">
+		</property>
+		<property name="sftp_password" label="密码" default="">
+		</property>
+		<property name="sftp_filepath" label="文件下载目录" default=""  description="例如：/download/cairenhui/">
+		</property>
+	</group>
+
+	<group name="WSKHRSAConfig" label="网开RSA加密解密公钥私钥">
+		<property name="wskh_sign_publickey" label="RSA公钥" default="">
+		</property>
+		<property name="wskh_sign_privatekey" label="RSA私钥" default="">
+		</property>
+	</group>
+</config>

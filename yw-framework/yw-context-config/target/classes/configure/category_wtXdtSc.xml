@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure xmlns="http://www.hundsun.com/ooas/category" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/category category.xsd">
+
+    <!-- 配置功能列表， id 必须唯一的不能重复  config 为配置规则文件，  generate为配置内容模板， 通过占位符替换  -->
+    
+     <!-- 网厅&小贷通配置-->
+    <catalog id="wt_common" name="网厅通用配置项" description="网厅通用配置项" config="/wt/config_common.xml">
+        <generate template="/wt/wt-common.properties" />
+    </catalog>
+    
+    <catalog id="wt_personal" name="网厅个人资料配置" description="网厅个人资料配置" config="/wt/config_personal.xml">
+        <generate template="/wt/wt-personal.properties" />
+    </catalog>
+    
+    <catalog id="wt_cert" name="网厅证书配置" description="网厅证书配置" config="/wt/config_cert.xml">
+        <generate template="/wt/wt-cert.properties" />
+    </catalog>
+    
+    <catalog id="wt_gem" name="网厅创业板配置" description="网厅创业板配置" config="/wt/config_gem.xml">
+        <generate template="/wt/wt-gem.properties" />
+    </catalog>
+
+    <catalog id="wt_margin" name="网厅融资融券配置" description="网厅融资融券配置" config="/wt/config_margin.xml">
+        <generate template="/wt/wt-margin.properties" />
+    </catalog>
+
+    <catalog id="wt_hkStock" name="网厅港股通配置" description="网厅港股通配置" config="/wt/config_hkStock.xml">
+        <generate template="/wt/wt-hkStock.properties" />
+    </catalog>
+
+    <catalog id="wt_third" name="网厅三方存管配置" description="网厅三方存管配置" config="/wt/config_third.xml">
+        <generate template="/wt/wt-third.properties" />
+    </catalog>
+
+    <catalog id="wt_myFund" name="网厅我的资金配置" description="网厅我的资金配置" config="/wt/config_myFund.xml">
+        <generate template="/wt/wt-myFund.properties" />
+    </catalog>
+
+    <catalog id="wt_stockAccount" name="网厅证券账户配置" description="网厅证券账户配置" config="/wt/config_stockAccount.xml">
+        <generate template="/wt/wt-stockAccount.properties" />
+    </catalog>
+
+ <catalog id="wt_account" name="网厅账户类" description="网厅账户类" config="/wt/config_account.xml">
+        <generate template="/wt/wt-account.properties" />
+    </catalog>
+    
+     <catalog id="wt_rights" name="网厅权限类" description="网厅权限类" config="/wt/config_rights.xml">
+        <generate template="/wt/wt-rights.properties" />
+    </catalog>
+    <catalog id="wt_xdt" name="小贷通配置" description="小贷通配置" config="/wt/config_xdt.xml">
+        <generate template="/wt/wt-xdt.properties" />
+    </catalog>
+    
+    <catalog id="wt_ht" name="网厅，小贷，商城， 需要后台控制的参数配置" description="网厅，小贷，商城， 需要后台控制的参数配置" config="/wt/config_ht.xml">
+        <generate template="/wt/wt-ht.properties" />
+    </catalog>
+    
+    <!-- 商城配置-->
+    <catalog id="sc_config" name="商城配置项" description="商城配置项" config="/sc/config.xml">
+        <generate template="/sc/sc-config.properties" />
+    </catalog>
+    <catalog id="sc_connection" name="商城通讯配置项" description="商城通讯配置项" config="/sc/config_connection.xml">
+        <generate template="/sc/sc-connection.properties" />
+    </catalog>
+</configure>

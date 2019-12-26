@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<group label="业务集中运营平台参数配置">
+		<property name="businflowrequest_single" label="仅允许办理一次的业务" default="100001,100005,100007,100010" description="100001(创业板开通),100005(机构开户),100007(信用开户),100010(新三板开户)" />
+		<property name="acct_pwd_minlength" label="客户密码最小长度" default="3" description="">
+			<validator type="required" />
+			<validator type="range" value="[0,8]" />
+		</property>
+		<property name="acct_pwd_maxlength" label="客户密码最大长度" default="6" description="">
+			<validator type="required" />
+			<validator type="range" value="[0,8]" />
+		</property>
+		<property name="csdc_time" label="中登查询超时时间" default="20" description="单位（秒）">
+			<validator type="required" />
+			<validator type="range" value="[10,120]" />
+		</property>
+		<property name="bank_time" label="银行查询超时时间" default="20" description="单位（秒）">
+			<validator type="required" />
+			<validator type="range" value="[10,120]" />
+		</property>
+		<property name="crdt_credit_knowledge_papertype" label="融资融券征信知识评测试卷" default="q" description="" />
+		<property name="crdt_credit_knowledge_minscore" label="融资融券知识评测要求最低分" default="60" description="" />
+		<property name="crdt_credit_minscore" label="融资融券征信评测要求最低分" default="60" description="" />
+		<property name="crdt_contract_remain_aheadday" label="融资融券合同到期提前提醒天数" default="30" description="">
+			<validator type="required" />
+			<validator type="range" value="[0,360]" />
+		</property>
+		<property name="cbp_srp_quota" label="股票质押式回购免审核最低金额" default="2000000" description="（单位：元）">
+			<validator type="required" />
+			<validator type="range" value="[0,100000000]" />
+		</property>
+		<property name="cbp_srp_risk_minlevel" label="股票质押式回购风险测评要求最低等级" default="1" description="参照风险评测等级" />
+		<property name="cbp_srp_credit_minscore" label="股票质押式回购征信测评要求最低分" default="60" description="1" />
+		<property name="cbp_arp_risk_minlevel" label="约定购回风险测评要求最低等级" default="1" description="参照风险评测等级" />
+		<property name="cbp_arp_credit_minscore" label="约定购回购征信测评要求最低分" default="60" description="1" />
+		<property name="super_channel_name" label="超级通道业务编号配置" default="测试业务1" description="业务名称用逗号隔开" />
+		<property name="gem_writeagree_flag" label="创业板业务流程是否增加手抄协议步骤" default="0" description="" />
+		<property name="sbc_wintess_flag" label="是否加入见证开户流程" default="0" description="" />
+		<property name="sbc_witness_webAddr" label="业务集中平台见证开户地址" default="http://acpt.sbc.com" description="" />
+		<property name="ordinary_stockAccount_count" label="A股和场内基金账户限制开户数量" default="3" description=""/>
+		<property name="credit_stockAccount_count" label="信用账户限制开户数量" default="1" description=""/>
+		<property name="b_stockAccount_count" label="B股账户限制开户数量" default="1" description=""/>
+		<property name="crdt_credit_quota_notice" label="融资融券授信额度提醒(单位：万元)" default="0" description="默认为0，则不提醒"/>
+		<property name="sbc_enable_mot" label="是否对接凌志MOT系统" default="0" description="默认为0，则不对接" />
+		<property name="sbc_unite_open_second" label="联合开户第二联系人是否必填" default="0" description="联合开户第二联系人是否必填"/>
+		<property name="sbc_id_rolled" label="同一身份证能否在多个营业部开户" default="0" description="同一身份证能否在多个营业部开户"/>
+		<property name="sbc_suitability_preference" label="查询适当性，是优先查询适当性的还是优先查询ris组件" default="suit" description="查询适当性，是优先查询适当性的还是优先查询ris组件"/>
+		<property name="suit_front_address" label="适当性系统前端访问地址" default="" description="适当性系统前端访问地址"/>
+		<property name="entermain_front_address" label="新版受理端前端访问地址" default="" description="新版受理端前端访问地址"/>
+	</group>
+	
+	<group label="pdf签章配置">
+	<property name="seal_ip" label="签章服务器ip地址" default="127.0.0.1" description="签章服务器ip地址">
+	</property>
+	<property name="seal_port" label="签章服务器端口" default="9230" description="签章服务器端口">
+	</property>
+	</group>
+	
+</config>

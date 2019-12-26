@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<property name="interface_sms_bean_ref" label="短信实现" default="demoSmsServiceImpl">
+		<validator type="select">
+			<option value="demoSmsServiceImpl" label="不发送短信"></option>
+			<option value="rlytSmsServiceImpl" label="容联易通短信" related="rlytSmsServiceImpl,sms_common"></option>
+			<option value="mwSmsServiceImpl" label="梦网短信" related="sms_basic,sms_common"></option>
+			<option value="caifwxSmsServiceImpl" label="财富无线短信" related="sms_basic,sms_common"></option>
+			<option value="gaoTimeSmsServiceHttpImpl" label="港澳 http短信" related="sms_basic,sms_common"></option>
+			<option value="gaoTimeSmsServiceV4Impl" label="港澳资讯短信" related="sms_basic,sms_common,sms_proxy_config"></option>
+			<option value="dbSmsServiceImpl" label="数据库短信" related="sms_basic,sms_common,jdbcSmsServiceImpl,dbSmsServiceImpl"></option>
+			<option value="ciccSmsServiceImpl" label="中金短信" related="sms_basic,sms_common,sms_proxy_config"></option>
+			<option value="ctsecSmsServiceImpl" label="财通短信" related="sms_basic,sms_common,smsPriority"></option>
+			<option value="dtzqSmsServiceImpl" label="大同证券" related="sms_basic,sms_common,jdbcSmsServiceImpl"></option>
+			<option value="gaoTimeSmsServiceV2Impl" label="港澳WS短信" related="sms_basic,sms_common,sms_proxy_config,smsPriority"></option>
+			<option value="gaoTimeDBSmsServiceImpl" label="港澳写库短信" related="sms_basic,sms_common,jdbcSmsServiceImpl,gaoTimeDBSmsServiceImpl"></option>
+			<option value="hczqSmsServiceImpl" label="华创证券" related="sms_basic,sms_common,jdbcSmsServiceImpl"></option>
+			<option value="htzqSmsServiceImpl" label="恒泰短信" related="sms_basic,sms_common,jdbcSmsServiceImpl,htzqSmsServiceImpl,dbSmsServiceImpl"></option>
+			<option value="icfwxSmsServiceImpl" label="财富无线短信（东北证券）" related="sms_basic,sms_common,icfwxSmsServiceImpl"></option>
+			<option value="jhzqSmsServiceImpl" label="江海证券" related="sms_basic,sms_common,jdbcSmsServiceImpl"></option>
+			<option value="hqzqSmsServiceImpl" label="企信王" related="hqzqSmsServiceImple,sms_basic,sms_common"></option>
+			<option value="tpyzqSmsServiceImpl" label="太平洋证券" related="sms_basic,sms_common,tpyzqSmsServiceImpl"></option>
+			<option value="wlzqSmsServiceImpl" label="万联证券" related="sms_basic,sms_common,sms_gateway_config"></option>
+			<option value="xuanWuSmsServiceV1Impl" label="玄武短信V1" related="sms_basic,sms_common,sms_gateway_config"></option>
+			<option value="xuanWuSmsServiceV2Impl" label="玄武短信V2" related="sms_basic,sms_common,sms_gateway_config"></option>
+			<option value="zyzqSmsServiceImpl" label="中原证券" related="sms_basic,sms_common,jdbcSmsServiceImpl"></option>
+			<option value="jyzqSmsServiceImpl" label="金元证券" related="sms_basic,sms_common"></option>
+			<option value="caiDaSmsServiceImpl" label="财达证券" related="sms_basic,sms_common,caiDaSmsServiceImpl"></option>
+			<option value="dwzqDBSmsServiceImpl" label="东吴证券" related="sms_basic,sms_common,dbSmsServiceImpl,dwzqDBSmsServiceImpl"></option>
+			<option value="xmzqSmsServiceImpl" label="厦门证券" related="sms_basic,sms_common,xmzqSmsServiceImpl"></option>
+			<option value="xyzqSmsServiceImple" label="兴业证券" related="sms_basic,sms_common,jdbcSmsServiceImpl,xyzqSmsServiceImple"></option>
+			<option value="xyzqSmsServiceV2Imple" label="兴业证券V2" related="sms_basic,sms_common,xyzqSmsServiceImple"></option>
+			<!-- <option value="hasecSmsServiceImpl" label="华安证券" related="sms_basic,sms_common,jdbcSmsServiceImpl,dbSmsServiceImpl,hasecSmsServiceImpl"></option> -->
+			<option value="FzzqSmsServiceHttpImpl" label="方正证券" related="sms_basic,sms_common,FzzqSmsServiceHttpImpl"></option>
+			<option value="ajzqSmsServiceImpl" label="爱建证券" related="sms_basic,sms_common,AjzqSmsServiceImpl"></option>
+			<option value="bwSmsServiceImpl" label="百悟短信" related="sms_basic,sms_common,BwSmsServiceImpl"></option>
+			<option value="HjhzServiceImpl" label="和佳汇智短信" related="sms_basic,sms_common,HjhzServiceImpl"></option>
+			<option value="XuanWuSmsserviceImpl" label="玄武短信（德邦证券）" related="sms_basic,sms_common,XuanWuSmsserviceImpl"></option>
+			<option value="GaoTimeSmsServiceVsHttpImpl" label="新港澳短信(国融证券)" related="sms_basic,sms_common,GaoTimeSmsServiceVsHttpImpl"></option>
+			<option value="hsdcSmsServiceImpl" label="恒生基金数据中心" ></option>
+			<option value="cjzqSmsServiceImpl" label="长江证券" related="sms_basic,sms_common,cjzqSmsServiceImpl"></option>
+		</validator> 
+	</property>
+	<property name="send_message_to_broker" label="是否给营销人员发送短信" default="false" description="客户开户成功是否给营销人员发送短信">
+            <validator type="checkbox">
+                <option label="是" value="true"></option>
+                <option label="否" value="false"></option>
+            </validator>
+        </property>
+	<group id="caiDaSmsServiceImpl" display="false">
+		<property name="sms_send_applicationCode" label="业务系统代码" default="" description="业务系统代码">
+			<validator type="required" />
+		</property>
+	</group>
+	<group id="dwzqDBSmsServiceImpl" display="false">
+		<property name="sms_dwzq_userid" label="发送用户ID" default="" />
+		<property name="sms_dwzq_passwd" label="发送用户密码" default="" />
+	</group>
+	<!-- <group id="hasecSmsServiceImpl" display="false">
+		<property name="sms_ydtdh" label="移动通道号" default="8014" />
+	</group> -->
+	<group id="rlytSmsServiceImpl" display="false">
+		<property name="CCPRest.url" label="服务器地址" default="sandboxapp.cloopen.com" />
+		<property name="CCPRest.port" label="服务器端口" default="8883" />
+		<property name="CCPRest.AppId" label="应用ID" default="" />
+		<property name="CCPRest.templateId" label="模板Id" default="" />
+		<property name="CCPRest.accountSid" label="主账号名称" default="" />
+		<property name="CCPRest.accountToken" label="主账号令牌" default="" />
+	</group>
+	<group id="xmzqSmsServiceImpl" display="false">
+		<property name="sms_sysNo" label="系统号" default="" description="系统号">
+			<validator type="required" />
+		</property>
+		<property name="sms_branchNo" label="营业部号" default="" description="营业部号">
+			<validator type="required" />
+		</property>
+	</group>
+	<!-- 华菁证券短信服务配置 -->
+	<group id="hqzqSmsServiceImple" display="false">
+		<property name="sms_send_userid" label="用户ID" default="" description="发送用户ID">
+			<validator type="required" />
+		</property>
+	</group>
+	<group id="sms_basic" display="false">
+		<property name="sms_run_model" label="短信运行模式" default="run">
+			<validator type="checkbox">
+				<option value="run" label="生产" />
+				<option value="debug" label="调试" />
+			</validator>
+		</property>
+		<property name="sms_test_mobile" label="短信测试号码" default="" description="短信测试号码, 如不为空则所有短信均发送至设置手机号码">
+		</property>
+		<property name="sms_url" label="短信接口地址" default="" description="短信服务URL或短信数据库URL">
+			<validator type="required" />
+		</property>
+		<property name="sms_user" label="短信服务使用帐号" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_user_pwd" id="password" label="短信服务使用密码" default="">
+		</property>
+	</group>
+	<group id="jdbcSmsServiceImpl" display="false">
+		<property id="sms_jdbc_driver" name="sms_jdbc_driver" label="短信数据库类型" default="oracle.jdbc.driver.OracleDriver">
+			<validator type="select">
+				<option value="oracle.jdbc.driver.OracleDriver" label="Oracle"></option>
+				<option value="com.microsoft.sqlserver.jdbc.SQLServerDriver" label="SQLServer"></option>
+			</validator>
+		</property>
+	</group>
+	<group id="dbSmsServiceImpl" display="false">
+		<property name="sms_db_sql" label="短信sql语句" default="" description="插入短信数据库表的sql语句，号码（前）和内容（后）用问号代替">
+			<validator type="required" />
+		</property>
+	</group>
+	<group id="smsPriority" display="false">
+		<property name="sms_priority" label="短信发送优先级" default="9">
+			<validator type="digits" />
+		</property>
+	</group>
+	<group id="gaoTimeDBSmsServiceImpl" display="false">
+		<property name="sms_gaotime_entityId" label="机构ID" default="">
+			<validator type="digits" />
+		</property>
+		<property name="sms_gaotime_ownerId" label="用户ID" default="">
+			<validator type="digits" />
+		</property>
+	</group>
+	<group id="gaoTimeSmsServiceHttpImpl" display="false">
+		<property name="sms_http_id_var" label="短信id变量(例如：id={smsId})" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_http_mobile_var" label="手机号码变量(例如：mobiles={mobile})" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_http_content_var" label="短信内容变量 (例如：sms={content}) " default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_http_result_issuccessflag" label="发送成功标识" default="">
+			<validator type="required" />
+		</property>
+		<property id="sms_http_content_isbase64" name="sms_http_content_isbase64" label="内容是否base64编码" default="">
+			<validator type="select">
+				<option value="1" label="是"></option>
+				<option value="0" label="否"></option>
+			</validator>
+		</property>
+	</group>
+	<group id="htzqSmsServiceImpl" display="false">
+		<property name="sms_sender" label="短信发送用户" default="">
+			<validator type="required" /><!-- 应该是digits？ -->
+		</property>
+	</group>
+	<group id="wlzqSmsServiceImpl" display="false">
+		<property name="sms_sub_port" label="短信号码子号段" default="">
+			<validator type="digits" />
+		</property>
+	</group>
+	<group id="cjzqSmsServiceImpl" display="false">
+		<property name="sms_cjzq_appid" label="应用系统号(APP_ID)" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_cjzq_messid" label="信息类型号(MESSAGE_ID)" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_cjzq_messoperator" label="操作员号(OPERATOR)" default="">
+			<validator type="required" />
+		</property>
+		<property name="sms_cjzq_messsendername" label="落款单位名称" default="">
+		</property>
+	</group>
+	<group id="sms_monitor" label="短信监控任务" display="hide">
+		<property name="sms_monitor_checkInterval" label="运行间隔" default="30" description="监控任务运行间隔（单位：秒，默认值30，最小值1，如小于最小值则使用默认值，如小于0则任务不运行）">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="sms_monitor_monitorDuration" label="统计时长范围" default="180" description="监控任务统计时长范围（单位：秒，默认值180，最小值10，如小于最小值则使用默认值）">
+			<validator type="range" value="[10,99999999]" />
+		</property>
+		<property name="sms_monitor_warnLimit" label="告警短信条数" default="100" description="监控任务告警短信条数（默认值100）">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="sms_monitor_adminMPs" label="管理员手机号" default="" description="监控任务管理员手机号（多个手机号以英文逗号,分割）">
+		</property>
+	</group>
+	<group id="sms_common" display="false">
+		<group id="sms_misc">
+			<property name="sms_retry_times" label="短信发送失败时重发次数" default="1">
+				<validator type="digits" />
+			</property>
+		</group>
+	</group>
+	<!-- 兴业证券ESB短信服务配置 -->
+	<group id="xyzqSmsServiceImple" display="false">
+		<property name="sms_esb_user_name" label="用户登录名" default="ZT" description="短信平台认证用户名">
+			<validator type="required" />
+		</property>
+		<property name="sms_esb_password" label="登录密码" default="38281850" description="短信平台认证密码">
+			<validator type="required" />
+		</property>
+	</group>
+	<group id="sms_content" label="短信内容">
+		<property name="sbc_sms_content_verify_identiry" label="短信验证码确认身份 " default="尊敬的客户，您本次验证码是{0}，如有疑问请拨打客服热线400********。" description="" />
+		<property name="sbc_sms_content_to_counter" label="业务申请需要临柜办理 " default="尊敬的{0}，{1}需要继续临柜办理，请携带{2}至营业部{3}，如有疑问请拨打客服热线400********。" description="提示携带证件或资料前往营业部办理" />
+		<property name="sbc_sms_content_un_condition" label="业务申请不满足办理条件 " default="尊敬的{0}，您申请的{1}不满足办理条件，原因：{2}，如有疑问请拨打客服热线400********。" description="" />
+		<property name="sbc_sms_content_verify_success" label="业务申请流程审核通过 " default="恭喜您{0}，您申请的{1}已审核通过，感谢您的再次光临。" description="" />
+		<property name="sbc_sms_content_verify_back" label="业务申请流程审核打回 " default="尊敬的{0}，很遗憾，您申请的{1}被审核退回，原因：{2}，如有疑问请拨打客服热线400********。" description="" />
+		<property name="sbc_sms_content_verify_invalid" label="业务申请流程作废(因为某种原因) " default="尊敬的{0}，您申请的{1}已作废，原因：{2}，如有疑问请拨打客服热线400********。" description="" />
+		<property name="sbc_sms_content_open_success" label="开户成功 " default="尊敬的{0}，感谢您选择在{1}开户，您的账户目前已开通，资金账号为{2}，若需相关咨询，请拨打{3}客服电话400********，祝您投资顺利！" description="个人开户/机构开户/融资融券开户" />
+		<property name="sbc_sms_content_open_fail" label="开户失败 " default="尊敬的{0}，您的申请的{1}失败，原因：{2}，如有疑问请拨打客服热线400********。" description="个人开户/机构开户/融资融券开户" />
+		<property name="sbc_sms_content_deposity_twostep" label="两步式银行三方存管提示 " default="尊敬的{0}，您的三方存管账户已进行了预指定，请到{0}银行完成最终确认。如有疑问请拨打客服热线400********。" description="" />
+		<property name="sms_send_deposity_onestep_bankicon" label="一步式发送短信银行" default="" description="一步式发送短信银行，输入：（zhaoshang,xingye,pufa）" />
+		<property name="sbc_sms_content_deposity_success" label="银行三方存管绑定成功 " default="尊敬的{0}，您的三方存管账户绑定成功，祝您投资顺利！" description="" />
+		<property name="sbc_sms_content_deposity_fail" label="银行三方存管绑定失败 " default="尊敬的{0}，您的三方存管账户绑定失败，请重新申请绑定三方存管银行，给您带来的不便，我们深表歉意，如有疑问请拨打客服热线400********。！" description="" />
+		<property name="sbc_sms_content_pwdreset" label="密码重置 " default="尊敬的客户，为您重置的新{0}为{1}，请妥善保管并尽快修改密码，如有疑问请拨打客服热线400********。" description="" />
+		<property name="sbc_sms_content_csdcrelation_unconfirm" label="证券账户关联关系未确认 " default="尊敬的{0}，由于您的证券账户关联关系未确认，请在时间段9:00-16:00携带{1}至营业部办理证券账户关联关系确认业务，如有疑问请拨打客服热线400********。" description="" />
+		
+		<property name="sms_content_open_register" label="注册验证码短信提示" default=""
+			description="注册验证码短信提示, 其中{0}是验证码占位变量, 请勿修改。示例：尊敬的客户，欢迎使用**证券网上开户，您的短信验证码是{0}，请确保由您本人完成开户操作。如需帮助请拨打客服热线400********。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_open_login" label="登录验证码短信提示" default=""
+			description="登录验证码短信提示, 其中{0}是验证码占位变量, 请勿修改。示例：尊敬的客户，欢迎使用**证券网上开户，您的短信验证码是{0}，请确保由您本人完成开户操作。如需帮助请拨打客服热线400********。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_operator_login" label="后台登录验证码短信提示" default="尊敬的客户，欢迎使用XPE管理后台，您的短信验证码是{0}，如需帮助请拨打客服热线400********"
+			description="登录验证码短信提示, 其中{0}是验证码占位变量, 请勿修改。示例：尊敬的客户，欢迎使用XPE管理后台，您的短信验证码是{0}，如需帮助请拨打客服热线400********。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_video_order" label="视频预约成功短信提示" default="" description="视频预约成功短信提示, 请勿修改。示例：尊敬的客户，您的预约开户信息已提交，我们的工作人员将尽快和您联系，请保持手机畅通。如需帮助请拨打客服热线400********。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_open_apply_submit" label="用户提交开户申请短信提示" default="" description="用户提交开户申请短信提示, 其中{0}等是占位变量, 请勿修改。示例：尊敬的{0}，您好。您的{1}申请已提交，请您耐心等待，{1}成功后会短信通知您账号。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_open_success" label="开户成功短信提示" default=""
+			description="开户成功短信提示, 其中{0}等是占位变量, 请勿修改。示例：尊敬的{0}，您好！感谢您选择在{1}开户，您的账户目前已开通, 资金账号为{3},一码通账户为{5}, {2}，营业部和电话为：{6},{7}。若需相关咨询，请拨打财通证券客服电话400********，恭祝您投资顺利！(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_open_fail" label="开户失败短信提示" default="" description="开户失败短信提示, 请勿修改。示例：尊敬的客户，您在证券网上开户的申请未能通过，如有疑问请拨打客服热线400********。">
+		</property>
+		<property name="sms_content_callback" label="用户回访短信提示" default="" description="用户回访短信提示, 其中{0}是验证码占位变量, 请勿修改。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_zh_fail" label="转户失败短信提示" default="" description="转户失败短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_deposity_twostep" label="两步式银行三方存管短信提示" default="" description="两步式银行三方存管短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_deposity_fail" label="三方存管绑定失败短信提示" default="" description="银行三方存管绑定失败短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_deposity_success" label="三方存管绑定成功短信提示" default="" description="银行三方存管绑定成功短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_deposity_smsbank" label="需短信验证三方存管提醒短信" default="" description="需短信验证银行三方存管短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_wt_zdapply" label="网厅中登证书申请验证码" default="" description="网厅中登证书申请验证码">
+		</property>
+		<property name="sms_content_wt_zjapply" label="网厅自建证书申请验证码" default="" description="网厅自建证书申请验证码">
+		</property>
+		<property name="sms_content_wt_mobilebind" label="网厅手机绑定验证码" default="" description="网厅手机绑定验证码">
+		</property>
+		<property name="sms_content_wt_validate_mobile" label="网厅手机校验短信" default="" description="网厅手机校验短信(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_wt_validate_pwdreset" label="密码重置-手机校验短信" default="" description="密码重置-手机校验短信(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_wt_pwdreset" label="密码重置-新密码发送" default="" description="密码重置-新密码发送(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_wt_validate_login_mobile" label="网厅-临柜转网开手机验证" default="" description="网厅-临柜转网开手机验证(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_ca_success" label="证书颁发成功短信提示" default="" description="证书颁发成功短信提示">
+		</property>
+		<property name="sms_content_ca_fail" label="证书颁发失败短信提示" default="" description="证书颁发失败短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_verify_fail" label="审核未通过短信提示" default="" description="审核未通过短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_verify_fail_sjkh" label="手机开户的客户审核未通过短信提示" default="" description="手机开户的客户审核未通过短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)"></property>
+        <property name="sms_content_verify_fail_360" label="360股票渠道的客户审核未通过短信提示" default="" description="360股票渠道的客户审核未通过短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)"></property>
+		<property name="sms_content_verify_success" label="审核通过短信提示" default="" description="审核通过短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_review_fail" label="复核未通过整改短信提示" default="" description="复核未通过整改验证码短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)"></property>
+		<property name="sms_content_review_fail_sjkh" label="手机开户的客户复核未通过整改短信提示" default="" description="手机开户的客户复核未通过整改验证码短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)"></property>
+		<property name="sms_content_review_fail_360" label="360股票渠道的客户复核未通过整改短信提示" default="" description="360股票渠道的客户复核未通过整改验证码短信提示, 其中{0}是复核未通过整改原因占位变量。(超过短信内容发送字数限制的部分不会发送)"></property>	
+		<property name="sms_content_review_success" label="复核通过短信提示" default="" description="复核通过短信提示(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<!-- add by wsz 2015-5-27 -->
+		<property name="sms_content_bzbopen_login" label="倍赚宝开户用户登录发送的内容" default="" description="倍赚宝开户用户登录发送的内容，如不配置，则沿用开户的短信配置(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<property name="sms_content_bzbopen_register" label="倍赚宝开户用户注册发送的内容" default="" description="倍赚宝开户用户注册发送的内容，如不配置，则沿用开户的短信配置(超过短信内容发送字数限制的部分不会发送)">
+		</property>
+		<!-- add by wsz 2015-5-27 -->
+		<!-- add by liaohui 2016-03-25 -->
+		<property name="sms_content_xjb" label="开户成功现金宝短信" default=""
+			description="开户成功短信提示, 其中{0}等是占位变量, 请勿修改。示例：尊敬的{0}，您好！感谢您选择在{1}开户，您的账户目前已开通, 资金账号为{3},一码通账户为{5}, {2}，营业部和电话为：{6},{7}。若需相关咨询，请拨打**证券客服电话400********，恭祝您投资顺利！">
+		</property>
+		<!-- end -->
+	</group>
+	<group id="sms_management" label="短信管理">
+		<property name="sms_management_HoursCount" label="每小时的短信限制数" default="2" description="每小时的短信限制数">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="sms_management_DayCount" label="每天的短信限制数" default="2" description="每天的短信限制数">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="sms_threshold_content_compare_length" label="短信内容长度限制" default="200">
+		</property>
+	</group>
+
+	<group id="validate_code_management" label="验证码管理">
+		<property name="code_email_valid_date" label="邮件验证码有效期(秒)" default="86400" description="邮件验证码有效期(秒)">
+			<validator type="max" value="99999999" />
+		</property>
+	</group>
+
+	<group id="sms_proxy_config" display="false" description="短信代理配置">
+		<property name="sms_proxy_host" label="代理IP" default="">
+			<validator type="required" />
+			<validator type="host" />
+		</property>
+		<property name="sms_proxy_port" label="代理端口" default="">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+	</group>
+
+	<group id="sms_gateway_config" display="false" description="短信网关配置">
+		<property name="sms_send_gateway_ip" label="短信网关IP" default="">
+			<validator type="required" />
+			<validator type="host" />
+		</property>
+		<property name="sms_send_gateway_port" label="短信网关端口" default="">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+	</group>
+	
+	
+	<group id="msgtask" label="消息中心配置">
+		<property name="msgtask_eachAccount" label="每轮push数量" default="1000" description="每轮push数量">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="msgtask_sendthreadPool" label="入队线程数" default="10" description="入队线程数">
+			<validator type="max" value="99999999" />
+		</property>
+		<property name="msgtask_threadPoolSendAccount" label="发送线程数" default="1000000" description="发送线程数">
+			<validator type="max" value="99999999" />
+		</property>
+		
+	</group>
+	<group id="wechat_config" label="微信公众号配置">
+		<property name="wechat_config_id" label="推送信息微信公众号" default="" description="推送信息微信公众号">
+			
+		</property>
+		<property name="wechat_config_appId" label="微信公众平台appID" default="" description="微信公众平台appID">
+			
+		</property>
+		<property name="wechat_config_appsecret" label="微信公众平台appsecret" default="" description="微信公众平台appsecret">
+			
+		</property>
+		<property name="wechat_config_token" label="微信公众平台token" default="`!@#$%^*()_+{};'cairenhui_wechat" description="微信公众平台token">
+			
+		</property>
+		<property name="wechat_config_api_url" label="微信公众平台API URL" default="https://api.weixin.qq.com/cgi-bin/" description="微信公众平台API URL">
+			<validator type="host" value="https://api.weixin.qq.com/cgi-bin/" />
+		</property>
+		<property name="wechat_config_ticket_url" label="微信公众平台Ticket URL" default="https://mp.weixin.qq.com/cgi-bin/" description="微信公众平台API URL">
+			<validator type="host" value="https://mp.weixin.qq.com/cgi-bin/" />
+		</property>
+	</group>
+	<group id="smspipe" label="通道编号配置">
+		<property name="sms_pipe" label="通道编号配置" default="" description="通道编号配置">
+		</property>
+	</group>
+</config>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="archive_config" label="档案平台配置">
+        <property name="archive_audit_auditlevel" label="档案审核级别" default="0" description="档案审核级别,0为不审核,1为审核,2为复核,包括审核,主二级审核">
+        </property>
+        <property name="archive_isOnTag" label="是否是外挂采集" default="0" description="是否是外挂采集">
+        	<validator type="checkbox">
+                <option label="是" value="1"></option>
+                <option label="否" value="0"></option>
+          	</validator>
+        </property>
+    </group>
+    <group id="sandbox_config" label="档案沙箱配置">
+        <property name="sandbox_ishavecallback" label="flash加载时是否调用回调函数" default="1" description="flash加载时是否调用回调函数，1为调用，0为不调用">
+        </property>
+    </group>
+    <group id="nas_config" label="nas账号配置">
+    	<property name="nas_host" label="nas服务器地址" default="" description="nas服务器地址">
+        </property>
+        <property name="nas_username" label="nas服务器用户名" default="" description="nas服务器用户名">
+        </property>
+        <property name="nas_password" label="nas服务器密码" default="" description="nas服务器密码">
+        </property>
+        <property name="nas_sourcePath" label="nas文件夹路径" default="" description="nas文件夹路径">
+        </property>
+    </group>
+    
+    <group id="file_storage_config" label="文件存储方式配置">
+    <property name="file_storage_way" label="文件存储方式" default="fileoperation">
+        <validator type="select">
+            <option value="fileoperation" label="存储在服务器本地" related="file_local_config"></option>               
+            <option value="fastdfsoperation" label="存储在FASTDFS" related="fastdfs_config"></option>     
+        </validator>
+    </property>
+    <property name="file_temp_path" label="档案文件临时目录路径" default="/usr/local/temparchivefiles/yyyyMMdd">
+    </property>
+    </group>
+     <group id="file_local_config" label="文件存储本地配置">
+    	<property name="file_local_path" label="文件存储路径配置" default="/usr/local/archivefiles/yyyyMMdd" description="文件存储路径配置">
+        </property>
+        <property name="file_local_video_path" label="视频存储路径配置" default="/usr/local/archivevediofiles/yyyyMMdd" description="视频存储路径配置">
+        </property>
+    </group>
+    <group id="fastdfs_config" label="FASTDFS配置">
+        <property name="fastdfs_video_group" label="fastdfs视频存储组名" default="group1" description="FASTDFS视频存储组名">
+        </property>
+        <property name="fastdfs_other_group" label="fastdfs文件存储组名" default="group1" description="FASTDFS文件存储组名">
+        </property>
+        <!--
+        <property name="fastdfs_host" label="fastdfs服务器地址" default="" description="fastdfs服务器地址">
+        </property>  
+        <property name="fastdfs_maxConn" label="fastdfs最大连接数" default="" description="fastdfs最大连接数">
+        </property>
+        <property name="fastdfs_maxIdle" label="fastdfs最大空闲连接数" default="" description="fastdfs最大空闲连接数">
+        </property>
+        <property name="fastdfs_maxBusyTime" label="fastdfs对象等待超时时间" default="" description="fastdfs对象等待超时时间">
+        </property>
+        -->
+    </group>
+    
+    <group id="arch_grouping" label="档案分组配置">
+         <property name="is_start_grouping" label="是否启用档案分组" default="1" description="是否启用档案分组">
+         	<validator type="checkbox">
+                 <option label="是" value="1"></option>
+	
+                 <option label="否" value="0"></option>
+           	</validator>
+         </property>
+     </group>
+</config>

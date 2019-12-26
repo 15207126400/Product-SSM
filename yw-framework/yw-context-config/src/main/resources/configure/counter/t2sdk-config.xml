@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<t2sdk-configuration>
+    <performance heartbeatTime="120" acquireConnWaitTime="20000" registerTime="5" reconnInterval="5"
+        localServerName="client_crh" callBackTime="10000" />
+        <!-- callBackTime 设置太短 容易导致t2结果返回出错 -->
+    <parents>
+        <parent parentName="jres_ar_crh" safeLevel="NONE">
+            <limit licenseFile="${t2_license_url}" encrypt="HSBlowfish" />
+            <members>
+                <member no="0" address="${t2_host}" port="${t2_port}" poolSize="2" />
+            </members>
+        </parent>
+    </parents>
+
+    <logAdapter className="com.hundsun.t2sdk.impl.util.CommonLogAdapter" />
+
+</t2sdk-configuration>

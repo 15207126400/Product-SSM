@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group id="security" label="券商基本配置内容">
+    	<property name="security_alias" label="券商"  default="cesc"  description="选择券商，同时会设置券商简称, 此配置会影响样式文件的调用目录">
+            <validator type="select">
+                <option value="hunanfae" label="湖南金交所" related="" />
+                <option value="casstock" label="航天证券" related="" />
+                <option value="ccnew" label="中原证券" related="" />
+                <option value="cesc" label="中华证券" related="" />
+                <option value="cfzqwskh" label="财富证券-网开" related="security_cfzq" />
+                <option value="cfsecu" label="财富证券--业务集中运营平台" related="" />
+                 <option value="dbsecu" label="东北证券--业务集中运营平台" related="" />
+                <option value="cfzq" label="财富证券" related="" />
+                <option value="cicc" label="中金证券" related="" />
+                <option value="cnpsec" label="中邮证券" related="" />
+                <option value="ctsec" label="财通证券" related="security_ctsec" />
+                <option value="dtzq" label="大同证券" related="" />
+                <option value="ghzq" label="国海证券" related="" />
+                <option value="htsec" label="海通证券" related="security_htsec" />
+                <option value="htzq" label="恒泰证券" related="" />
+                <option value="hczq" label="华创证券" related="" />
+                <option value="jhzq" label="江海证券" related="" />
+                <option value="jyzq" label="金元证券" related="" />
+                <option value="mzzq" label="民族证券" related="" />
+                <option value="nesc" label="东北证券" related="security_nesc,security_jiaotong"/>
+                <option value="stocke" label="浙商证券" related="" />
+                <option value="swsc" label="西南证券" related="" />
+                <option value="sxsec" label="山西证券" related="" />
+                <option value="tpyzq" label="太平洋证券" related="" />
+                <option value="wlzq" label="万联证券" related="" />
+                <option value="xbzq" label="西部证券" related="" />
+                <option value="xmzq" label="厦门证券" related="security_xmzq,security_ldap_conf" />
+                <option value="xsdzq" label="新时代证券" related="securities_licaishi" />
+                <option value="xyzq" label="兴业证券" related="" />
+                <option value="kyzq" label="开源证券" related="" />
+                <option value="cdzq" label="财达证券" related="" />
+                <option value="shhxzq" label="华信证券" related="" />
+                <option value="ajzq" label="爱建证券" related="security_ajzq" />
+                <option value="grzq" label="国融证券" related="" />
+                <option value="dbzq" label="德邦证券" related="" />
+                <option value="sgzq" label="申港证券" related="" />
+                <option value="cjzq" label="长江证券" related="security_cjzq" />
+                <option value="hqzq" label="华菁证券" related="" />
+            </validator>
+        </property>
+        <property name="security_name" label="券商名称" default="中华证券"  description="券商名称, 此名称将全局显示在各网页文字部分" />
+        <property name="security_footer" label="券商页脚名" default="中华证券股份有限公司版权所有  Copyright@2000-2016 All Rights Reserved"  description="前台登录页面页脚信息" />
+        <property name="security_servicephone" label="客服电话" default="4008696336"  description="券商客服电话, 此电话将显示在各网页文字部分" />
+        <property name="security_serviceqq" label="客服QQ" default=""  description="券商在线客服QQ号码, 此电话将在作用在首页的在线客服链接" />
+        <property name="security_logo_path" label="LOGO路径" default="logo/ctsec.png"  description="券商LOGO的存放路径" />
+        <property name="security_qcode_logo_path" label="二维码内嵌LOGO路径" default=""  description="券商二维码内嵌LOGO的存放路径" />
+        <property name="security_bannerpath" label="背景路径" default="banner/convenient.jpg"  description="券商首页背景图片路径" />
+        <property name="security_zh_bannerpath" label="转户背景路径" default="banner/xb02.jpg"  description="转户首页背景图片路径" />
+        <property name="security_simple_bannerpath" label="理财背景路径" default="banner/light-blue1.jpg"  description="理财账户开户首页背景图片路径" />
+        <property name="online_business_hall" label="网上营业厅" default="http://www.baidu.com"  description="" />
+        <property name="investor_education_url" label="投资者教育网站地址" default="http://www.ctsec.com/ctzq/tzzjy/tzzjy.html"  description="" />
+        <property name="investor_education_book_url" label="投资者教育手册网站地址" default="http://www.ctsec.com/softdownload/HandBook.pdf"  description=""/>
+        <property name="ios_app_download_url" label="IOS客户端地址" default="http://www.opendrive.com/files/OF80MzI2MjEzOV9TMFRUcF9kYTQ1/ctsc-sjkh.ipa"  description="" />
+        <property name="android_app_download_url" label="Android客户端地址" default="http://sjkh.ctsec.com/sjkhApp.apk"  description="" />
+        <property name="official_website_url" label="官方网站地址" default="http://www.baidu.com/" description=""/>
+        <property name="audit_app_picture" label="开户成功页面手机APP二维码图片路径" default="newversion/qr-code.png" description="开户成功结果页面手机APP二维码图片存放路径"/>
+		<property name="audit_deal_picture" label="开户成功结果页面交易图片存放路径" default="newversion/rising.png" description="开户成功结果页面交易图片存放路径"/>
+        <property name="wskh_audit_app_picture" label="开户成功结果页面开启财富之旅第二图标路径" default="newversion/qr-code.png" description="开户成功结果页面开启财富之旅第二图标路径"/>
+        <property name="audit_home_picture" label="开户成功结果页面官网图片存放路径" default="newversion/to-home.png" description="开户成功结果页面官网图片存放路径"/>
+        <property name="audit_app_url" label="开户成功结果页面开启财富之旅第二图标链接地址" default="" description="开户成功结果页面开启财富之旅第二图标链接地址"/>
+        <property name="wskh_audit_advertisement_picture" label="开户成功结果页面推广图片存放路径" default="" description="开户成功结果页面推广图片存放路径"/>
+
+		<property name="interface_investment_bean_ref" label="投顾bean引用" default="demoOpenCallbackInterfaceImpl"  description="" >
+		 <validator type="select">
+        	<option value="demoOpenCallbackInterfaceImpl" label="默认投顾bean引用" related="" />
+        	<option value="ciccCounterCallbackInterfaceImpl" label="中金网厅投顾bean引用" related="" />
+        	<option value="ciccOpenCallbackInterfaceImpl" label="中金开户投顾bean引用" related="" />
+        	<option value="wlzqMiddleSecInterfaceImpl" label="万联证券投顾bean引用" related="" />
+        	<option value="ctsecMiddleSecInterfaceImpl" label="财通证券投顾bean引用" related="" />
+        	<option value="cnhtMiddleSecInterfaceImpl" label="恒泰证券投顾bean引用" related="" />
+        	<option value="sxsecMiddleSecInterfaceImpl" label="山西证券开户成功投顾bean引用" related="" />
+        </validator>
+		</property>
+		
+        <property name="interface_trans_pwd_bean_ref" label="通信密码bean引用" default="demoOpenCallbackInterfaceImpl"  description="" >
+        	<validator type="select">
+        	<option value="demoOpenCallbackInterfaceImpl" label="默认通信密码bean引用" related="" />
+        	<option value="ciccCounterCallbackInterfaceImpl" label="中金网厅通信密码bean引用" related="" />
+        	<option value="ciccOpenCallbackInterfaceImpl" label="中金开户通信密码bean引用" related="" />
+        	<option value="wlzqMiddleSecInterfaceImpl" label="万联证券通信密码bean引用" related="" />
+        	<option value="ctsecMiddleSecInterfaceImpl" label="财通证券通信密码bean引用" related="" />
+        	<option value="cnhtMiddleSecInterfaceImpl" label="恒泰证券通信密码bean引用" related="" />
+        	<option value="sxsecMiddleSecInterfaceImpl" label="山西证券开户成功通信密码bean引用" related="" />
+        </validator>
+		</property>
+        <property name="interface_callback_bean_ref" label="开户回调bean引用" default="demoOpenCallbackInterfaceImpl"  description="">
+        	<validator type="select">
+        	<option value="demoOpenCallbackInterfaceImpl" label="默认开户回调bean引用" related="" />
+        	<option value="ciccCounterCallbackInterfaceImpl" label="中金网厅开户回调bean引用" related="" />
+        	<option value="ciccOpenCallbackInterfaceImpl" label="中金开户回调bean引用" related="" />
+        	<option value="wlzqMiddleSecInterfaceImpl" label="万联证券开户回调bean引用" related="" />
+        	<option value="ctsecMiddleSecInterfaceImpl" label="财通证券开户回调bean引用" related="" />
+        	<option value="cnhtMiddleSecInterfaceImpl" label="恒泰证券开户回调bean引用" related="" />
+        	<option value="sxsecMiddleSecInterfaceImpl" label="山西证券开户成功回调bean引用" related="" />
+        	<option value="cfzqMiddleSecInterfaceImpl" label="财富证券开户成功回调bean引用" related="" />
+        	<option value="nescMiddleSecInterfaceImpl" label="东北证券开户成功回调bean引用" related="" />
+        </validator>
+		</property>
+        <property name="open_success_callback_ws_url" label="开户完成回调接口所需参数" default="http://192.168.40.75:8080/api/users"  description="" />
+        <property name="open_success_callback_crm_url" label="开户完成crm接口地址" default="http://218.26.154.213:8180/lmsp-wmsp-bl/JHJRWebService?wsdl"  description="" />
+        <property name="snp_url" label="营销平台服务地址" description="营销平台服务地址"></property>
+        <property name="mobile_app_picture" label="手机APP二维码路径" default="qrcode/cfzq.png"  description="" />
+        <property name="sms_content_app_down" label="手机APP短信下载连接内容" default="尊敬的客户，欢迎您下载财通证券手机开户客户端应用，下载地址为 http://sjkh.ctsec.com/download.html。如需帮助请拨打客服热线4008696336"  description="" />
+        <property name="notice_tilte" label="通知标题" default="通知"  description="" />
+        <property name="kehu_notice_flag" label="是否允许客户开户"  default="visible">
+		  <validator type="checkbox">
+                <option label="是" value="visible"></option>
+                <option label="否" value="invisible"></option>
+          </validator>
+        </property>
+        <property name="notice_content" label="通知内容" default=""  description="" />
+        <property name="wskh_client_download_url" label="个人网上开户成功页面下载客户端地址" default="http://www.baidu.com"  description="">
+            <validator type="url" />
+        </property>
+        <property name="client_download_url" label="开户成功页面下载客户端地址" default="http://www.baidu.com"  description="">
+            <validator type="url" />
+        </property>
+        <property name="client_download_name" label="开户成功页面下载客户端按钮名称" default="下载太平洋交易客户端"  description="" />
+        <property name="branch_type" label="营业部类型" default="2,3"  description="" />
+        <property name="seo_keywords" label="SEO网络优化关键字" default="股票开户 低佣金开户 万三开户 省钱开户 方便开户 快捷开户 哪里开户佣金低 如何网上开户 "  description="" />
+        <property name="seo_description" label="SEO网络优化描述" default="江海证券万三佣金，3分钟秒杀开户，赠送价值1680/年点睛平台，优秀投顾为您服务。"  description="" />
+    
+    	<property name="csdcca_query_counter" label="中登股东账户查询连接的柜台"  default="hundsun">
+		  <validator type="select">
+                <option label="恒生柜台" value="hundsun"></option>
+                <option label="顶点柜台" value="livebos"></option>
+          </validator>
+        </property>
+        
+        <property name="allow_image_type" label="允许上传图片格式" default=".jpg,.jpeg,.tif"  description="允许上传的图片格式" />
+        <property name="future_open_url" label="期货产品链接" default="" description="期货产品链接" />
+        <property name="relogin_after_updpwd" label="是否重新登陆"  default="false" description="操作员修改密码之后，是否要求操作员使用新密码进行登录">
+ 		  <validator type="checkbox">
+                 <option label="是" value="true"></option>
+                 <option label="否" value="false"></option>
+           </validator>
+         </property>
+         
+         <property name="first_force_edit_pwd" label="坐席第一次登录强制修改成强密码"  default="false" description="">
+ 		  <validator type="checkbox">
+                 <option label="是" value="true"></option>
+                 <option label="否" value="false"></option>
+           </validator>
+        </property>
+    </group>
+    
+    <group id="securities_licaishi" label="新浪理财师配置">
+    	<property name="licaishi_base_url" label="新浪理财师平台Base URL" default="http://licaishi.sina.com.cn/" description="新浪理财师平台Base URL" />
+    	<property name="licaishi_user_bind_url" label="用户绑定接口" default="http://licaishi.sina.com.cn/intranet/brokerBinding" description="新浪理财师平台用户绑定接口" />
+    	<property name="licaishi_js_url" label="新浪理财师平台JS脚本" default="http://finance.sina.com.cn/licaishi/static/bridge.js" description="新浪理财师平台提供公共的js脚本" />
+    </group>
+    
+    <group id="channel_config" label="渠道配置" >
+        <property name="interface_channel_bean_ref" label="营销渠道bean引用" default="defaultChannel"  description="" >
+        <validator type="select">
+        	<option value="defaultChannel" label="默认渠道（只统计短链接的注册及开户量）" related="" />
+        	<option value="cfzqChannel" label="财富证券" related="" />
+        	<option value="dtsbcChannel" label="大同证券" related="" />
+        	<option value="jhzqChannel" label="江海证券" related="" />
+        	<option value="ciccChannel" label="中金证券(保存渠道用户id)" related="" />    
+        	<option value="kyzqChannel" label="开源证券" related="" />
+        	<option value="ajzqChannel" label="爱建证券" related="" />
+        </validator>
+        </property>
+        
+		<property name="channel_mult_attr_value_flag" label="渠道属性是否支持多属性值"  default="0">
+		  <validator type="checkbox">
+                <option label="是" value="1"></option>
+                <option label="否" value="0"></option>
+          </validator>
+        </property>
+        
+        <property name="oos_qrcode_url" label="手机、微信二维码渠道开户请求地址" default=""  description="手机、微信二维码渠道开户请求地址" />
+        <property label="h5二维码渠道开户请求地址" description="h5二维码渠道开户请求地址" default="" name="oos_h5_qrcode_url"/>
+	</group>
+    
+    <group id="invest_config" label="理财户实现配置" >
+        <property name="invest_bean_ref" label="理财户实现bean引用" default="defaultInvest"  description="" >
+        <validator type="select">
+        	<option value="defaultInvest" label="默认理财户实现  " related="" />
+        	<option value="wlzqInvest" label="万联证券实现" related="" />
+        </validator>
+        </property>
+	</group>
+	
+    <group id="greeting" label="券商常用问候语">
+    	<property name="video_welcomestr" label="欢迎问候语" default="尊敬的客户，您好。我是客户服务中心${EMP_NAME}，工号${EMP_NO}，很高兴为您服务" description="支持变量：EMP_NAME 柜员名称  EMP_NO 柜员编号  EMP_CERT 柜员资格证号  OGR_INFO 营业部信息" />
+    	<property name="greeting_word01" label="问候语1" default="您好，请问您可以准备好视频见证了吗？"/>
+    	<property name="greeting_word02" label="问候语2" default="我是海通证券网上开户数字证书见证人员${EMP_NAME}，我的工号是${EMP_NO}，您可以登陆相关网站查询执业信息，请问您现在了解了吗？"/>
+    	<property name="greeting_word03" label="问候语3" default="下面我将对您进行网上开户数字证书申请的影像采集，将会询问您几个问题，请您配合完成。（1）请问您是${USER_NAME}先生吗（2）请问您已阅读关于数字证书的相关文件，理解和同意接受相关条款，对吗？（1分钟）"/>
+    	<property name="greeting_word04" label="问候语4" default="视频见证影像录制完成，我们工作人员会对您的资料进行后台审核，请耐心等待。"/>
+    	<property name="greeting_word05" label="问候语5" default="您的视频审核已经通过，请您安装好数字证书，设置数字证书私钥密码并妥善保管。"/>
+    	<property name="greeting_word06" label="问候语6" default=""/>
+    	<property name="greeting_word07" label="问候语7" default=""/>
+    	<property name="greeting_word08" label="问候语8" default=""/>
+    	<property name="greeting_word09" label="问候语9" default=""/>
+    	<property name="greeting_word10" label="问候语10" default=""/>
+    	<property name="video_kh_word_tip" label="开户话术用语" default="您好，我是${SECURITY_NAME}${ORG_NAME}呼叫中心视频验证人员${EMP_NAME} 工号${EMP_NO}，您可以通过我公司官网或客服热线核实我的身份，并可通过中国证券业协会网站核实我的执业资格。\n1、请问您是${USER_NAME}本人吗？\n2、您是本人自愿申请数字证书并进行网上开户，并已阅读理解和接受相关责任条款对吗？\n好的，本次视频验证通过后，您可以根据系统提示，安装数字证书，自行设置证书密码并妥善保管好吗？\n感谢您的配合！（视频录制完毕，视频验证人员点击[结束录像]，系统自动进行视频上传。）" description="支持变量：SECURITY_NAME 券商名称  USER_NAME 客户名称 EMP_NAME 柜员名称  EMP_NO 柜员编号  OGR_NAME 营业部名称 \n 换行符" />
+    	<property name="video_wt_word_tip" label="网厅话术用语" default="您好，我是${SECURITY_NAME}${ORG_NAME}呼叫中心视频验证人员${EMP_NAME} 工号${EMP_NO}，您可以通过我公司官网或客服热线核实我的身份，并可通过中国证券业协会网站核实我的执业资格。" description="支持变量：SECURITY_NAME 券商名称  USER_NAME 客户名称 EMP_NAME 柜员名称  EMP_NO 柜员编号  OGR_NAME 营业部名称 \n 换行符" />
+    	<property name="video_wtpwdrst_word_tip" label="网厅密码重置话术用语" default="" description="支持变量：USER_NAME 客户名称 EMP_NAME 柜员名称  EMP_NO 柜员编号  EMP_CERT 柜员资格证号  OGR_INFO 营业部信息 \n 换行符" />
+    	<property name="video_wtinfomodify_word_tip" label="网厅信息修改话术用语" default="" description="支持变量：USER_NAME 客户名称 EMP_NAME 柜员名称  EMP_NO 柜员编号  EMP_CERT 柜员资格证号  OGR_INFO 营业部信息 \n 换行符" />
+    	<property name="video_wtgem_word_tip" label="网厅gem话术用语" default="" description="支持变量：USER_NAME 客户名称 EMP_NAME 柜员名称  EMP_NO 柜员编号  EMP_CERT 柜员资格证号  OGR_INFO 营业部信息 \n 换行符" />
+    </group>
+    
+     <group id="security_ctsec" label="财通个性化配置内容" display="false">
+    	<property name="simple_allinpay_submiturl" label="通联网银认证提交URL" default="http://116.236.252.101:38080/AppStsRequest/service/nofieldSignServlet.action"/>
+        <property name="simple_allinpay_searchurl" label="通联网银认证查询URL"  default="http://116.236.252.101:38080/AppStsRequest/service/queryBusinessAction.action"  />
+        <property name="simple_allinpay_inst_id" label="机构代码" default="70410000" />
+        <property name="simple_allinpay_reqs_url" label="回调请求地址" default="http://kh.32dev.com:4491/simple/verify/callback/rqst/" />
+        <property name="simple_allinpay_resp_url" label="回调应答地址" default="http://kh.32dev.com:4491/simple/verify/callback/resp/" />
+	</group>
+	
+	<group id="security_htsec" label="海通个性化配置内容" display="false">
+		<property name="htsec_xyaddr" label="新意图片文件服务URL"  default="http\://188.188.113.196\:8080/ECIMC/jsp/service/uploadimage/scanimage.do"  />
+		<property name="htsec_xydir" label="新意文件下载目录"  default=""  />
+		<property name="htsec_companycode" label="证券公司代码"  default="HTSEC"  description="导出用户三方存管签名时, 证券公司代码设定" />
+		<property name="htsec_companyname" label="证券公司名称"  default="海通证券"  description="导出用户三方存管签名时, 证券公司名称设定"/>
+	</group>
+	
+	<group id="security_ajzq" label="爱建个性化配置内容" display="false">
+		<property name="ajzq_lx_day" label="爱建证券轮训天数个性化配置"  default="10" description="轮训开户成功天数支持修改，默认为十天未开户成功就失败，可修改配置天数，单位（天）" />
+	</group>
+		
+	<group id="security_hsipccweb" label="恒生呼叫中心接口">
+	    <property name="is_send_msg_crm" label="是否启用呼叫中心断点推送"  default="invisible">
+		  <validator type="checkbox">
+                <option label="是" value="visible"></option>
+                <option label="否" value="invisible"></option>
+          </validator>
+        </property>
+		<property name="hsipccweb_webservice_url" label="Webservice接口URL" default=""/>
+    	<property name="hsipccweb_privatekey" id="password" label="私有key" default=""/>
+    	<property name="hsipccweb_task_interval"  label="任务停留超时时间配置(分钟)" default="30" description=""/>
+    	<property name="hsipccweb_task_beginDate" label="回访任务开始日期" default="" description="回访任务开始日期，如2011-11-11"/>
+		<property name="hsipccweb_task_sendsms" label="是否发送短信"  default="invisible">
+		  <validator type="checkbox">
+                <option label="是" value="true"></option>
+                <option label="否" value="false"></option>
+          </validator>
+        </property>
+		<property name="hsipccweb_task_sendsms_content" label="发送短信内容" default="" description="占位 {0}姓名  {1}位置"/>
+	</group>
+	
+	<group id="security_dzh" label="中转服务器消息推送配置">
+		<property name="dzh_transit_url" label="中转服务器配置的接口URL" default=""/>
+    	<property name="dzh_company_no" label="提供的券商编号" default=""/>
+    	<property name="dzh_channel_no" label="提供的券商渠道编号" default=""/>
+    	<property name="dzh_transit_isfilterfinanc" label="是否过滤、只有理财帐户开户成功的用户"  default="true">
+		  <validator type="checkbox">
+                <option label="是" value="true"></option>
+                <option label="否" value="false"></option>
+          </validator>
+        </property>
+        <property name="dzh_transit_isPushfinanc" label="是否推送、只有理财帐户开户成功的用户"  default="false">
+		  <validator type="checkbox">
+                <option label="是" value="true"></option>
+                <option label="否" value="false"></option>
+          </validator>
+        </property>
+	</group>
+	
+	<group id="security_livebos" label="顶点CRM推送">
+		<property name="livebos_userid_crm" label="顶点crm webservice服务用户ID" default="" description="">
+        </property>
+     	<property name="livebos_user_crm" label="顶点crm webservice服务用户名" default="" description="">
+        </property>
+        <property name="livebos_password_crm" id="password" label="顶点crm webservice服务密码" default="">
+        </property>
+        <property name="livebos_service_url_crm" label="顶点crm webservice地址" default="">
+        </property>
+        <property name="crh_fixapi_ip_crm" label="顶点fix接口转发程序IP" default="" description="">
+            <validator type="host" />
+        </property>
+        <property name="crh_fixapi_port_crm" label="顶点fix接口转发程序端口" default="">
+            <validator type="range" value="[1,65535]" />
+        </property>
+	</group>
+	
+	<!-- M201502130008 2014-0423 增加厦门证券LDAP服务器配置项 -->
+	<group id="security_xmzq" label="厦门证券个性化配置内容">
+		<property name="xmzq_is_open_ad_auth" label="是否开启AD域认证"  default="no" description="配置管理平台登录是否进行AD域认证(使用LDAP服务)，开启后AD域服务器的配置才起作用">
+		  <validator type="checkbox">
+                <option label="开启" value="yes"></option>
+                <option label="关闭" value="no"></option>
+          </validator>
+        </property>
+	</group>
+	<group id="security_ldap_conf" label="AD域认证服务器配置(LDAP服务)">
+		<property name="ldap_server_url" label="LDAP服务器URL" default="" description="LDAP服务器地址，请填写IP或域名"/>
+		<property name="ldap_server_port" label="LDAP服务器端口" default="" description="LDAP服务器端口"/>
+		<property name="ldap_server_base" label="LDAP服务根目录" default="" description="LDAP服务根目录，如根目录dn为'dc=localhost,dc=com'，则将此dn填入即可"/>
+		<property name="ldap_server_ad_acc" label="管理员账号" default="" description="LDAP服务器管理员账号，如管理员dn(目录服务唯一标识)为'cn=admin,dc=localhost,dc=com'，则填入admin"/>
+		<property name="ldap_server_ad_pwd" label="管理员密码" default="" description="LDAP服务器管理员密码，密码为加密后的字符串"/>
+		<property name="ldap_username_attribute_name" label="用户名检索属性" default="cn" description="设置认证时检索用户名使用的属性名称，如根据用户名密码认证时，用户名使用uid属性进行服务器检索，则填入uid即可。建议使用uid或者cn"/>
+	</group>
+	 <group id="success_witness_review_remuneration_set" label="绩效考核视频见证、复核每次获取奖励设置" >
+		<property name="success_witness_remuneration_day" label="视频成功见证1" default="3" description="（工作日8:00至18:00），每次奖励（元）"/>
+    	<property name="success_witness_remuneration_night" label="视频成功见证2" default="8" description="（工作日18:00至24:00），每次奖励（元）"/>
+    	<property name="success_review_remuneration_set" label="成功复核次数" default="2"  description="每次奖励（元）"/>
+	</group>
+	
+	<group id="app_send_msg_config" label="APP消息推送配置">
+		<property name="is_send_msg_broken" label="是否启用APP断点推送"  default="invisible">
+		  <validator type="checkbox">
+                <option label="是" value="visible"></option>
+                <option label="否" value="invisible"></option>
+          </validator>
+        </property>
+		<property name="is_send_msg_to_unchannels" label="是否向非渠道开户客户推送消息"  default="invisible">
+		  <validator type="checkbox">
+                <option label="是" value="visible"></option>
+                <option label="否" value="invisible"></option>
+          </validator>
+        </property>
+    	<property name="umeng_message_url" label="友盟消息推送接口URL" default="http://msg.umeng.com/api/send/" description="友盟消息推送接口URL" />
+    	<property name="app_key_andriod" label="andriod应用唯一标识" default="574bf69ee0f55a1eae001a1b" description="andriod应用唯一标识" />
+    	<property name="app_master_secret_andriod" label="andriod应用服务器秘钥" default="lenqqdyooukofmgjhbtaw1apvg5dzdmq" description="andriod应用服务器秘钥" />
+    	<property name="app_key_ios" label="ios应用唯一标识" default="57620f8de0f55a40c0001213" description="ios应用唯一标识" />
+    	<property name="app_master_secret_ios" label="ios应用服务器秘钥" default="rurucnc9ev84m4vw70qggrotj69hanny" description="ios应用服务器秘钥" />
+    </group>
+    
+     <group id="systemName" label="后台系统名称配置" >
+		<property name="security_systemName" label="后台系统名称配置" default="XPE后台管理系统" description="展示在后台登录页面的系统名称"/>
+	</group>
+	
+	<group id="databaseCode" label="数据库编码配置" >
+ 		<property name="database_code" label="数据库编码配置" default="2" description="数据库编码配置" >
+ 			<validator type="select">
+                 <option label="GBK" value="2"></option>
+                 <option label="UTF-8" value="3"></option>
+             </validator>
+         </property>
+	
+ 	</group>
+	
+	<group id="security_cfzq" label="财富证券个性化配置内容">
+		<property name="pwd_box_on" label="密码保管箱是否启用"  default="0">
+		  <validator type="checkbox">
+                <option label="是" value="1"></option>
+                <option label="否" value="0"></option>
+          </validator>
+        </property>
+    	<property name="pwd_box_appid" label="密码箱appid " default="" />
+    	<property name="pwd_box_auth_code" label="密码箱授权码 " default="" />
+    	<property name="pwd_box_url" label="密码箱url " default="" />
+    	<property name="pwd_box_clean_time" label="清理密码的期限" default="7" description="清理密码的期限，默认是7，如果小于等于0,则不会清理密码 " />
+        <property name="user_custom_info_protection_day" label="扩展信息保护期" default="5" description="扩展信息保护期,单位(天),默认5天 "/>
+        <property name="own_channels_appid" label="自有渠道appid" default="" description=""/>
+        <property name="own_channels_referermoble" label="自有渠道referermoble" default="" description=""/>
+	    <property name="channel_360_short_url" label="360股票渠道短连接" default="OQu59w" description="360股票渠道短连接"></property> 
+	    <property name="cfzq_risk_specificfactor_conf" label="财富证券风险适当性-特殊要素配置" default="" description="[风险测评题目id,风险测评答题选项编号,特殊要素编号],[风险测评题目id,风险测评答题选项编号,特殊要素编号]">
+     </property>
+	 </group>
+	 
+	 
+	 <group id="security_nesc" label="东北证券个性化配置内容">
+    	<property name="nesc_bond_fundCode" label="保证金理财基金代码 " default="002243" />
+    	<property name="nesc_bond_fundCompany" label="保证金理财基金公司代码 " default="40" />
+    	<property name="nesc_bond_fundName" label="保证金理财基金公司名称 " default="余额理财" />
+    	<property name="nesc_bond_ofcashBalance" label="触发金额" default="10" />
+    	<property name="nesc_bond_subRiskFlag" label="是否签署风险揭示书 " default="a" />
+    	<property name="nesc_bond_prodKind" label="产品类别  " default="7" />
+    	<property name="nesc_bond_econtractType" label="电子合同类别 " default="1" />
+    	<property name="nesc_bond_prodtaNo" label="产品TA编号 " default="40" />
+    	<property name="nesc_bond_prodCode" label="产品代码  " default="002243" />
+    	<property name="nesc_bond_jjCode" label="基金代码   " default="002243" />
+    	<property name="nesc_bond_chargeType" label="前后收费类型   " default="0" />
+	 </group>
+	 
+	 <group id="security_jiaotong" label="交通银行红包活动配置">
+    	<property name="jiaotong_hongbao_start_time" label="活动开始时间 " default="" description="活动时间配置方式为:'2017/03/14 9:51:19',时间格式为24小时制"/>
+    	<property name="jiaotong_hongbao_end_time" label="活动结束时间 " default="" description="活动时间配置方式为:'2017/03/14 20:51:19',时间格式为24时间制"/>
+    	<property name="jiaotong_hongbao_description" label="活动说明 " default="" description="活动说明部分字体需要用红色字体展示的，用@@开始，##结束"/>
+    	<property name="jiaotong_hongbao_success_sms" label="红包银行绑定成功短信 " default="" description="红包银行绑定成功发送短信"/>
+	 </group>
+	 <group id="browser_config" label="档案插件配置">
+        <property name="browser_arch_version" label="档案插件版本配置" default="1.0.2.1" description="档案插件版本配置">
+     </property>
+    </group>
+    <group id="cloudwalk_config" label="人脸识别云从服务地址配置">
+        <property name="wskh_facedetection_tmp_path" label="人脸识别临时目录" default="" description="人脸识别临时目录"/>
+     	<property name="cloudwalk_app_id" label="云从服务所需的身份标示" default="" description="云从服务所需的身份标示"/>
+     	<property name="cloudwalk_secret_id" label="云从服务所需的访问密码" default="" description="云从服务所需的访问密码"/>
+     	<property name="cloudwalk_server_url" label="云从服务地址" default="" description="云从服务地址"/>
+    </group>
+    
+    <group id="loginWay" label="登录项配置">
+        <property name="isMsg_login" label="是否启用短信验证码登录"  default="0">
+		  <validator type="checkbox">
+                <option label="是" value="1"></option>
+                <option label="否" value="0"></option>
+          </validator>
+        </property>
+    </group>
+    
+    <group id="security_cjzq" label="长江证券个性化配置" display="false">
+		<property name="suit_revisit_number" label="匹配回访问卷试题编号"  description="" />
+		<property name="notsuit_revisit_number" label="不匹配回访问卷试题编号"  description="" />
+		<property name="risk_investkind_investtime" label="获取风险投资品种，期限" default="" description="[风险测评题目id,风险测评答题选项编号],[风险测评题目id,风险测评答题选项编号]"/>
+		<property name="risk_investkind_investtime_num" label="风测选项编号对应的协议选项编号" default="" description="[风险测评答题选项编号,协议选项编号],[风险测评答题选项编号,协议选项编号]"/>
+	</group>
+	
+		
+	<group id="ths_user_push_task" label="开户对接同花顺定时推送开户信息配置">
+	
+		<property name="ths_user_push_url" label="定时推送开户信息接口地址" default="">
+		</property>
+		<property name="ths_user_push_name" label="定时推送开户信息接口名" default="">
+		</property>
+		<property name="ths_user_push_qsid" label="定时推送开户信息券商ID" default="" description="">
+		</property>	
+		<property name="ths_user_push_publickey" label="RSA公钥" default="">
+
+		</property>	
+		<property name="ths_user_push_channel_code" label="同花顺渠道代码" default="">
+
+		</property>	
+	</group>
+</config>

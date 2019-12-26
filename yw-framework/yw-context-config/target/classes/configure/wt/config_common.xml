@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+<!-- 网厅公共模块配置修改（高伟星）开始 -->
+	<property name="security_path" label="网厅版本" default="cesc"
+		description="选择券商，同时会设置券商简称, 此配置会影响样式文件的调用目录">
+		<validator type="select">
+			<option value="std_wt" label="标准版网厅"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="std_xdt" label="标准版小贷通" related="xdt" />
+			<option value="std_wt_xdt" label="标准版网厅小贷通合并版"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="cesc" label="中华证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="cfzq" label="财富证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="cicc" label="中金证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="ctsec" label="财通证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="dfzq" label="东方证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="dbzq_xdt" label="东北证券小贷通" related="xdt" />
+			<option value="dwzq" label="东吴证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="hczq" label="华创证券网厅"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="hcxdt" label="华创证券小贷通" related="xdt" />
+			<option value="ghzq_xdt" label="国海证券小贷通" related="xdt" />
+			<option value="jyzq" label="金元证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="kyzq" label="开源证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="sxzq" label="山西证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="xczq" label="湘财证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="xsdzq" label="新时代证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="zszq" label="浙商证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="jhzq" label="江海证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="jhzq_xdt" label="江海证券小贷通"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="jhzq_xdt" label="华安证券小贷通"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="fzzq" label="方正证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+			<option value="dtzq" label="大同证券"
+				related="third,stock,funds,consign_type,e_sign,product,gem,xdt,margin,hkstock,otc,delistFinishing,funcbankmacct" />
+		</validator>
+	</property>
+	
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	
+	<group id="security" label="券商基本配置内容（仅适用于网厅）" display="true">
+		<property name="security_name" label="券商名称" default="中华证券"
+			description="券商名称, 此名称将全局显示在各网页文字部分" />
+		<property name="security_short" label="券商名称简称" default="中华"
+			description="券商名称简称, 此名称将全局显示在各网页文字部分" />
+		<property name="security_servicephone" label="客服电话" default="4008696336"
+			description="券商客服电话, 此电话将显示在各网页文字部分,有多个客服热显示以“;”分隔" />
+		<property name="security_pet_name" label="券商吉祥物名称" default=""
+			description="券商吉祥物名称,此名称将全局显示:小金提示、小金推荐，不配置则显示：温馨提示等,可配置为小金或小财等" />
+		<property name="security_image_logo" label="券商LOGO图片"
+			default="zhzq.png" description="券商LOGO图片名称" />
+		<property name="security_controlpkg_path" label="安装包名"
+			default="CRHSetup.exe" description="券商控件安装包名称" />
+			
+		<property name="wt_header_online_show" label="网厅头部是否显示在线客服" default="0" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="navigator_menu_xdt" label="右侧悬浮导航菜单,是否显示小贷入口"
+			default="0" description="目前恒泰要求需要">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="navigator_menu_sc" label="右侧悬浮导航菜单,是否显示商城入口"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="navigator_menu_wx" label="右侧悬浮导航菜单,是否显示官方微信"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="navigator_menu_yx" label="右侧悬浮导航菜单,是否显示官方易信"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="verify_code_time" label="手机验证码倒计时" default="60"
+			description="获取手机验证码倒计时设置 ,单位秒">
+			<validator type="range" value="[30,3200]" />
+		</property>
+		<property name="wt_login_entrust_way" label="支持网厅登录的委托方式"
+			default="" description="除网上委托之外，网厅还可以以哪几种委托方式登录，该项可配置为支持的委托方式编号以“#”分隔，例如：1#2" />
+		<property name="wt_support_login_way" label="网厅登录方式" default="1" description="" >
+			<validator type="select">
+				<option value="1" label="资金账号登录"></option>
+			    <option value="6" label="客户号登录"></option>
+			</validator>
+		</property>
+		<property name="agremeent_sync_flag" label="网厅签署协议是否需要提交到柜台"
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		<property name="wt_user_login_valid_time" label="用户登录失效时间" default="3600" description="单位:秒">
+		</property>
+		<property name="video_queue_root_inner" label="视频队列服务地址"
+			default="http://115.238.108.41:8088" description="视频队列服务内网根地址（必配）">
+			<validator type="url" />
+			<validator type="required" />
+		</property>
+		<property name="video_default_branchno" label="提供视频服务的默认营业部编号"
+			default="" description="提供视频服务的默认营业部编号,不输入时，视频服务为客户所属的营业部" />
+
+
+		<property name="wt_cfzq_link_portal" label="券商门户网站" default=""
+			description="">
+			<validator type="url" />
+		</property>
+		<property name="link_kh_online" label="网上开户系统" default=""
+			description="" />
+		<property name="link_kh_order" label="预约开户系统" default=""
+			description="" />
+		<property name="link_mall_online" label="商城网址" default=""
+			description="" />
+		<property name="link_xfzf_online" label="消费支付外部连接" default=""
+			description="" />
+		<property name="link_soft_download" label="软件下载地址" default=""
+			description="外链的配置具体URL,网厅自己实现配置为:/download/" />
+		<property name="wt_exam_queryType" label="网厅测评试题获取方式" default="1"
+			description="网厅测评试题获取方式  1:IFS获取     0:本地数据库获取" />
+			
+		<property name="wt_login_ip" label="登录网厅记录用户的IP地址还是配置中的op_station" default="0"
+			description="1：记录用户IP，0：记录配置文件中的op_station" />
+
+	</group>
+	
+	<!--  -->
+	<group id="home" label="网厅首页显示内容" display="true">
+		<property name="home_show_third" label="首页是否显示三方存管信息" default="1"
+			description="首页是否显示三方存管信息">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+		
+		<property name="home_show_hkstock" label="首页是否显示沪港通信息" default="1"
+			description="首页是否显示沪港通信息">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+		
+		<property name="home_show_digital" label="首页是否显示电子签名约定书信息" default="1"
+			description="首页是否显示电子签名约定书信息">
+			<validator type="select">
+				<option value="1" label="是" />
+				<option value="0" label="否" />
+			</validator>
+		</property>
+
+		<property name="wt_validate_range" label="网厅验证码取值范围是否包含字母" default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+
+		<property name="user_lock_screen_time" label="大同证券用户锁屏时间"
+			default="600" description="单位：秒" />
+		
+		<property name="risk_inner_days_end" label="网厅风险评测，多少天以内算即将到期"
+			default="0" description="单位：天" />
+		
+		<property name="idCard_inner_days_end" label="身份证有效期，多少天以内算是即将到期"
+			default="0" description="单位：天" />
+		
+		<property name="wt_not_trading_time_describe" label="网厅非业务时间提示语"
+			default="非常抱歉，当前不在业务时间，请在{0}-{1}使用此功能!" description="示例：非常抱歉，当前不在业务时间，请在{0}-{1}使用此功能!" />
+		
+		<property name="home_pre_condition" label="网厅账户页是否显示前置条件检查弹窗" default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>	
+	</group>
+
+</config>

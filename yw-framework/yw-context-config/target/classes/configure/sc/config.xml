@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+	<group id="mall" label="商城配置" display="true">
+		<property name="security_name" label="券商名称"
+			default="" description="此名称将全局显示在各网页文字部分">
+		</property>
+		<property name="security_short" label="券商简称"
+			default="" description="">
+		</property>
+		<property name="webAddr" label="商城地址"
+			default="" description="">
+		</property>
+		<property name="scWebAddr" label="商城地址"
+			default="" description="">
+		</property>
+		<property name="wt_webaddr" label="网厅地址"
+			default="" description="">
+		</property>
+		<property name="staticResourcesAddr" label="静态资源地址"
+			default="" description="">
+		</property>
+		<property name="resource_path" label="商城版本"
+			default="ctzqnew" description="">
+			<validator type="select">
+				<option value="ctzq" label="财通证券" />
+				<option value="ctzqnew" label="财通证券新版" />
+				<option value="xczq" label="湘财证券" />
+			</validator>
+		</property>
+		<property name="sec_name" label="券商官网名称"
+			default="" description="">
+		</property>
+		<property name="sec_official_website" label="券商官网"
+			default="" description="">
+		</property>
+		<property name="sec_open_account_website" label="券商开户网站"
+			default="" description="">
+		</property>
+		<property name="sec_simple_open_account_website" label="券商简易开户网站"
+			default="" description="">
+		</property>
+		<property name="sec_software_download_website" label="软件下载连接"
+			default="" description="">
+		</property>
+		<property name="cookie_domain" label="域名"
+			default="" description="">
+		</property>
+		<property name="cookie_version" label="cookie版本"
+			default="" description="">
+		</property>
+		<property name="cookie_aes_key" label="cookie对称加密KEY"
+			default="" description="16个数字，大或小写英文，符号组成（必配）">
+		</property>
+		<property name="cookie_aes_iv" label="cookie对称加密向量"
+			default="" description="16个数字（必配）">
+		</property>
+		<property name="middle_connect_model" label="中台连接运行方式"
+			default="" description="（run / debug）">
+		</property>
+		<property name="video_queue_root_inner" label="视频队列服务内网根地址"
+			default="" description="（必配）">
+		</property>
+		<property name="video_default_branch_no" label="提供视频服务的默认营业部编号"
+			default="" description="不输入时，视频服务为客户所属的营业部">
+		</property>
+		<property name="op_entrust_way" label="商城委托方式"
+			default="" description="">
+		</property>
+		<property name="sc_gw" label="商城头部的官网链接是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_rjxz" label="商城头部的软件下载链接是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="zqkh" label="商城头部的证券开户链接是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="lckh" label="商城头部的理财开户链接是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_zglc" label="商城头部的资管理财产品下拉菜单是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_jjlc" label="商城头部的基金理财产品下拉菜单是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_otclc" label="商城头部的otc理财产品下拉菜单是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_banklc" label="商城头部的银行理财产品下拉菜单是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_need_yykh" label="登录框预约开户按钮是否显示"
+			default="1" description="">
+			<validator type="checkbox" ref="display_checkbox"></validator>
+		</property>
+		<property name="sc_need_yykhUrl" label="登录框预约开户链接地址"
+			default="" description="">
+		</property>
+	</group>
+
+</config>

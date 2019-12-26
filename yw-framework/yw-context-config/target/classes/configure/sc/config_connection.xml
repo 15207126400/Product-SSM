@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+	<group id="mall_connection" label="商城通讯配置" display="true">
+		<property name="crh_connection_timeout" label="与中台接口通讯连接超时时间"
+			default="60" description="单位秒,默认60秒">
+		</property>
+		<property name="crh_so_timeout" label="与中台接口通讯提交请求超时时间"
+			default="60" description="单位秒，默认60秒">
+		</property>
+		<property name="crh_cookie_name" label="中台WebService请求cookie键值格式"
+			default="" description="">
+		</property>
+		<property name="crh_cookie_path" label="中台WebService请求cookie路径"
+			default="" description="">
+		</property>
+		<property name="sisap_cookie_domain" label="中台WebService请求cookie作用域"
+			default="" description="">
+			<validator type="required" />
+            <validator type="host" />
+		</property>
+		<property name="sisap_webservice_url" label="中台WebService接口地址"
+			default="" description="">
+		</property>
+		<property name="wt_cookie_domain" label="网厅域名"
+			default="" description="">
+			<validator type="required" />
+            <validator type="host" />
+		</property>
+	</group>
+
+</config>

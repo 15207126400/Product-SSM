@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+	<property name="interface_voice_bean_ref" label="语音验证码实现"
+		default="demoVoiceServiceImpl">
+		<validator type="select">
+			<option value="demoVoiceServiceImpl" label="不发送语音验证码"></option>
+			<option value="xnzqVoiceServiceImpl" label="西南证券语音验证码"
+				related="voice_basic,xnzqset"></option>
+			<option value="rlytVoiceServiceImpl" label="容联易通语音验证码"
+				related="voice_basic,ccprest"></option>
+			<option value="bwVoiceServiceImpl" label="百悟语音验证码"
+				related="voice_basic,baiwuset"></option>
+		</validator>
+	</property>
+	<group id="voice_basic" display="false">
+		<property name="voice_run_model" label="语音验证码运行模式" default="run">
+			<validator type="radio">
+				<option value="run" label="生产" />
+				<option value="debug" label="调试" />
+			</validator>
+		</property>
+		<property name="voice_test_mobile" label="语音验证码测试号码" default=""
+			description="语音验证码测试号码, 如不为空则所有语音验证码均发送至设置手机号码">
+		</property>
+	</group>
+	<group id="xnzqset" display="false">
+		<property name="xnzq_url" label="语音验证码接口地址" default=""
+			description="语音验证码服务URL或语音验证码数据库URL">
+			<validator type="required" />
+		</property>
+		<property name="xnzq_user" label="语音验证码服务使用帐号" default="">
+			<validator type="required" />
+		</property>
+		<property name="xnzq_user_pwd" id="password" label="语音验证码服务使用密码"
+			default="">
+		</property>
+	</group>
+	<group id="baiwuset" display="false">
+		<property name="baiwu_url" label="访问地址" default=""
+			description="">
+			<validator type="required" />
+		</property>
+		<property name="baiwu_accountSid" label="企业账号" default=""
+			description="">
+			<validator type="required" />
+		</property>
+		<property name="baiwu_passwd" label="密码" default=""
+			description="">
+			<validator type="required" />
+		</property>
+		<property name="baiwu_serviceCode" label="业务代码" default=""
+			description="">
+			<validator type="required" />
+		</property>
+		<property name="baiwu_callNumber" label="主叫号" default=""
+			description="">
+			<validator type="required" />
+		</property>
+
+	</group>
+
+	<group id="ccprest" label="语音验证码配置">
+		<property name="ccprest_url" label="服务器地址" default="sandboxapp.cloopen.com">
+			<validator type="required" />
+		</property>
+		<property name="ccprest_port" label="服务器端口" default="8883">
+			<validator type="required" />
+			<validator type="range" value="[1,65535]" />
+		</property>
+		<property name="ccprest_accountSid" label="主帐号名称"
+			default="aaf98f89490d8cf501491818085c06ae">
+			<validator type="required" />
+		</property>
+		<property name="ccprest_accountToken" label="主帐号令牌"
+			default="9a033fa8bc1f487ab04176a189f90196">
+			<validator type="required" />
+		</property>
+		<property name="ccprest_AppId" label="应用ID"
+			default="8a48b55148fe48600149182438f11091">
+			<validator type="required" />
+		</property>
+		<property name="ccprest_showMobile" label="来电显示号码" default="400400">
+			<validator type="required" />
+		</property>
+		<property name="ccprest_times" label="语音提示次数" default="1">
+			<validator type="required" />
+			<validator type="range" value="[1,999999999]" />
+		</property>
+	</group>
+</config>

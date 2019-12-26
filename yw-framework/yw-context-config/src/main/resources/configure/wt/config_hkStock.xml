@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="需要" value="1"></option>
+		<option label="不需要" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	
+	<group id="hkstock" label="沪港通配置" display="true">
+		<property name="hkstock_min_risk_score" label="港股通开通在线评测最低分数不低于"
+			default="80" description="港股通开通在线评测的分数，大于等于这个值才允许开通，如60" />
+
+		<property name="client_asset_info_get" label="港股通开通验资不包含信用资产"
+			default="0" description="港股通判断资产的时候，打开表示只判断普通资产，关闭表示 普通资产和信用资产的总和">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="hkstock_min_balance" label="港股通开通资产不低于"
+			default="500000" description="港股通开通判断资产的标准，大于等于这个值才允许开通，如500000" />
+		
+		<property name="hkstock_do_riskCheck" label="是否检查用户的风险等级"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="hkstock_do_riskCheck_date" label="检查用户的风险等级评测时间"
+			default="0.5" description="检查用户的风险评测是否大于指定时效 如半年设置0.5一年设置1" />
+		
+			
+		<property name="hkstock_min_risk_level" label="港股通开通风险等级不低于"
+			default="2" description="港股通判断风险等级的标准，大于等于这个值才允许开通，如2" />
+			
+		<property name="wt_hkstock_newopen_deal" label="港股通没有沪A股东账户的时候处理方式"
+			default="1" description="网厅港股通开户时，没有沪A股东账户的时候，是否新开沪A的HK港股通户 。开->1新开，关->0不新开。默认1">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="wt_hkstock_regflag_deal" label="港股通新指定的处理方式"
+			default="0" description="网厅港股通开户时，是否将新指定作为未指定处理（默认作为已指定处理）开->1是，关->0作为已指定处理。默认0">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>	
+		
+		<property name="wt_hk_regflag" label="港股通未指定不去新开HK"
+			default="0" description="网厅港股通开户时，有沪A股东账户的情况下，未指定的时候是否要不去新开HK账户。开->1不新开,关->0新开。默认0">
+		    <validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+		
+		<property name="wt_hkstock_dig_deal" label="开港股通是否要检查电子签名约定书"
+			default="0" description="港股通开通时，是否要检查电子签名约定书权限  1需要， 0不需要。默认0" >
+		    <validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+	</group>
+
+</config>

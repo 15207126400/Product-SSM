@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunwei.context.config.dao.YwQuartzjobDao">
+
+    <sql id="sql">
+       job_name,job_group,description,concurrent_flag,job_class,trigger_time,update_datetime,valid_flag
+    </sql>
+    
+    <sql id = "whereSql">
+	     <where>
+	        <if test="job_name != null and job_name != '' ">
+	          <!-- like CONCAT(CONCAT('%',#{job_name}),'%') -->
+	          and job_name = #{job_name}
+	        </if>
+	        
+	    </where> 
+    </sql>
+    
+    <sql id="whereBatchSql">
+		<where>
+			<if test="job_name != null and job_name != '' ">
+				and job_name in
+				<foreach collection="job_name" item="id" separator="," open="("
+					close=")">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 字典保存 -->
+	<insert id="insert" parameterType="com.yunwei.context.config.model.YwQuartzjob">
+		insert into yw_system_usercenter.yw_quartzjob(<include refid="sql"/>) values(#{job_name},#{job_group},#{description},#{concurrent_flag},#{job_class},#{trigger_time},#{update_datetime},#{valid_flag})
+	</insert>
+	
+	<!-- 查询所有字典信息-->
+	<select id="queryList" parameterType="java.util.Map" resultType="com.yunwei.context.config.model.YwQuartzjob">
+		select <include refid="sql"/> from yw_system_usercenter.yw_quartzjob
+		<include refid="whereSql"/>
+	</select>
+	
+	<!-- 查询分页信息 -->
+	<select id="queryListPage" parameterType="java.util.Map" resultType="com.yunwei.context.config.model.YwQuartzjob">
+		select <include refid="sql"/> from yw_system_usercenter.yw_quartzjob
+		<include refid="whereSql"/>
+		limit #{begin},#{end}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryTotals" parameterType="java.util.Map" resultType="int">
+		select count(1) from yw_system_usercenter.yw_quartzjob
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="update" parameterType="java.util.Map">
+	    update yw_system_usercenter.yw_quartzjob
+	     <trim prefix="set" suffixOverrides=",">
+	      <if test="job_name != null and job_name != '' ">
+	           job_name = #{job_name},
+	      </if>
+	      <if test="job_group != null and job_group != ''">
+	           job_group = #{job_group},
+	      </if>
+	      <if test="description != null and description != '' ">
+	           description = #{description},
+	      </if>
+	      <if test="concurrent_flag != null and concurrent_flag != '' ">
+	           concurrent_flag = #{concurrent_flag},
+	      </if>
+	      <if test="job_class != null and job_class != '' ">
+	           job_class = #{job_class},
+	      </if>
+	      <if test="trigger_time != null and trigger_time != '' ">
+	           trigger_time = #{trigger_time},
+	      </if>
+	      <if test="update_datetime != null and update_datetime != '' ">
+	           update_datetime = #{update_datetime},
+	      </if>
+	      <if test="valid_flag != null and valid_flag != '' ">
+	           valid_flag = #{valid_flag},
+	      </if>
+	    </trim>
+	    <include refid="whereSql"/>
+	</update>
+	
+	<delete id="delete" parameterType="java.util.Map">
+	    delete from yw_system_usercenter.yw_quartzjob 
+	    <include refid="whereSql"/>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.Map">
+	   delete from yw_system_usercenter.yw_quartzjob
+	   <include refid="whereBatchSql"/>
+	</delete>
+	
+</mapper>

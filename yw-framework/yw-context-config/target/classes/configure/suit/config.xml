@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<group label="适当性前台地址">
+		<property name="suit_front_url" label="前台地址" default="" description="" />
+	</group>
+	
+	<group label="讯飞语音转写服务">
+		<property name="lfasr_appid" label="服务AppId" default="" description="" />
+		<property name="lfasr_secret_key" label="服务秘钥" default="" description="" />
+		<property name="lfasr_upload_url" label="音频文件上传地址" default="https://lfasr.openspeech.cn/lfasr/api/upload" 
+			description="将音频文件上传到讯飞提供的地址，默认值为【https://lfasr.openspeech.cn/lfasr/api/upload】" />
+		<property name="lfasr_upload_result" label="查询结果地址" default="https://lfasr.openspeech.cn/lfasr/api/result" 
+			description="从此地址查询转写结果，默认值为【https://lfasr.openspeech.cn/lfasr/api/result】" />
+		<property name="sleep_second_before_each_query" label="查询前等待时长" default="2" description="每次查询结果前sleep的秒数，默认值2秒" />
+		<property name="max_query_times" label="最大查询次数" default="30" description="最大查询次数，默认值30次" />
+	</group>
+	
+	<group label="讯飞语音合成服务">
+		<property name="tts_appid" label="服务AppId" default="" description="" />
+	</group>
+
+	<group label="适当性同步接口适配器">
+        <property name="suit_counter_bean_ref" label="适当性同步接口" default="noCounter">
+            <validator type="select">
+                <option value="suitHSCounter" label="恒生适当性接口" ></option>
+                <option value="noCounter" label="不同步" ></option>
+            </validator>
+        </property>
+	</group>
+	<group label="客户风险等级保守型对应字典值">
+		<property name="suit_corplevel_conservative" label="客户风险等级保守型对应字典值" default="" description="" />
+		</group>
+</config>

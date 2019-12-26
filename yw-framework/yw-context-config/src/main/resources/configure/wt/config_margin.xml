@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+	<validator id="judge_checkbox" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="judge_checkbox2" type="checkbox">
+		<option label="开" value="1"></option>
+		<option label="关" value="0"></option>
+	</validator>
+	<validator id="display_checkbox" type="checkbox">
+		<option label="显示" value="1"></option>
+		<option label="隐藏" value="0"></option>
+	</validator>
+	<validator id="visible_checkbox" type="checkbox">
+		<option label="显示" value="visible"></option>
+		<option label="隐藏" value="invisible"></option>
+	</validator>
+	
+	<group id="margin_risk" label="融资融券-风险评测相关" display="true">
+		<property name="margin_do_riskCheck" label="融资融券是否检查用户的风险等级"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_do_riskCheck_date" label="检查用户的风险等级评测时间"
+			default="0.5" description="检查用户的风险评测是否大于指定时效 如半年设置0.5一年设置1" />
+
+		<property name="margin_risk_min_level" label="风险评测的最低等级"
+			default="2" description="风险评测的最低等级,默认2" />
+			
+		<property name="margin_risk_min" label="融资融券风险测评相关信息配置"
+			default="30#保守型#1" description="测评最低分数 #测评等级提示#测评等级编号，如：30#保守型#1   注：此处对照exam_result_comment表  " />
+		
+		<property name="margin_risk_paperType" label="融资融券风险测评试题代码"
+			default="1" description="融资融券风险测评试题代码 ,需要根据券商的配置来，默认为1 " />
+			
+		<property name="margin_riskLevel" label="融资融券风险测评paper_type不等于1的试题做风险等级对照 "
+			default="-1"
+			description="配置规则：10-20-1-保守型    依次为      最低分-最高分-风险等级-风险等级描述     每个等级之间使用‘|’分割" />
+	</group>
+	
+	<group id="margin_creidt" label="融资融券-征信以及额度相关" display="true">
+		<property name="margin_do_credit" label="融资融券开通是否需要征信问卷"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_credit_min" label="融资融券开通征信最低分数不低于"
+			default="65" description="融资融券开通征分数，大于等于这个值才允许开通，如60" />
+			
+		<property name="margin_maxCreditValue" label="融资融券最大授信额度 "
+			default="-1" description=" 不限制配置   -1" />
+
+		<property name="margin_adjustModel" label="融资融券调整额度，额度计算模式  "
+			default="1" description="">
+			<validator type="select">
+				<option value="1" label="普通资产+信用资产 " />
+				<option value="2" label="普通资产" />
+				<option value="3" label="信用资产" />
+			</validator>
+		</property>
+		
+		<property name="sys_type" label="融资融券获取用户的授信额度配置的客户系统类型"
+			default="UF"
+			description="针对融资融券获取用户的授信额度配置的客户系统类型，是06+账户，还是UF     默认为UF不区分大小写， 06加账户就写06" />
+		
+		<property name="margin_checkTotalBalance" label="融资融券调整额度是否检查用户信用资产+普通资产是否超过某个限额  默认：不校验 "
+			default="0"	description="此项配置与‘融资融券调整额度检查用户信用资产+普通资产是否大于此限额 ’ 配置配合使用">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="margin_checkBalance" label="融资融券调整额度检查用户信用资产+普通资产是否大于此限额  默认：500000 "
+			default="500000" description="此项配置与‘融资融券调整额度是否检查用户信用资产+普通资产是否超过某个限额 ’ 配置配合使用" />
+		
+		<property name="margin_adjust_credit_riskCheck" label="融资融券调整额度是否检查用户的风险等级及有效时间 默认不检查"
+			default="0"	description="开：检查       关：不检查  默认：不检查">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="margin_adjust_credit_riskCheck_time" label="融资融券调整额度用户风险等级有效年限"
+			default="2"	description="默认两年">
+		</property>
+	</group>
+	
+	<group id="margin" label="融资融券-条件检查等配置" display="true">
+		<property name="margin_do_precondition" label="是否校验融资融券开通条件检查 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_check_age" label="融资融券开通是否校验年龄 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_age_max" label="融资融券开通最大年龄不高于" default="80"
+			description="" />
+
+		<property name="margin_check_gem" label="融资融券开通是否创业板开通 "
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_do_investor_education" label="融资融券开通是否需要投资者教育"
+			default="0" description="融资融券开通前，是否需要投资者教育    链接到券商网站">
+			<validator type="checkbox" ref="judge_checkbox"></validator>
+		</property>
+
+		<property name="margin_do_knowledge" label="融资融券开通是否需要知识测评"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_knowledge_paperType" label="融资融券知识测评题目代码 "
+			default="e" description="#融资融券知识测评题目代码 , 由于没有准确提供，暂时写为e需要后续根据券商的设置配置" />
+
+		<property name="margin_knowledge_min" label="融资融券开通知识测评最低分数不低于"
+			default="80" description="融资融券开通知识测评分数，大于等于这个值才允许开通，如60" />
+
+		
+
+		<property name="margin_firstTrade_tradeAge" label="融资融券首次交易日交易年限 "
+			default="0" description="单位：日，如需检查，配置需要的天数，不检查配置：0" />
+			
+		<property name="margin_firstTrade_queryType" label="融资融券首次交易日查询方式"
+			default="0" description="" >
+			<validator type="select">
+				<option value="0" label="查询中登" />
+				<option value="1" label="查询本券商" />
+			</validator>
+		</property>
+
+		<property name="margin_do_checkStock" label="是否检查用户深圳上海股东账户"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_contract_year" label="设置合同录入时的合同有效期限"
+			default="30" description="合同录入时设置的合同有效期限 ，华创配置30年根据生产数据配置  配置为0时为永久" />
+
+		<property name="margin_mail_suffix" label="融资融券邮箱后缀" default="@123.com"
+			description="对应恒生配置项15005" />
+
+		<property name="busin_margin_effective_date" label="融资融券流水有效天数"
+			default="5" description="" />
+
+		<property name="margin_checkSelfInfo" label="融资融券是否做个人资料完整性检查"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_stockCheck_count" label="融资融券股东账户存在性检查个数"
+			default="1" description="配置1为检查任意单市场，配置2检查双市场" />
+
+		<property name="margin_checkDegitalSign" label="融资融券是否检查电子签名约定书签署"
+			default="1" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_doEducation" label="融资融券投资者教育 "
+			default="0" description="">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+
+		<property name="margin_mailType" label="融资融券追保邮箱类型 " default="1"
+			description=" 0：用户绑定的基本资料邮箱    1：券商提供特定邮箱     注意：配置为1时，需要配置融资融券邮箱后缀" />
+
+		<property name="margin_basicMail_check" label="融资融券资料确认是否检查基本资料邮箱  默认：不校验 "
+			default="0"	description="融资融券资料确认是否检查基本资料邮箱  默认不校验 ">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="margin_need_returnVisit" label="融资融券开通是否需要问卷回访 默认：不需要 "
+			default="0"	description="融资融券开通是否需要问卷回访 默认：不需要   目前只有华创需要 ">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+		<property name="margin_returnVisit_paperType" label="融资融券问卷回访 试卷paperType"
+			default="1"	description=" ">
+		</property>
+		
+		<property name="margin_need_checkZDstock" label="融资融券开通是否需要检查中登信用股东户 默认：不需要 "
+			default="0"	description="融资融券开通是否需要检查中登信用股东户 默认：不需要">
+			<validator type="checkbox" ref="judge_checkbox2"></validator>
+		</property>
+		
+	</group>
+
+</config>

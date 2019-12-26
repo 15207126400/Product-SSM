@@ -1,0 +1,10 @@
+#if(!$f.define)
+<label class="w-300">
+<input type="$f.type" id="$f.formFieldId" name="$f.property.name" value="$f.property.value" class="txt"
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+/>
+</label>
+
+#end

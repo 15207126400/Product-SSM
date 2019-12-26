@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.hundsun.com/ooas/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.hundsun.com/ooas/config ../config.xsd">
+
+    <group name="default" label="CA配置内容">
+        <property name="interface_csdcca_bean_ref" label="中登CA" default="csdcca">
+            <validator type="select">
+                <option value="csdcca" label="中登直连" related="csdcca"></option>
+                <option value="itrus" label="天威代理访问" description="通过天威代理访问中登" related="itrus"></option>
+                <option value="itrus_v2" label="天威代理访问V2" description="通过天威V2代理访问中登" related="itrus"></option>
+                <option value="jqkaca" label="同花顺代理" description="通过同花顺代理访问中登" related="jqkaca"></option>
+                <option value="hscsdcca" label="恒生统一网关代理" description="通过恒生统一网关访问中登"></option>
+                <option value="beijingCsdcca" label="北京CA代理访问V2" description="通过北京CA代理访问中登" related="beijingca_v2_csdcca"></option>
+            </validator>
+        </property>
+
+        <property name="interface_selfca_bean_ref" label="自建CA" default="itrusV1SelfCA">
+            <validator type="select">
+                <option value="itrusV1SelfCA" label="天威诚信V1" related="itrus" />
+                <option value="itrusV2SelfCA" label="天威诚信V2" related="itrus" />
+                <option value="infosecSelfCA" label="信安世纪" related="infosec" />
+                <option value="jqkaSelfCA" label="同花顺CA" related="jqkaca" />
+                <option value="heNanCASelfCA" label="河南CA" related="heNanCASelfCA" />
+                <option value="shanDongCASelfCA" label="山东CA" related="shanDongCASelfCA" />
+                <option value="beiJingCASelfCA" label="北京CA" related="beiJingCASelfCA" />
+                <option value="beiJingCAV2SelfCA" label="北京CA-V2" related="beijingca_v2" />
+            </validator>
+        </property>
+
+        <property name="csdcca_timeout" label="超时时间(毫秒)" default="30000">
+            <validator type="digits" />
+        </property>
+    </group>
+
+    <group name="csdcca" label="中登直接查询" display="false">
+        <property name="csdcca_ws_url" label="接口URL"
+            default="https://ra.test.chinaclear.cn/RaGateway/WebServiceInterface.ws">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="csdcca_orgcode" label="机构号" default="74064802">
+            <validator type="required" />
+        </property>
+        <property name="csdcca_https_truststore" label="HTTPS证书设置路径"
+            default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/ratest.keystore">
+            <validator type="required" />
+        </property>
+        <property name="csdcca_https_truststore_pwd" label="HTTPS密钥" default="changeit">
+            <validator type="required" />
+        </property>
+		<property name="interface_encrypt_bean_ref" label="加密机厂商" default="infosecEncrypt">
+            <validator type="select">
+                <option value="infosecEncrypt" label="信安世纪" related="csdcca_netsign_ip,csdcca_netsign_port,csdcca_sign_cert_dn,csdcca_netsign_timeout" />
+                <option value="beiJingEncrypt" label="北京CA" related="csdcca_svsclient_ip1,csdcca_svsclient_port1,csdcca_svsclient_timeout,csdcca_svsclient_instance" />
+            </validator>
+        </property>
+        <!-- 北京CA加密机 begin -->
+    	<property name="csdcca_svsclient_ip1" label="加密机IP" default="220.165.246.200" display="false">
+            <validator type="required" />
+        </property>
+        <property name="csdcca_svsclient_port1" label="加密机端口" default="8000" display="false">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        <property name="csdcca_svsclient_timeout" label="连接加密机超时(毫秒)" default="1000" display="false">
+            <validator type="required" />
+        </property>
+        <property name="csdcca_svsclient_instance" label="应用名称" default="zhongdengTest" display="false">
+         	<validator type="required" />
+        </property>
+        <!-- 北京CA加密机 end -->
+    </group>
+
+    <group name="itrus" label="天威诚信" display="false">
+        <property name="itrus_ws_version" label="天威诚信版本" default="1">
+            <validator type="required" />
+        </property>
+        <property name="itrus_ws_url" label="接口URL" default="http://115.236.164.66:8073/cks/services/ZDCAWebService">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="itrus_email" label="邮箱" default="administrator@tw.com">
+            <validator type="required" />
+        </property>
+        <property name="itrus_username" label="操作员编号(登录名)" default="administrator">
+            <validator type="required" />
+        </property>
+        <property name="itrus_userregionid" label="操作员所在的区域ID" default="100">
+            <validator type="required" />
+        </property>
+        <property name="itrus_realname" label="操作员真实姓名" default="administrator">
+            <validator type="required" />
+        </property>
+        <property name="itrus_regionid" label="申请证书的人所在的区域ID" default="100">
+            <validator type="required" />
+        </property>
+        <property name="itrus_caType" label="申请证书标识" default="top">
+            <validator type="required" />
+        </property>
+    </group>
+
+    <group name="infosec" label="信安世纪" display="false">
+        <property name="ca_infosec_url" label="服务地址地址 " default="http://218.26.226.117:5551/ra/WS/DataInterface">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="ca_infosec_caid" label="CA编号 " default="2">
+            <validator type="required" />
+        </property>
+        <property name="ca_infosec_defaultOrganId" label="默认机构ID" default="1">
+            <validator type="required" />
+        </property>
+        <property name="ca_infosec_timeout" label="超时 " default="40" description="超时（秒）">
+            <validator type="required" />
+            <validator type="digits" />
+        </property>
+    </group>
+
+    <group name="jqkaca" label="同花顺CA" display="false">
+        <property name="jqka_ws_url" label="RA地址 " default="http://222.74.204.45:88/interface/webCertservice.php">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+    </group>
+
+    <group name="heNanCASelfCA" label="河南CA" display="false">
+        <property name="henanca_wsdl_url" label="WSDL（接口定义）地址 "
+            default="http://202.110.117.44:8080/RAservices/services/RAservices?wsdl">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+    </group>
+
+    <group name="shanDongCASelfCA" label="山东CA" display="false">
+        <property name="ca_shandongca_url" label="服务地址地址 " default="http://60.216.5.244:7009">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="ca_shandongca_ctmlId" label="模板编号 " default="4">
+            <validator type="required" />
+        </property>
+        <property name="ca_shandongca_adminName" label="管理员用户名 " default="admin">
+            <validator type="required" />
+        </property>
+        <property name="ca_shandongca_password" id="password" label="管理员密码 " default="111111">
+            <validator type="required" />
+        </property>
+        <property name="ca_shandongca_connTimeout" label="连接超时 " default="10" description="连接超时（秒）"
+            display="hide">
+            <validator type="required" />
+            <validator type="digits" />
+        </property>
+        <property name="ca_shandongca_soTimeout" label="执行超时 " default="40" description="超时（秒）">
+            <validator type="required" />
+            <validator type="digits" />
+        </property>
+    </group>
+    
+    <group name="beiJingCASelfCA" label="北京CA" display="false">
+        <property name="ca_beijingca_ip" label="CA服务的IP地址 " default="https://60.247.77.115">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_port" label="CA向RA提供的服务端口 " default="443">
+            <validator type="required" />
+            <validator type="digits" />
+        </property>
+        <property name="ca_beijingca_templateId" label="模板编号 " default="11">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_certChainFile" label="证书链文件名(.p7b) " default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/ca/bjca/radk.p7b">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_raTruststoreName" label="安全通信证书文件路径 " default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/ca/bjca/ca.jks">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_oid" label="自定义扩展项OID " default="2.16.840.1.113732.2">
+       		<validator type="required" />
+        </property>
+        <property name="ca_beijingca_mode" label="签名方式 " default="0" display="false">
+        	<validator type="required" />
+        </property>
+        <property name="ca_beijingca_rakeyStoreName" label="keystore文件路径 " default="/usr/local/tomcat/apache-tomcat-api/webapps/ROOT/WEB-INF/classes/ca/bjca/radk.jks">
+            <validator type="required" />
+        </property>
+       <property name="ca_beijingca_keyPassword" id="password" label="私钥保护口令 " default="111111">
+            <validator type="required" />
+        </property>
+    </group>
+    <group name="beijingca_v2_csdcca" label="北京CA代理访问V2" display="false">
+        <property name="ca_beijingca_v2_csdcca_wsUrl" label="RA地址 " default="http://116.52.1.61:9088/caasws/CertServiceImpPort?wsdl">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="ca_beijingca_v2_rulesn_csdcca_apply" label="中登CA申请证书规则号" default="011101">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_v2_rulesn_csdcca_update" label="中登CA更新证书规则号" default="012101">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_v2_rulesn_csdcca_replace" label="中登CA更新证书规则号" default="013101">
+            <validator type="required" />
+        </property>
+    </group>
+    <group name="beijingca_v2" label="北京CA_V2" display="false">
+        <property name="ca_beijingca_v2_wsUrl" label="RA地址 " default="http://116.52.1.61:9088/caasws/CertServiceImpPort?wsdl">
+            <validator type="required" />
+            <validator type="url" />
+        </property>
+        <property name="ca_beijingca_v2_rulesn_self_apply" label="自建CA申请证书规则号" default="1">
+            <validator type="required" />
+        </property>
+        <property name="ca_beijingca_v2_rulesn_self_update" label="自建CA更新证书规则号" default="2">
+            <validator type="required" />
+        </property>
+    </group>
+    
+    <!-- 信安世纪加密机 begin -->
+    <group name="default" label="信安世纪加密机">
+        <property name="csdcca_netsign_ip" label="加密机IP" default="10.10.16.133">
+            <validator type="required" />
+        </property>
+
+        <property name="csdcca_netsign_port" label="加密机端口" default="54321">
+            <validator type="required" />
+            <validator type="range" value="[1,65535]" />
+        </property>
+        
+		<property name="csdcca_sign_cert_dn" label="加密机签名DN" default="CN=74064802@1000000085,OU=Access,O=CSDC Test,C=CN">
+            <validator type="required" />
+        </property>
+        <property name="csdcca_netsign_api_password" label="加密机口令" default="" />
+        <property name="csdcca_netsign_max_conn" label="加密机最大连接数" default="256"/>
+           
+        <property name="csdcca_netsign_timeout" label="连接加密机超时(毫秒)" default="30000">
+            <validator type="required" />
+        </property>
+        <!-- 信安世纪加密机 end -->
+      </group>
+</config>

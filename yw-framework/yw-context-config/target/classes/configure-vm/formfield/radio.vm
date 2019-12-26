@@ -1,0 +1,9 @@
+#if (!$f.define)
+
+<span id="$f.formFieldId" class="relatedTrigger" onclick="$(this).change()" onchange="onOptionChanged(this, ':radio')" >
+#foreach ( $fragment in $f.fragments )
+$fragment.toHTML()
+#end
+</span>
+
+#end

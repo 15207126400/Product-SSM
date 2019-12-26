@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.hundsun.com/ooas/category"
+    xmlns="http://www.hundsun.com/ooas/category" elementFormDefault="qualified">
+
+    <xs:element name="configure" type="configure">
+    </xs:element>
+
+    <xs:complexType name="generate">
+        <xs:attribute name="template" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="catalog">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="generate"></xs:element>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string"></xs:attribute>
+        <xs:attribute name="name" type="xs:string"></xs:attribute>
+        <xs:attribute name="description" type="xs:string"></xs:attribute>
+        <xs:attribute name="config" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="generate" type="generate"></xs:element>
+    <xs:element name="catalog" type="catalog"></xs:element>
+
+    <xs:complexType name="configure">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="catalog"></xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>
